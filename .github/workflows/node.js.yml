@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm install -g eas eas-cli expo
+    - run: npm install -g eas eas-cli expo expo-cli
     - run: expo login -u chameleonapp -p Password01!
     - run: eas build -p android
 #     - run: npm run build --if-present
