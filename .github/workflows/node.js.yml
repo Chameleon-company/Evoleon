@@ -21,9 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - shell: bash
-      env:
-        EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -31,5 +28,8 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm install -g eas eas-cli expo expo-cli
-    - run: expo login -u chameleonapp -p Password01!
-    - run: eas build -p android $EXPO_PASSWORD
+    - shell: bash
+      env:
+        EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
+      run: expo login -u chameleonapp -p $EXPO_PASSWORD
+    - run: eas build -p android
