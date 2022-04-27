@@ -2,7 +2,7 @@
   "expo": {
     "name": "evoleon",
     "slug": "evoleon",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "owner": "chamelonorg",
     "icon": "./assets/icon.png",
@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.evoleonapp.evoleon"
+      "package": "com.evoleonapp.evoleon",
+      "versionCode" : 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
