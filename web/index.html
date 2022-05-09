@@ -75,6 +75,30 @@
       A generic no script element with a reload button and a message.
       Feel free to customize this however you'd like.
     -->
+    <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
+    authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+  var email = "maarif@deakin.edu.au";
+  var password = "ahmedarif";
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      document.getElementById("message").innerHTML = "Welcome, " + user.email;
+   } else {
+      document.getElementById("message").innerHTML = "No user signed in.";
+    }
+  });
+
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    document.getElementById("message").innerHTML = error.message;
+  });
+</script>
     <noscript>
       <form
         action=""
