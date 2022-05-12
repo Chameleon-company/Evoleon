@@ -1,14 +1,17 @@
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      document.getElementById("message").innerHTML = "Welcome, " + user.email;
+   } else {
+      document.getElementById("message").innerHTML = "No user signed in.";
+    }
+  });
 
-import { initializeApp } from "firebase/app";
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    document.getElementById("message").innerHTML = error.message;
+  });
+function login() {
+    var userEmail = document.getElementById("email_field").value;
+    var userPass = document.getElementById("password_field").value;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
-  authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
-  projectId: "sit-22t1-evolean-9396038",
-  storageBucket: "sit-22t1-evolean-9396038.appspot.com",
-  messagingSenderId: "28830424326",
-  appId: "1:28830424326:web:c37819d00c0b3d9e031287"
-};
-
-
-const app = initializeApp(firebaseConfig);
+    window.alert(userEmail +""+ userPass);
+}
