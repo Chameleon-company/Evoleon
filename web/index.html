@@ -78,42 +78,26 @@
     <form>
       <h1> login</h1>
       <div>
-        <input type="text" placeholder="username">
+        <input type="text" placeholder="username" id="email_field">
 
       </div>
       <div>
-        <input type="password" placeholder="password">
+        <input type="password" placeholder="password" id="password_field">
       </div>
-      <input type="submit" value="login">
+      
+      <button onclick="login()">login to account</button>
       <div>
         Don't have an account?
       </br>
       <a href="#">sign up</a>
       </div>
     </form>
-    <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
-<script>
-  var config = {
-    apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
-    authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
-  };
-  firebase.initializeApp(config);
-</script>
+    
 <script>
   var email = "maarif@deakin.edu.au";
   var password = "ahmedarif";
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      document.getElementById("message").innerHTML = "Welcome, " + user.email;
-   } else {
-      document.getElementById("message").innerHTML = "No user signed in.";
-    }
-  });
-
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-    document.getElementById("message").innerHTML = error.message;
-  });
+  
 </script>
     <noscript>
       <form
@@ -163,5 +147,15 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
+    <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
+        authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src="index.js"> </script>
+
   </body>
 </html>
