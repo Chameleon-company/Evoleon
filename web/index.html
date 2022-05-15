@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    
     <!-- 
       This viewport works for phones with notches.
       It's optimized for gestures by disabling global zoom.
@@ -62,12 +61,8 @@
       }*/
     </style>
 
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg"
-      type="text/javascript"
-    ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM"></script>
+    
   </head>
 
   <body>
@@ -75,30 +70,6 @@
       A generic no script element with a reload button and a message.
       Feel free to customize this however you'd like.
     -->
-    <form>
-      <h1> login</h1>
-      <div>
-        <input type="text" placeholder="username" id="email_field">
-
-      </div>
-      <div>
-        <input type="password" placeholder="password" id="password_field">
-      </div>
-      
-      <button onclick="login()">login to account</button>
-      <div>
-        Don't have an account?
-      </br>
-      <a href="#">sign up</a>
-      </div>
-    </form>
-    
-<script>
-  var email = "maarif@deakin.edu.au";
-  var password = "ahmedarif";
-
-  
-</script>
     <noscript>
       <form
         action=""
@@ -112,8 +83,6 @@
           z-index: 9999;
         "
       >
-      <div>Identity Platform Quickstart</div>
-      <div id="message">Loading...</div>
         <div
           style="
             font-size: 18px;
@@ -147,15 +116,5 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-    <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"></script>
-    <script>
-      var config = {
-        apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
-        authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
-      };
-      firebase.initializeApp(config);
-    </script>
-    <script src="index.js"> </script>
-
   </body>
 </html>
