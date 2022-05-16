@@ -11,7 +11,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1.00001, viewport-fit=cover"
     />
-    <title>%WEB_TITLE%</title>
+    <title>Evoleon</title>
+    <link rel="stylesheet" href="evoleon.css">
     <style>
       /**
        * Extend the react-native-web reset:
@@ -70,51 +71,126 @@
       A generic no script element with a reload button and a message.
       Feel free to customize this however you'd like.
     -->
-    <noscript>
-      <form
-        action=""
-        style="
-          background-color: #fff;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 9999;
-        "
-      >
-        <div
-          style="
-            font-size: 18px;
-            font-family: Helvetica, sans-serif;
-            line-height: 24px;
-            margin: 10%;
-            width: 80%;
-          "
-        >
-          <p>Oh no! It looks like JavaScript is not enabled in your browser.</p>
-          <p style="margin: 20px 0;">
-            <button
-              type="submit"
-              style="
-                background-color: #4630eb;
-                border-radius: 100px;
-                border: none;
-                box-shadow: none;
-                color: #fff;
-                cursor: pointer;
-                font-weight: bold;
-                line-height: 20px;
-                padding: 6px 16px;
-              "
-            >
-              Reload
-            </button>
-          </p>
-        </div>
-      </form>
-    </noscript>
-    <!-- The root element for your Expo app. -->
-    <div id="root"></div>
+<
+    <div id="login-box">
+      <div class="left">
+        <!-- <img class="evoleon-logo" src="desktop/Evoleon Final.jpg" alt="logo"> -->
+        <h1>Sign up</h1>
+        
+        <input type="text" id="email" name="email" placeholder="E-mail" />
+        <input type="password" id="password" name="password" placeholder="Password" />
+        
+        <input type="submit" id="saveData" name="signup_submit" value="Sign in" />
+      </div>
+      
+      <div class="right">
+        <span class="loginwith">Sign in with<br />social network</span>
+        
+        <!-- <button class="social-signin facebook">Log in with facebook</button> -->
+        <!-- <button class="social-signin apple" id='login'>Log in with apple</button> -->
+        <button class="social-signin google" id='login'>Log in with Google</button>
+      </div>
+      <div class="or">OR</div>
+</div>
+</body>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+  import { getAuth ,GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    
+  apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
+  authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
+  projectId: "sit-22t1-evolean-9396038",
+  storageBucket: "sit-22t1-evolean-9396038.appspot.com",
+  messagingSenderId: "28830424326",
+  appId: "1:28830424326:web:c37819d00c0b3d9e031287"
+
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider(app);
+
+  login.addEventListener('click',(e) => {
+   // signInWithRedirect(auth, provider);
+
+
+   // redirect the result
+  //  getRedirectResult(auth)
+  //    .then((result) => {
+  //      // This gives you a Google Access Token. You can use it to access Google APIs.
+  //      const credential = GoogleAuthProvider.credentialFromResult(result);
+  //      const token = credential.accessToken;
+
+  //      // The signed-in user info.
+  //      const user = result.user;
+
+  //    }).catch((error) => {
+  //      // Handle Errors here.
+  //      const errorCode = error.code;
+  //      const errorMessage = error.message;
+  //      // The email of the user's account used.
+  //      const email = error.email;
+  //      // The AuthCredential type that was used.
+  //      const credential = GoogleAuthProvider.credentialFromError(error);
+  //      // ...
+       
+  // });
+
+  // sign in with popup tab
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+
+
+    alert(user.displayName);
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+
+    alert(errorMessage);
+  });
+ });
+ signOut.addEventListener('click',(e) => {
+
+signOut(auth).then(() => {
+ // Sign-out successful.
+}).catch((error) => {
+ // An error happened.
+});
+
+});
+
+     </script>
+    <!-- // <div id="root"></div>
+    // <script src="https://www.gstatic.com/firebasejs/8.0/firebase.js"> -->
+    // <script>
+    //   var config = {
+    //     apiKey: "AIzaSyDgpt0Eh1AZl_a2S-TWjpvjd5LNPnF33NM",
+    //     authDomain: "sit-22t1-evolean-9396038.firebaseapp.com",
+    //   };
+    //   firebase.initializeApp(config);
+    // </script>
+    <!-- // <script src="index.js"> </script>ß -->
+
   </body>
 </html>
