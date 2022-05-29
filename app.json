@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "expo-hamburger-menu-template",
-    "slug": "expo-hamburger-menu-template",
+    "name": "evoleon",
+    "slug": "evoleon",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
+    "owner": "chamelonorg",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -25,7 +26,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "android": {
-      "package": "com.grichmondprivate.expohamburgermenutemplate"
+      "package": "com.evoleonapp.evoleon"
     }
   }
 }
