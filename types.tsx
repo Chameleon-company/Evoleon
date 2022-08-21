@@ -20,6 +20,8 @@ export type DrawerParamList = {
   Clients: undefined;
   Initial: undefined;
   Login: undefined;
+  Authenticate: undefined;  
+  Signup: undefined;
 };
 
 export type DatabaseParamList = {
@@ -40,6 +42,14 @@ export type InitialParamList = {
 
 export type LoginParamList = {
   LoginScreen: undefined;
+};
+
+export type AuthenticateParamList = {
+  AuthenticateScreen: undefined;
+};
+
+export type SignupParamList = {
+  SignupScreen: undefined;
 };
 
 export type onPressFunc = (event: GestureResponderEvent) => void;
