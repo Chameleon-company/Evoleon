@@ -17,7 +17,9 @@ export type TabOneParamList = {
 export type DrawerParamList = {
   Database: undefined;
   FileSystem: undefined;
-  Clients: undefined;  
+  Clients: undefined;
+  Initial: undefined;
+  Login: undefined;
 };
 
 export type DatabaseParamList = {
@@ -30,6 +32,14 @@ export type FileSystemParamList = {
 
 export type ClientsParamList = {
   ClientsScreen: undefined;
+};
+
+export type InitialParamList = {
+  InitialScreen: undefined;
+};
+
+export type LoginParamList = {
+  LoginScreen: undefined;
 };
 
 export type onPressFunc = (event: GestureResponderEvent) => void;

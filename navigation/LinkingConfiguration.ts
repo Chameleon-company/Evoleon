@@ -1,29 +1,34 @@
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
 export default {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
       Root: {
         screens: {
           Database: {
             screens: {
-              DatabaseScreen: 'database'
-            }
+              DatabaseScreen: "database",
+            },
           },
           FileSystem: {
             screens: {
-              FileSystemScreen: 'filesystem'
-            }
+              FileSystemScreen: "filesystem",
+            },
           },
           Clients: {
             screens: {
-              ClientsScreen: 'clients'
-            }
-          }
+              ClientsScreen: "clients",
+            },
+          },
+          Login: {
+            screens: {
+              LoginScreen: "login",
+            },
+          },
         },
       },
-      NotFound: '*',
+      NotFound: "*",
     },
   },
 };
