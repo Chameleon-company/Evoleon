@@ -6,12 +6,17 @@ import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ClientsScreen from "../screens/ClientsScreen";
 import LoginScreen from "../screens/Login-screen";
+import AuthenticateScreen from '../screens/AuthenticateScreen';
+import SignupScreen from '../screens/SignupScreen';
+
 import {
   DrawerParamList,
   DatabaseParamList,
   FileSystemParamList,
   ClientsParamList,
   LoginParamList,
+  AuthenticateParamList, 
+  SignupParamList
 } from "../types";
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -23,6 +28,9 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
       <Drawer.Screen name="Login Draft" component={LoginNavigator} />
+      <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
+      <Drawer.Screen name="Signup" component={SignupNavigator}
+      />  
     </Drawer.Navigator>
   );
 }
@@ -68,4 +76,31 @@ function LoginNavigator() {
       <LoginStack.Screen name="Login/Sign Up" component={LoginScreen} />
     </LoginStack.Navigator>
   );
+}
+
+const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
+
+function AuthenticateNavigator() {
+  return (
+    <AuthenticateStack.Navigator>
+      <AuthenticateStack.Screen
+        name="AuthenticateScreen"
+        component={AuthenticateScreen}
+      />
+    </AuthenticateStack.Navigator>
+  )
+}
+
+
+const SignupStack = createStackNavigator<SignupParamList>();
+
+function SignupNavigator() {
+  return (
+    <SignupStack.Navigator>
+      <SignupStack.Screen
+        name="SignupScreen"
+        component={SignupScreen}
+      />
+    </SignupStack.Navigator>
+  )
 }
