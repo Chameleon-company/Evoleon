@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import * as React from "react";
 
 import DatabaseScreen from "../screens/DatabaseScreen";
@@ -23,11 +23,20 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator initialRouteName="Database" drawerContent={props => {
+      return (
+        <DrawerContentScrollView {...props}>
+          <DrawerItemList {...props} />
+          <DrawerItem label="Logout" onPress={() => 
+            //To do: update to check if user is logged in and change text accordingly 
+            props.navigation.navigate("Authenticate") }/>
+        </DrawerContentScrollView>
+      )
+    }}>
       <Drawer.Screen name="Database" component={DatabaseNavigator} />
       <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
-      <Drawer.Screen name="Login Draft" component={LoginNavigator} />
+      <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Signup" component={SignupNavigator}
       />  
