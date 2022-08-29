@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 
 import { Text, View } from "../components/Themed";
+import { Pressable } from "react-native";
+import buttonStyles from "../styles/buttonStyle";
 import MenuIcon from "../components/MenuIcon";
 import { Button, TextInput } from "react-native-paper";
 import { useEffect } from "react";
@@ -22,9 +24,9 @@ export default function LoginScreen() {
     <SafeAreaView style={LoginStyle.content}>
       <View style={LoginStyle.upperContent}>
         <Text>Don't have an account?</Text>
-        <Button textColor="rgb(41,78,75)" uppercase={false}>
-          Sign Up
-        </Button>
+        <Pressable style={LoginStyle.buttonTextOnly}>
+          <Text style={LoginStyle.SignupLink}>Sign Up</Text>
+        </Pressable>
       </View>
       <View style={LoginStyle.inputView}>
         <TextInput
@@ -37,28 +39,27 @@ export default function LoginScreen() {
           label="Password"
           secureTextEntry={true}
         ></TextInput>
-        <Button
-          textColor="rgb(41,78,75)"
+
+        <Pressable style={LoginStyle.forgotPassButton}>
+          <Text style={LoginStyle.SignupLink}>Forgot your password?</Text>
+        </Pressable>
+
+        {/* Sign in button */}
+        <Pressable
           style={LoginStyle.button}
-          uppercase={false}
+          onPress={() => {
+            console.log("Pressed sign up button");
+
+            // Navigation link to be improved
+            navigation.navigate("DatabaseScreen");
+          }}
         >
-          Forgot your password?
-        </Button>
-        <Button
-          style={LoginStyle.button}
-          buttonColor="rgb(41,78,75)"
-          mode="contained"
-          labelStyle={{ fontSize: 20 }}
-        >
-          Sign In
-        </Button>
-        <Button
-          textColor="rgb(41,78,75)"
-          style={LoginStyle.cancelButton}
-          uppercase={false}
-        >
-          Cancel
-        </Button>
+          <Text style={buttonStyles.Text}>Sign In</Text>
+        </Pressable>
+
+        <Pressable style={LoginStyle.cancelButton}>
+          <Text style={LoginStyle.cancelText}>Cancel</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
