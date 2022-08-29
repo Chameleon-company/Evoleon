@@ -41,12 +41,30 @@ export const LoginStyle = StyleSheet.create({
     borderColor: "rgba(0,0,0,0)",
     backgroundColor: "rgba(0,0,0,0)",
   },
+  SignupLink: {
+    color: "#294E4B",
+    fontWeight: "bold",
+  },
+  forgotPassButton: {
+    marginBottom: 20,
+    marginTop: 50,
+  },
   button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 85,
+    borderRadius: 50,
     width: 360,
-    top: 70,
+    top: 1,
+    backgroundColor: "rgb(41,78,75)",
   },
   cancelButton: {
-    width: 360,
-    top: 140,
+    marginBottom: 20,
+    marginTop: 100,
+  },
+  cancelText: {
+    color: "#294E4B",
+    fontWeight: "bold",
   },
 });
