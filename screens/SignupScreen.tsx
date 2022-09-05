@@ -13,9 +13,26 @@ import inputStyle from '../styles/inputStyle';
 import Checkbox from 'expo-checkbox';
 
 
+/* Firebase code - TO DO: improve and move to a seperate file */
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, createUserWithEmailAndPassword, Auth } from "firebase/auth";
+function userSignUp( auth: Auth, email: string, password: string){
+  createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+}
+
+
 {/* Sign up Screen
     To do: improve user interface code, intergrate with database, and update page links
   */}
+
 export default function SignupScreen() {
     const navigation = useNavigation();
     const [firstName, onChangeTextFirstName] = React.useState('');
@@ -26,12 +43,31 @@ export default function SignupScreen() {
     const [password, onChangeTextPassword] = React.useState('');
     const [isChecked, setChecked] = React.useState(false);
 
+
+    /* Firebase code - TO DO: improve and move to a seperate file */
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2KIY6cDnp1UPZXCc66wqH8d6uZV5-Eck",
+      authDomain: "evoleonapp-c3959.firebaseapp.com",
+      projectId: "evoleonapp-c3959",
+      storageBucket: "evoleonapp-c3959.appspot.com",
+      messagingSenderId: "956409458991",
+      appId: "1:956409458991:web:8c4cebedcc21a476a831da",
+      measurementId: "G-CXFWZ7G1LE"
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+
+
+    
     useEffect(() => {
         navigation.setOptions({
           headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon/>)
         });
       });
 
+      
 
     return (
  
@@ -71,13 +107,13 @@ export default function SignupScreen() {
 
           {/* Submit button */}
           <Pressable style={buttonStyles.Button}
-          onPress={() => console.log("Submit button pressed")
+          onPress={() => 
+            userSignUp(auth, email, password)
           }>
             <Text style={buttonStyles.Text}>Submit</Text>
           </Pressable>
-    
+
       </View>
-      
     )
 
 }
