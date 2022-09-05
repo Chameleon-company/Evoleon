@@ -59,7 +59,7 @@ function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
       <ClientsStack.Screen
-        name="ClientsScreen"
+        name="Profile"
         component={ClientsScreen}
       />
     </ClientsStack.Navigator>

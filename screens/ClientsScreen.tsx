@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { Image ,Button,Alert} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
@@ -17,13 +18,33 @@ export default function ClientsScreen() {
   });
 
   return (
-    <View style={main.centered}>
-      <Text
+    
+    <View >
+      <Image 
+      style ={{
+        borderTopRightRadius: 20,
+        height:100,
+      width:200}}source={ require("../assets/EvoleonFinal.png")}/>
+      
+      <Button 
+        title="vehicle info"
+        onPress={() => Alert.alert('vehicle info')}
+      />
+      <Button
+        title="owner info"
+        onPress={() => Alert.alert('owner info')}
+      />
+      <Button
+        title="charging history"
+        onPress={() => Alert.alert('charging history')}
+      />
+      {/* <Text
+      
         lightColor="rgba(0,0,0,0.8)"
         darkColor="rgba(255,255,255,0.8)"
       >
-        This is Clients Screen
-      </Text>
+        Vehicle info
+      </Text> */}
     </View>
   )
 };
