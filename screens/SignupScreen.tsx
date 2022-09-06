@@ -17,10 +17,12 @@ import Checkbox from 'expo-checkbox';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, createUserWithEmailAndPassword, Auth } from "firebase/auth";
+
 function userSignUp( auth: Auth, email: string, password: string){
   createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log('Created new account for:', user.email)
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -92,7 +94,7 @@ export default function SignupScreen() {
               <TextInput style={inputStyle.Text} onChangeText={onChangeTextCountry} value={homeCountry} placeholder="Home Country"/>
               <TextInput style={inputStyle.Text} onChangeText={onChangeTextPostcode} value={homePostcode} placeholder="Home Postcode"/>
               <TextInput style={inputStyle.Text} onChangeText={onChangeTextEmail} value={email} placeholder="Email"/>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
+              <TextInput style={inputStyle.Text} secureTextEntry={true} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
           </SafeAreaView>
 
           <View style={inputStyle.CheckBox}>
