@@ -13,14 +13,14 @@ export default function DrawerNavigator() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="Database"
+        name="Map"
         component={DatabaseNavigator}/>
       <Drawer.Screen
-        name="FileSystem"
+        name="Saving chart"
         component={FileSystemNavigator}
       />
       <Drawer.Screen
-        name="Clients"
+        name="Profile"
         component={ClientsNavigator}
       />
     </Drawer.Navigator>
@@ -33,7 +33,7 @@ function DatabaseNavigator() {
   return (
     <DatabaseStack.Navigator>
       <DatabaseStack.Screen
-        name="DatabaseScreen"
+        name="Charging locations"
         component={DatabaseScreen}
       />
     </DatabaseStack.Navigator>
@@ -59,7 +59,7 @@ function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
       <ClientsStack.Screen
-        name="ClientsScreen"
+        name="Profile"
         component={ClientsScreen}
       />
     </ClientsStack.Navigator>
