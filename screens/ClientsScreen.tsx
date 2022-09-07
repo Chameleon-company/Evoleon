@@ -22,9 +22,14 @@ export default function ClientsScreen() {
     <View >
       <Image 
       style ={{
-        borderTopRightRadius: 20,
+      
+        padding: 30,
+        margin: 80,
+        borderTopRightRadius: 12,
         height:100,
-      width:200}}source={ require("../assets/EvoleonFinal.png")}/>
+      width:200,
+      resizeMode: 'contain'
+      }}source={ require("../assets/EvoleonFinal.png")}/>
       
       <Button 
         title="vehicle info"
