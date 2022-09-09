@@ -48,13 +48,13 @@ export default function SignupScreen() {
 
     /* Firebase code - TO DO: improve and move to a seperate file */
     const firebaseConfig = {
-      apiKey: "AIzaSyB2KIY6cDnp1UPZXCc66wqH8d6uZV5-Eck",
-      authDomain: "evoleonapp-c3959.firebaseapp.com",
-      projectId: "evoleonapp-c3959",
-      storageBucket: "evoleonapp-c3959.appspot.com",
-      messagingSenderId: "956409458991",
-      appId: "1:956409458991:web:8c4cebedcc21a476a831da",
-      measurementId: "G-CXFWZ7G1LE"
+      apiKey: "AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg",
+      authDomain: "evoleonapp.firebaseapp.com",
+      projectId: "evoleonapp",
+      storageBucket: "evoleonapp.appspot.com",
+      messagingSenderId: "425564389277",
+      appId: "1:425564389277:web:c86772f8abb19ffca47974",
+      measurementId: "G-GL6LC3D645"
     };
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
