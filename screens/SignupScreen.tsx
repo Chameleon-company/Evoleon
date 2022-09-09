@@ -11,30 +11,10 @@ import main from '../styles/authenticate';
 import buttonStyles from '../styles/buttonStyle';
 import inputStyle from '../styles/inputStyle';
 import Checkbox from 'expo-checkbox';
+import {userSignUp} from '../web/firebase'
 
 
-/* Firebase code - TO DO: improve and move to a seperate file */
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, Auth } from "firebase/auth";
-
-function userSignUp( auth: Auth, email: string, password: string){
-  createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Created new account for:', user.email)
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-}
-
-
-{/* Sign up Screen
-    To do: improve user interface code, intergrate with database, and update page links
-  */}
-
+{/* User sign up screen */}
 export default function SignupScreen() {
     const navigation = useNavigation();
     const [firstName, onChangeTextFirstName] = React.useState('');
@@ -44,23 +24,6 @@ export default function SignupScreen() {
     const [email, onChangeTextEmail] = React.useState('');
     const [password, onChangeTextPassword] = React.useState('');
     const [isChecked, setChecked] = React.useState(false);
-
-
-    /* Firebase code - TO DO: improve and move to a seperate file */
-    const firebaseConfig = {
-      apiKey: "AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg",
-      authDomain: "evoleonapp.firebaseapp.com",
-      projectId: "evoleonapp",
-      storageBucket: "evoleonapp.appspot.com",
-      messagingSenderId: "425564389277",
-      appId: "1:425564389277:web:c86772f8abb19ffca47974",
-      measurementId: "G-GL6LC3D645"
-    };
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth();
-
 
     
     useEffect(() => {
@@ -110,7 +73,7 @@ export default function SignupScreen() {
           {/* Submit button */}
           <Pressable style={buttonStyles.Button}
           onPress={() => 
-            userSignUp(auth, email, password)
+            userSignUp(email, password)
           }>
             <Text style={buttonStyles.Text}>Submit</Text>
           </Pressable>
