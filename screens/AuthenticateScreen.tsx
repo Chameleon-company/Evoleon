@@ -33,7 +33,7 @@ export default function AuthenticateScreen() {
             {/* Sign in button */}
             <Pressable style={buttonStyles.Button}
             onPress={() => {     
-                console.log("Pressed sign in button") 
+                navigation.navigate("Login");
             }}>
               <Text style={buttonStyles.Text}>Sign in</Text>
             </Pressable>
@@ -41,13 +41,8 @@ export default function AuthenticateScreen() {
             {/* Sign up button */}
             <Pressable style={buttonStyles.Button} 
               onPress={() => {
-                console.log("Pressed sign up button")
-
-                // Navigation link to be improved
-                navigation.navigate("SignupScreen")
-              }
-            }
-            >
+                navigation.navigate("Signup")
+              }}>
               <Text style={buttonStyles.Text}>Sign up</Text>
             </Pressable>
        

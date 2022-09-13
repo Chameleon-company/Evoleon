@@ -8,6 +8,7 @@ import ClientsScreen from "../screens/ClientsScreen";
 import LoginScreen from "../screens/Login-screen";
 import AuthenticateScreen from '../screens/AuthenticateScreen';
 import SignupScreen from '../screens/SignupScreen';
+import {getSignInSignOutButtonText, signInSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -27,9 +28,11 @@ export default function DrawerNavigator() {
       return (
         <DrawerContentScrollView {...props}>
           <DrawerItemList {...props} />
-          <DrawerItem label="Logout" onPress={() => 
-            //To do: update to check if user is logged in and change text accordingly 
-            props.navigation.navigate("Authenticate") }/>
+          <DrawerItem label={getSignInSignOutButtonText()} onPress={() => {
+            signInSignOutButtonPressed();
+            props.navigation.navigate("Authenticate");
+          }
+        }/>
         </DrawerContentScrollView>
       )
     }}>
@@ -38,8 +41,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
-      <Drawer.Screen name="Signup" component={SignupNavigator}
-      />  
+      <Drawer.Screen name="Signup" component={SignupNavigator}/>  
     </Drawer.Navigator>
   );
 }
@@ -59,10 +61,7 @@ const FileSystemStack = createStackNavigator<FileSystemParamList>();
 function FileSystemNavigator() {
   return (
     <FileSystemStack.Navigator>
-      <FileSystemStack.Screen
-        name="FileSystemScreen"
-        component={FileSystemScreen}
-      />
+      <FileSystemStack.Screen name="FileSystemScreen" component={FileSystemScreen} />
     </FileSystemStack.Navigator>
   );
 }
@@ -82,7 +81,7 @@ const LoginStack = createStackNavigator<LoginParamList>();
 function LoginNavigator() {
   return (
     <LoginStack.Navigator>
-      <LoginStack.Screen name="Login/Sign Up" component={LoginScreen} />
+      <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
     </LoginStack.Navigator>
   );
 }
@@ -92,10 +91,7 @@ const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
 function AuthenticateNavigator() {
   return (
     <AuthenticateStack.Navigator>
-      <AuthenticateStack.Screen
-        name="AuthenticateScreen"
-        component={AuthenticateScreen}
-      />
+      <AuthenticateStack.Screen name="AuthenticateScreen" component={AuthenticateScreen} />
     </AuthenticateStack.Navigator>
   )
 }
@@ -106,10 +102,7 @@ const SignupStack = createStackNavigator<SignupParamList>();
 function SignupNavigator() {
   return (
     <SignupStack.Navigator>
-      <SignupStack.Screen
-        name="SignupScreen"
-        component={SignupScreen}
-      />
+      <SignupStack.Screen name="SignupScreen" component={SignupScreen} />
     </SignupStack.Navigator>
   )
 }

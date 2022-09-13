@@ -30,25 +30,16 @@ export default function LoginScreen() {
     <SafeAreaView style={LoginStyle.content}>
       <View style={LoginStyle.upperContent}>
         <Text>Don't have an account?</Text>
-        <Pressable style={LoginStyle.buttonTextOnly}>
+        <Pressable style={LoginStyle.buttonTextOnly} onPress={() => {
+            navigation.navigate("Database")
+          }}>
           <Text style={LoginStyle.SignupLink}>Sign Up</Text>
         </Pressable>
       </View>
+
       <View style={LoginStyle.inputView}>
-        <TextInput
-          style={LoginStyle.input}
-          keyboardType="email-address"
-          onChangeText={onChangeTextEmail}
-          value={email}
-          placeholder="Email"
-        />
-        <TextInput
-          style={LoginStyle.input}
-          secureTextEntry={true}
-          onChangeText={onChangeTextPassword}
-          value={password}
-          placeholder="Password"
-        />
+        <TextInput style={LoginStyle.input} keyboardType="email-address" onChangeText={onChangeTextEmail} value={email} placeholder="Email"/>
+        <TextInput style={LoginStyle.input} secureTextEntry={true} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
 
         <Pressable style={LoginStyle.forgotPassButton}>
           <Text style={LoginStyle.SignupLink}>Forgot your password?</Text>
@@ -57,10 +48,10 @@ export default function LoginScreen() {
         {/* Sign in button */}
         <Pressable
           style={LoginStyle.button}
-          onPress={() => {
-            userSignIn(email, password);
-          }}
-        >
+            onPress={() => {
+              userSignIn(email, password);
+              navigation.navigate("Database")
+          }}>
           <Text style={buttonStyles.Text}>Sign In</Text>
         </Pressable>
 
