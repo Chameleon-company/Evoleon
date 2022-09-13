@@ -44,8 +44,7 @@ export default function SignupScreen() {
           {/* Link to go to sign in page*/}
           <Pressable
               onPress={() => {
-                console.log("Navigate to sign in page button pressed")
-                navigation.navigate("SignupScreen")
+                navigation.navigate("Login")
               }}>
             <Text style={buttonStyles.SigninLink}>Sign in</Text>
           </Pressable>
@@ -72,9 +71,10 @@ export default function SignupScreen() {
 
           {/* Submit button */}
           <Pressable style={buttonStyles.Button}
-          onPress={() => 
-            userSignUp(email, password)
-          }>
+          onPress={() => {
+            userSignUp(email, password);
+            navigation.navigate("Database");
+          }}>
             <Text style={buttonStyles.Text}>Submit</Text>
           </Pressable>
 
