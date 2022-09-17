@@ -24,8 +24,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "android": {
-      "package": "com.evoleonapp.evoleon",
-      "googleServicesFile": "/google-services.json"
+      "package": "com.evoleonapp.evoleon"
     }
   }
 }

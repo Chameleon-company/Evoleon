@@ -18,12 +18,13 @@ import {
   createUserDocFromAuth,
   signInWithGoogle,
 } from "../web/firebase";
+import { render } from "react-dom";
 
 {
   /* User sign up screen */
 }
 
-export default function SignupScreen() {
+const SignupScreen = (props) => {
   const navigation = useNavigation();
   const [firstName, onChangeTextFirstName] = React.useState("");
   const [lastName, onChangeTextLastName] = React.useState("");
@@ -33,11 +34,34 @@ export default function SignupScreen() {
   const [password, onChangeTextPassword] = React.useState("");
   const [isChecked, setChecked] = React.useState(false);
 
+  // const [contact, setContact] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   homeCountry: "",
+  //   homePostcode: "",
+  //   email: "",
+  //   password: "",
+  // });
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
   });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { user } = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await createUserDocFromAuth(user, { displayName });
+    } catch (error) {
+      console.log("error in creating user", error.message);
+    }
+  };
 
   return (
     <View style={main.Centered}>
@@ -58,38 +82,38 @@ export default function SignupScreen() {
       <SafeAreaView style={inputStyle.InputArea}>
         <TextInput
           style={inputStyle.Text}
-          onChangeText={onChangeTextFirstName}
+          onChange={onChangeTextFirstName}
           value={firstName}
-          placeholder="First name"
+          placeholder="Firstname"
         />
         <TextInput
           style={inputStyle.Text}
-          onChangeText={onChangeTextLastName}
+          onChange={onChangeTextLastName}
           value={lastName}
-          placeholder="Last name"
+          placeholder="Lastname"
         />
         <TextInput
           style={inputStyle.Text}
-          onChangeText={onChangeTextCountry}
+          onChange={onChangeTextCountry}
           value={homeCountry}
           placeholder="Home Country"
         />
         <TextInput
           style={inputStyle.Text}
-          onChangeText={onChangeTextPostcode}
+          onChange={onChangeTextPostcode}
           value={homePostcode}
           placeholder="Home Postcode"
         />
         <TextInput
           style={inputStyle.Text}
-          onChangeText={onChangeTextEmail}
+          onChange={onChangeTextEmail}
           value={email}
           placeholder="Email"
         />
         <TextInput
           style={inputStyle.Text}
+          onChange={onChangeTextPassword}
           secureTextEntry={true}
-          onChangeText={onChangeTextPassword}
           value={password}
           placeholder="Password"
         />
@@ -119,4 +143,6 @@ export default function SignupScreen() {
       </Pressable>
     </View>
   );
-}
+};
+
+export default SignupScreen;
