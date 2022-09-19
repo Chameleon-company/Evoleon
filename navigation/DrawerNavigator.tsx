@@ -26,6 +26,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator() {
   return (
+
     <Drawer.Navigator initialRouteName="Database" drawerContent={props => {
 
         const filteredTopLeftMenuItems = {
@@ -59,9 +60,22 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
+
+      {/* <Drawer.Screen
+        name="Map"
+        component={DatabaseNavigator}/>
+      <Drawer.Screen
+        name="Saving chart"
+        component={FileSystemNavigator}
+      />
+      <Drawer.Screen
+        name="Profile"
+  component={ClientsNavigator} >*/ }
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+
+
     </Drawer.Navigator>
   );
 }
@@ -71,9 +85,9 @@ const DatabaseStack = createStackNavigator<DatabaseParamList>();
 function DatabaseNavigator() {
   return (
     <DatabaseStack.Navigator>
-      <DatabaseStack.Screen 
-        name="DatabaseScreen" 
-        component={DatabaseScreen} 
+      <DatabaseStack.Screen
+        name="DatabaseScreen"
+        component={DatabaseScreen}
         options={{
           headerTitle:'EV database map',
           headerStyle: {
@@ -113,9 +127,9 @@ const ClientsStack = createStackNavigator<ClientsParamList>();
 function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
-      <ClientsStack.Screen 
-        name="ClientsScreen" 
-        component={ClientsScreen} 
+      <ClientsStack.Screen
+        name='ClientsScreen'
+        component={ClientsScreen}
         options={{
           headerTitle:'Clients',
           headerStyle: {
