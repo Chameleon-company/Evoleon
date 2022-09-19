@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
-import main from '../styles/authenticate';
-import buttonStyles from '../styles/buttonStyle';
+import {AuthScreenStyle} from '../styles/authenticateStyle';
+import {ButtonStyle} from '../styles/buttonStyle';
 import logoStyles from '../styles/logoStyle';
 
 
@@ -25,25 +25,25 @@ export default function AuthenticateScreen() {
       });
 
       return (
-          <View style={main.Centered}>
+          <View style={AuthScreenStyle.Centered}>
 
             {/* Logo - to be updated with current logo */}
             <Image style={logoStyles.Logo} source={require('./EvoleonFinal.png')} />
 
             {/* Sign in button */}
-            <Pressable style={buttonStyles.Button}
+            <Pressable style={ButtonStyle.Button}
             onPress={() => {     
                 navigation.navigate("Login");
             }}>
-              <Text style={buttonStyles.Text}>Sign in</Text>
+              <Text style={ButtonStyle.Text}>Sign in</Text>
             </Pressable>
 
             {/* Sign up button */}
-            <Pressable style={buttonStyles.Button} 
+            <Pressable style={ButtonStyle.Button} 
               onPress={() => {
                 navigation.navigate("Signup")
               }}>
-              <Text style={buttonStyles.Text}>Sign up</Text>
+              <Text style={ButtonStyle.Text}>Sign up</Text>
             </Pressable>
        
           </View>
