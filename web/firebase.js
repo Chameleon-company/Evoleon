@@ -85,7 +85,7 @@ export const userSignIn = (email, password) => {
 //Sign up for a new user
 export const userSignUp = async (email, password) => {
   if (!email || !password) return;
-  console.log("\nCheck 1: pass\n");
+  console.log("Check 1");
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -134,18 +134,18 @@ export const createUserDocFromAuth = async (
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    const { firstName, email } = userAuth;
+    const { displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
       await setDoc(userDocRef, {
-        firstName,
+        displayName,
         email,
         createdAt,
         ...additionalInformation,
       });
     } catch (error) {
-      console.log("error in creatinggg ", error.message);
+      console.log("error in creating ", error.message);
     }
   }
 
