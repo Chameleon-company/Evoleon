@@ -7,9 +7,9 @@ import { useEffect } from 'react';
 import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
-import main from '../styles/authenticate';
-import buttonStyles from '../styles/buttonStyle';
-import inputStyle from '../styles/inputStyle';
+import {AuthScreenStyle} from '../styles/authenticateStyle';
+import {ButtonStyle} from '../styles/buttonStyle';
+import {SignUpScreenStyle} from '../styles/signUpStyle';
 import Checkbox from 'expo-checkbox';
 import {userSignUp} from '../web/firebase'
 
@@ -36,7 +36,7 @@ export default function SignupScreen() {
 
     return (
  
-      <View style={main.Centered}>
+      <View style={AuthScreenStyle.Centered}>
           <Text lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)" >
             Already have an account?
           </Text> 
@@ -46,36 +46,36 @@ export default function SignupScreen() {
               onPress={() => {
                 navigation.navigate("Login")
               }}>
-            <Text style={buttonStyles.SigninLink}>Sign in</Text>
+            <Text style={ButtonStyle.SigninLink}>Sign in</Text>
           </Pressable>
 
           {/* Collect user information */}
-          <SafeAreaView style={inputStyle.InputArea}>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextFirstName} value={firstName} placeholder="First name"/>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextLastName} value={lastName} placeholder="Last name"/>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextCountry} value={homeCountry} placeholder="Home Country"/>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextPostcode} value={homePostcode} placeholder="Home Postcode"/>
-              <TextInput style={inputStyle.Text} onChangeText={onChangeTextEmail} value={email} placeholder="Email"/>
-              <TextInput style={inputStyle.Text} secureTextEntry={true} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
+          <SafeAreaView style={SignUpScreenStyle.InputArea}>
+              <TextInput style={SignUpScreenStyle.Text} onChangeText={onChangeTextFirstName} value={firstName} placeholder="First name"/>
+              <TextInput style={SignUpScreenStyle.Text} onChangeText={onChangeTextLastName} value={lastName} placeholder="Last name"/>
+              <TextInput style={SignUpScreenStyle.Text} onChangeText={onChangeTextCountry} value={homeCountry} placeholder="Home Country"/>
+              <TextInput style={SignUpScreenStyle.Text} onChangeText={onChangeTextPostcode} value={homePostcode} placeholder="Home Postcode"/>
+              <TextInput style={SignUpScreenStyle.Text} onChangeText={onChangeTextEmail} value={email} placeholder="Email"/>
+              <TextInput style={SignUpScreenStyle.Text} secureTextEntry={true} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
           </SafeAreaView>
 
-          <View style={inputStyle.CheckBox}>
+          <View style={SignUpScreenStyle.CheckBox}>
               <Checkbox
                 value={isChecked}
                 onValueChange={setChecked}
                 color={isChecked ? '#294E4B' : undefined}
               />
-              <Text style={inputStyle.CheckBoxText}>I agree to Terms and Conditions and the Privacy Policy</Text>
+              <Text style={SignUpScreenStyle.CheckBoxText}>I agree to Terms and Conditions and the Privacy Policy</Text>
           </View> 
 
 
           {/* Submit button */}
-          <Pressable style={buttonStyles.Button}
+          <Pressable style={ButtonStyle.Button}
           onPress={() => {
             userSignUp(email, password);
             navigation.navigate("Database");
           }}>
-            <Text style={buttonStyles.Text}>Submit</Text>
+            <Text style={ButtonStyle.Text}>Submit</Text>
           </Pressable>
 
       </View>
