@@ -16,7 +16,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -24,8 +26,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "android": {
-      "package": "com.evoleonapp.evoleon",
-      "googleServicesFile": "/google-services.json"
+      "package": "com.evoleonapp.evoleon"
     }
   }
 }

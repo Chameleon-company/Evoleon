@@ -1,42 +1,33 @@
 {
   "project_info": {
-    "project_number": "425564389277",
-    "firebase_url": "https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "evoleonapp",
-    "storage_bucket": "evoleonapp.appspot.com"
+    "project_number": "956409458991",
+    "project_id": "evoleonapp-c3959",
+    "storage_bucket": "evoleonapp-c3959.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:425564389277:android:bac0ff510d7b7c55a47974",
+        "mobilesdk_app_id": "1:956409458991:android:b75fc6734856c0a9a831da",
         "android_client_info": {
-          "package_name": "com.evoleonapp.evoleon"
+          "package_name": "com.grichmondprivate.expohamburgermenutemplate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "425564389277-3opldmu1u4plvt7cspl2nrv8o632ugo5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.evoleonapp.evoleon",
-            "certificate_hash": "da830d5b21374525b52de3461a0de39990963329"
-          }
-        },
-        {
-          "client_id": "425564389277-qc90pkn5r2q1hch8o63erhksldc3qnkf.apps.googleusercontent.com",
+          "client_id": "956409458991-849c8av964m507b4vghsp45j23ic3kop.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIuA1jh-AIUQbuMJCZ65v8hwumADH1vdw"
+          "current_key": "AIzaSyD-nU46NKJ-dYz6D-32UehcLlLu4GetoV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "425564389277-qc90pkn5r2q1hch8o63erhksldc3qnkf.apps.googleusercontent.com",
+              "client_id": "956409458991-849c8av964m507b4vghsp45j23ic3kop.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
