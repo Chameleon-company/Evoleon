@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export const ButtonStyle = StyleSheet.create({
   Button: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
-    paddingHorizontal: 85,
+    paddingHorizontal: 120,
     borderRadius: 50,
     backgroundColor: '#294E4B',
-    marginBottom: 40
+    marginBottom: 40,
   },
   
   Text: {
