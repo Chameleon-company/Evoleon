@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { FlipInEasyX } from "react-native-reanimated";
 
-export const LoginStyle = StyleSheet.create({
+export const SignUpScreenStyle = StyleSheet.create({
   content: {
     display: "flex",
     flex: 1,
@@ -26,7 +26,6 @@ export const LoginStyle = StyleSheet.create({
     top: 120,
     left: 10,
     right: 10,
-
     justifyContent: "center",
     alignItems: "center",
   },
@@ -67,4 +66,31 @@ export const LoginStyle = StyleSheet.create({
     color: "#294E4B",
     fontWeight: "bold",
   },
+  Text: {
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    marginBottom: 25,
+    // paddingHorizontal: 50,
+    justifyContent: "flex-start",
+  },
+
+  InputArea: {
+    marginTop: 50,
+    marginBottom: 50,
+    width: 300,
+  },
+
+  CheckBox: {
+    flexDirection: 'row',
+    backgroundColor: '#E9ECE6',
+    marginBottom: 15
+  },
+
+  CheckBoxText: {
+    marginLeft: 10,
+    width: 250,
+    flexWrap: 'wrap',
+    marginBottom: 10,
+
+  }
 });

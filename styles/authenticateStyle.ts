@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export const AuthScreenStyle = StyleSheet.create({
   Centered: {
     flex: 1,
     justifyContent: 'center',
