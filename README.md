@@ -23,7 +23,7 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 
 <!-- Add a demo for your project -->
 
-![Demo GIF](Simulator Screen Recording - iPhone 8 - 2022-09-27 at 16.38.38.mp4)
+<video src='Simulator Screen Recording - iPhone 8 - 2022-09-27 at 16.38.38.mp4' width=180/>)
 
 # Table of contents
 
