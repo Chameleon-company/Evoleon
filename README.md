@@ -23,8 +23,8 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 
 <!-- Add a demo for your project -->
 
-![Demo GIF](https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4)
-
+<!-- ![Demo GIF](https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4) -->
+<video src='https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4' width=180 />)
 # Table of contents
 
 - [Evoleon App]
