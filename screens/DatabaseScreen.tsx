@@ -6,7 +6,7 @@ import { Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { StyleSheet, Dimensions } from 'react-native';
 import MenuIcon from '../components/MenuIcon';
-import MapView, { Marker,Callout } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import main from '../styles/main';
@@ -31,15 +31,15 @@ export default function DatabaseScreen() {
   useEffect(() => {
     (async () => {
       navigation.setOptions({
-        headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon/>)
-      });  
+        headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon />)
+      });
 
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-  
+
       let location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5
@@ -50,81 +50,81 @@ export default function DatabaseScreen() {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,    
+        longitudeDelta: 0.0421,
       })
 
-  
+
     })();
   }, []);
-  
-//   return (
-//     <View style={styles.container}>
-//       <MapView
-//         style={{ alignSelf: 'stretch', height: '100%' }}
-//         // region={mapRegion}
-//        initialRegion={{
-//           latitude: -37.840935,
-//           longitude: 144.946457,
-//           latitudeDelta: 0.922,
-//           longitudeDelta: 0.0421,
-//         }}
-//         >
-          
-//         <Marker 
-//         coordinate={{latitude:-37.875937,
-//         longitude:145.159616,}}
-//         > 
-//          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
 
-//          </Marker>
-//          <Marker 
-//         coordinate={{latitude:-37.804359,
-//         longitude:144.87952,}}
-//         > 
-//          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
+  //   return (
+  //     <View style={styles.container}>
+  //       <MapView
+  //         style={{ alignSelf: 'stretch', height: '100%' }}
+  //         // region={mapRegion}
+  //        initialRegion={{
+  //           latitude: -37.840935,
+  //           longitude: 144.946457,
+  //           latitudeDelta: 0.922,
+  //           longitudeDelta: 0.0421,
+  //         }}
+  //         >
 
-//          </Marker>
-//          <Marker 
-//         coordinate={{latitude:-37.738141,
-//         longitude:144.971459,}}
-//         > 
-//          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
+  //         <Marker 
+  //         coordinate={{latitude:-37.875937,
+  //         longitude:145.159616,}}
+  //         > 
+  //          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
 
-//          </Marker>
-//          <Marker 
-//         coordinate={{latitude:-37.897614,
-//         longitude:145.015414,}}
-//         > 
-//          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
+  //          </Marker>
+  //          <Marker 
+  //         coordinate={{latitude:-37.804359,
+  //         longitude:144.87952,}}
+  //         > 
+  //          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
 
-//          </Marker>
-//       </MapView>
-     
-//     </View>
-//   );
-// };
+  //          </Marker>
+  //          <Marker 
+  //         coordinate={{latitude:-37.738141,
+  //         longitude:144.971459,}}
+  //         > 
+  //          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   map: {
-//     width: Dimensions.get('window').width,
-//     height: Dimensions.get('window').height,
-//   },
-// });
+  //          </Marker>
+  //          <Marker 
+  //         coordinate={{latitude:-37.897614,
+  //         longitude:145.015414,}}
+  //         > 
+  //          <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
 
-const markers = [
-  {
-    latitude: -38.0270921,
-    longitude: 145.2116802,
-    }, 
+  //          </Marker>
+  //       </MapView>
+
+  //     </View>
+  //   );
+  // };
+
+  // const styles = StyleSheet.create({
+  //   container: {
+  //     flex: 1,
+  //     backgroundColor: '#fff',
+  //     alignItems: 'center',
+  //     justifyContent: 'center',
+  //   },
+  //   map: {
+  //     width: Dimensions.get('window').width,
+  //     height: Dimensions.get('window').height,
+  //   },
+  // });
+
+  const markers = [
+    {
+      latitude: -38.0270921,
+      longitude: 145.2116802,
+    },
     {
       latitude: -37.9716443,
-      longitude:145.2237479,
+      longitude: 145.2237479,
     },
     {
       latitude: -38.041583,
@@ -133,122 +133,122 @@ const markers = [
     {
       latitude: -37.9854814,
       longitude: 145.2327025,
-    }, 
-    
+    },
+
     {
       latitude: -38.0547951,
       longitude: 145.1159521,
-    }, 
+    },
     {
       latitude: -38.002297,
-      longitude:145.250432,
-    }, 
+      longitude: 145.250432,
+    },
     {
       latitude: -37.9219276,
       longitude: 145.1575352,
-    }, 
+    },
     {
       latitude: -37.9528594,
       longitude: 145.1800715,
-    }, 
+    },
     {
       latitude: -37.9078295,
       longitude: 145.1311389,
-    }, 
+    },
     {
       latitude: -37.9854814,
       longitude: 145.2327025,
-    },  {
+    }, {
       latitude: -38.0547951,
       longitude: 145.1159521,
-    },  {
+    }, {
       latitude: -38.002297,
       longitude: 145.250432,
-    },  {
+    }, {
       latitude: -37.9528594,
       longitude: 145.1800715,
-    },  {
+    }, {
       latitude: -37.8208618,
       longitude: 145.0398254,
-    },  {
+    }, {
       latitude: -37.8760732,
       longitude: 145.0436879,
-    },  {
+    }, {
       latitude: -37.9593761,
       longitude: 145.0177174,
-    },  {
+    }, {
       latitude: -37.9584609,
       longitude: 145.0548509,
-    },  {
+    }, {
       latitude: -37.9509025,
-      longitude:145.0803493,
-    },  {
+      longitude: 145.0803493,
+    }, {
       latitude: -37.886676,
       longitude: 145.081194,
-    },  {
+    }, {
       latitude: -37.8147452,
       longitude: 145.2295859,
-    },  {
+    }, {
       latitude: -37.9427717,
       longitude: 145.117778,
-    },  {
+    }, {
       latitude: -37.9326298,
-      longitude:145.0977292,
-    },  {
+      longitude: 145.0977292,
+    }, {
       latitude: -38.1099888,
-      longitude:145.336415,
-    },  {
+      longitude: 145.336415,
+    }, {
       latitude: -37.9556732,
-      longitude:145.0385755,
-    },  {
+      longitude: 145.0385755,
+    }, {
       latitude: -37.8448741,
       longitude: 145.0420954,
-    },  {
+    }, {
       latitude: -38.0870087,
       longitude: 145.2795685,
-    },  {
+    }, {
       latitude: -37.9058135,
       longitude: 145.159594,
-    },  {
+    }, {
       latitude: -37.9280757,
       longitude: 145.1437915,
-    },  {
+    }, {
       latitude: -37.7852548,
       longitude: 145.1257933,
-    },  {
+    }, {
       latitude: -37.9357283,
       longitude: 145.1898176,
-    },  {
+    }, {
       latitude: -37.8486608,
       longitude: 144.9925299,
-    },  {
+    }, {
       latitude: -37.7621431,
       longitude: 145.168488,
-    },  {
+    }, {
       latitude: -37.9121995,
       longitude: 145.1349813,
-    },  {
+    }, {
       latitude: -38.1069358,
       longitude: 145.2502657,
-    },  {
+    }, {
       latitude: -37.821678,
       longitude: 145.1240832,
-    },  {
+    }, {
       latitude: -37.8717032,
       longitude: 145.244814,
-    },  {
+    }, {
       latitude: -37.811869,
       longitude: 145.0123035,
-    },  {
+    }, {
       latitude: -37.9214041,
-      longitude:145.2375523,
-    },  {
+      longitude: 145.2375523,
+    }, {
       latitude: -37.8443581,
       longitude: 145.111212,
-    },  {
+    }, {
       latitude: -37.787866,
       longitude: 145.1240894,
-    }, 
+    },
     {
       latitude: -37.832143,
       longitude: 144.995688,
@@ -263,7 +263,7 @@ const markers = [
       longitude: 145.1640819,
     }, {
       latitude: -37.8158872,
-      longitude:144.9595931,
+      longitude: 144.9595931,
     }, {
       latitude: -37.8493627,
       longitude: 144.9781768,
@@ -329,7 +329,7 @@ const markers = [
       longitude: 144.9636109,
     }, {
       latitude: -37.8177027,
-      longitude:144.9712506,
+      longitude: 144.9712506,
     }, {
       latitude: -37.8198211,
       longitude: 144.9583003,
@@ -372,7 +372,7 @@ const markers = [
     }, {
       latitude: -37.8132086,
       longitude: 145.0097036,
-    }, 
+    },
     {
       latitude: -37.8197106,
       longitude: 145.0130928,
@@ -411,7 +411,7 @@ const markers = [
       longitude: 145.2488922,
     }, {
       latitude: -37.7620701,
-      longitude:145.1678517,
+      longitude: 145.1678517,
     }, {
       latitude: -37.899758,
       longitude: 145.2478032,
@@ -445,63 +445,63 @@ const markers = [
     }, {
       latitude: -37.7836174,
       longitude: 145.1261033,
-    }, 
-];
+    },
+  ];
 
-const CustomMarker = () => {
-  return(
-    
-    <View>
-       <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
+  const CustomMarker = () => {
+    return (
+
+      <View>
+        <Image source={require('../assets/EvoleonFinal.png')} style={{ height: 20, width: 20 }} />
+      </View>
+    )
+  }
+
+
+  return (
+    <View style={
+      MapStyle.ViewStyle
+    }>
+      <MapView style={
+        MapStyle.ViewStyle
+      }
+        showsUserLocation={true}
+        initialRegion={{
+          latitude: -37.840935,
+          longitude: 144.946457,
+          latitudeDelta: 0.922,
+          longitudeDelta: 0.0421,
+        }}
+        zoomEnabled={true}
+      >
+        {
+          markers.map((val) => (
+            <Marker coordinate={{
+              latitude: val.latitude,
+              longitude: val.longitude,
+            }}
+              title='Evoleon charging point'
+              description='melbourne charging locations available'
+            >
+              <CustomMarker />
+
+              <Callout tooltip={true}>
+                <View style={MapStyle.MarkerPopupStyle}>
+                  <Text style={MapStyle.MarkerPopupStyleText}> Suburb Name EV Station </Text>
+                  <View style={MapStyle.IconPosition}>
+                    <Image source={require('../assets/Direction.png')} style={MapStyle.IconStyle} />
+                    <Image source={require('../assets/Start.png')} style={MapStyle.IconStyle} />
+                    <Image source={require('../assets/Info.png')} style={MapStyle.IconStyle} />
+                    <Image source={require('../assets/Favourite.png')} style={MapStyle.IconStyle} />
+                  </View>
+                </View>
+              </Callout>
+
+
+            </Marker>
+          ))
+        }
+      </MapView>
     </View>
   )
-}
-
-
-return(
-  <View style={
-    MapStyle.ViewStyle
-  }>
-    <MapView style={
-      MapStyle.ViewStyle
-    }
-      showsUserLocation={true}
-      initialRegion={{
-        latitude: -37.840935,
-        longitude: 144.946457,
-        latitudeDelta: 0.922,
-        longitudeDelta:0.0421,
-      }}
-      zoomEnabled={true}
-    >
-      {
-        markers.map((val) => (
-          <Marker coordinate={{
-            latitude: val.latitude,
-            longitude: val.longitude,
-          }}
-          title='Evoleon charging point'
-          description='melbourne charging locations available'
-          >
-            <CustomMarker/>
-
-            <Callout tooltip={true}>
-              <View style = {MapStyle.MarkerPopupStyle}>
-                  <Text style = {MapStyle.MarkerPopupStyleText}> Suburb Name EV Station </Text>
-                  <View style = {MapStyle.IconPosition}>
-                    <Image source={require('../assets/Direction.png')} style = {MapStyle.IconStyle}/>
-                    <Image source={require('../assets/Start.png')} style = {MapStyle.IconStyle}/>
-                    <Image source={require('../assets/Info.png')} style = {MapStyle.IconStyle}/>
-                    <Image source={require('../assets/Favourite.png')} style = {MapStyle.IconStyle}/>
-                  </View>   
-              </View>
-            </Callout>
-            
-            
-          </Marker>
-        ))
-      }
-    </MapView>
-  </View>
-)
 }

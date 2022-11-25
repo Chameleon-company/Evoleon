@@ -5,7 +5,7 @@ export const MapStyle = StyleSheet.create({
   ViewStyle: {
     flex: 1,
   },
-  
+
   MarkerPopupStyle: {
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
     height: 150,
@@ -25,7 +25,7 @@ export const MapStyle = StyleSheet.create({
   },
 
   IconStyle: {
-    height: 50, 
+    height: 50,
     width: 50,
     marginLeft: 10
   },
