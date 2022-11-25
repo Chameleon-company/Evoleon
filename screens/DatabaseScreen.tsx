@@ -12,6 +12,8 @@ import * as Location from 'expo-location';
 import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
+import { MapStyle } from "../styles/mapStyle";
+
 export default function DatabaseScreen() {
   const navigation = useNavigation();
 
@@ -451,19 +453,18 @@ const CustomMarker = () => {
     
     <View>
        <Image source={require('../assets/EvoleonFinal.png')} style={{height: 20, width:20 }} />
-     
     </View>
   )
 }
 
 
 return(
-  <View style={{
-    flex: 1,
-  }}>
-    <MapView style={{
-      flex: 1,
-    }}
+  <View style={
+    MapStyle.ViewStyle
+  }>
+    <MapView style={
+      MapStyle.ViewStyle
+    }
       showsUserLocation={true}
       initialRegion={{
         latitude: -37.840935,
@@ -478,9 +479,24 @@ return(
           <Marker coordinate={{
             latitude: val.latitude,
             longitude: val.longitude,
-          }}title='Evoleon charging point'
-          description='melbourne charging locations available'>
-            <CustomMarker />
+          }}
+          title='Evoleon charging point'
+          description='melbourne charging locations available'
+          >
+            <CustomMarker/>
+
+            <Callout tooltip={true}>
+              <View style = {MapStyle.MarkerPopupStyle}>
+                  <Text style = {MapStyle.MarkerPopupStyleText}> Suburb Name EV Station </Text>
+                  <View style = {MapStyle.IconPosition}>
+                    <Image source={require('../assets/Direction.png')} style = {MapStyle.IconStyle}/>
+                    <Image source={require('../assets/Start.png')} style = {MapStyle.IconStyle}/>
+                    <Image source={require('../assets/Info.png')} style = {MapStyle.IconStyle}/>
+                    <Image source={require('../assets/Favourite.png')} style = {MapStyle.IconStyle}/>
+                  </View>   
+              </View>
+            </Callout>
+            
             
           </Marker>
         ))
@@ -488,5 +504,4 @@ return(
     </MapView>
   </View>
 )
-    
 }
