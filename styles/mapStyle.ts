@@ -17,11 +17,17 @@ export const MapStyle = StyleSheet.create({
     justifyContent: 'space-between'
   },
 
-  MarkerPopupStyleText: {
+  MarkerPopupStyleTextTitle: {
     textAlign: 'center',
     color: 'white',
     marginTop: 15,
-    fontSize: 20
+    fontSize: 20,
+    marginBottom: 0
+  },
+  MarkerPopupStyleText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 15
   },
 
   IconStyle: {
