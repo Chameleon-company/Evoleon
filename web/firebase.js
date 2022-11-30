@@ -128,16 +128,16 @@ export const fetchLocations = async () => {
   const querySnapshot = await getDocs(q);
 
   const qMap = querySnapshot.docs.reduce((place, docSnapshot) => {
-    console.log(docSnapshot.data().id);
-    console.log(docSnapshot.data().lat);
-    console.log(docSnapshot.data().long);
-    console.log();
     const { id, lat, long } = docSnapshot.data();
     place[id] = [lat, long];
+
+    // console.log(docSnapshot.data().id);
+    // console.log(docSnapshot.data().lat);
+    // console.log(docSnapshot.data().long);
+    // console.log();
 
     return place;
   }, {});
 
-  console.log(qMap);
   return qMap;
 };

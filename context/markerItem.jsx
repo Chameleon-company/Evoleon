@@ -13,11 +13,9 @@ function MarkerItem(props) {
   return (
     <div>
       {filtQuestions.map((test) => (
-        <List
-          id={question[test][2]}
-          lat={question[test][0]}
-          long={question[test][1]}
-        />
+        <div lat={question[test][0]} long={question[test][1]}>
+          <p>{lat}</p>
+        </div>
       ))}
     </div>
   );

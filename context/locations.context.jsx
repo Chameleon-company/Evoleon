@@ -2,8 +2,8 @@ import React, { createContext, useState, useEffect } from "react";
 import { fetchLocations } from "../web/firebase";
 
 export const LocationContext = createContext({
-  locationFromDB: [0],
-  setlocationFromDB: () => [0],
+  locationFromDB: 0,
+  setlocationFromDB: () => 0,
 });
 
 export const LocationProvider = ({ children }) => {
@@ -11,6 +11,7 @@ export const LocationProvider = ({ children }) => {
   useEffect(() => {
     const fetchLocationMap = async () => {
       const locationMap = await fetchLocations();
+      console.log(locationMap);
       setlocationFromDB(locationMap);
     };
     fetchLocationMap();

@@ -20,8 +20,6 @@ export default function DatabaseScreen() {
   const navigation = useNavigation();
   const { locationFromDB } = useContext(LocationContext);
 
-  const markerList = Object.keys(locationFromDB);
-
   const [mapRegion, setmapRegion] = useState({
     latitude: -37.840935,
     longitude: 144.946457,
@@ -33,6 +31,12 @@ export default function DatabaseScreen() {
   // const [location, setLocation] = useState(null);
   const [dbLocations, setdbLocations] = useState([]);
   const [region, setRegion] = useState(null);
+  const [coords, setcoords] = useState([
+    {
+      long: 0,
+      lat: 0,
+    },
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -50,7 +54,7 @@ export default function DatabaseScreen() {
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5,
       });
-      console.log(location);
+      // console.log(location);
       // setRegion(location)
       setmapRegion({
         latitude: location.coords.latitude,
@@ -58,7 +62,26 @@ export default function DatabaseScreen() {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       });
-      fetchLocations();
+
+      let temp1 = coords.lat;
+      let temp2 = coords.long;
+
+      const locally = await fetchLocations();
+      console.log("NEW RUN ------------------------------------");
+      console.log(locally);
+      setcoords((coords.lat = temp1), (coords.long = temp2));
+
+      for (let i = 1; i < 3; i++) {
+        temp1 = locally[i][0];
+
+        temp2 = locally[i][1];
+
+        setcoords(...coords, (coords.lat = temp1), (coords.long = temp2));
+
+        console.log(temp1);
+        console.log(temp2);
+      }
+      console.log(coords);
     })();
   }, []);
 
@@ -522,7 +545,7 @@ export default function DatabaseScreen() {
               latitude: val.latitude,
               longitude: val.longitude,
             }}
-            title="temp title"
+            title="title"
             description="melbourne charging locations available"
           >
             <CustomMarker />
