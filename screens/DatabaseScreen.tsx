@@ -503,7 +503,7 @@ export default function DatabaseScreen() {
 
               <Callout tooltip={true}>
                 <View style={MapStyle.MarkerPopupStyle}>
-                  <Text style={MapStyle.MarkerPopupStyleTextTitle}> Suburb Name EV Station </Text>
+                  <Text style={MapStyle.MarkerPopupStyleTextTitle}> Australia EV Station </Text>
                   <Text style={MapStyle.MarkerPopupStyleText}> {getChargerLocationAmenityAvailable(val)}</Text>
                   <View style={MapStyle.IconPosition}>
                     <Image source={require('../assets/Direction.png')} style={MapStyle.IconStyle} />
