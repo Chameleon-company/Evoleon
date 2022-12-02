@@ -13,7 +13,7 @@ import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
-import { getChargerLocationAmenityAvailable } from '../mapFunctions';
+import { getChargerLocationAmenityAvailable } from '../view/mapFunctions';
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
