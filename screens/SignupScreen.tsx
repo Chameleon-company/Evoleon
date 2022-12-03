@@ -72,7 +72,7 @@ export default function SignupScreen() {
           {/* Submit button */}
           <Pressable style={ButtonStyle.Button}
           onPress={() => {
-            userSignUp(email, password);
+            userSignUp(email, password, firstName);
             navigation.navigate("Database");
           }}>
             <Text style={ButtonStyle.Text}>Submit</Text>
