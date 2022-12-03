@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
-    "owner": "chamelonorg",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -27,6 +26,11 @@
     },
     "android": {
       "package": "com.evoleonapp.evoleon"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35a5e80d-1b32-43a8-b5ca-a96a8436e7fd"
+      }
     }
   }
 }

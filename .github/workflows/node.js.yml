@@ -31,7 +31,8 @@ jobs:
     - shell: bash
       env:
         EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
-      run: expo login -u grichmondprivate -p $EXPO_PASSWORD
+        EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
+      run: expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - run: eas build -p android
     
     
