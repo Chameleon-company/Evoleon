@@ -88,45 +88,6 @@ export default function DatabaseScreen() {
     })();
   }, []);
 
-  const markers = [
-    {
-      latitude: -38.0270921,
-      longitude: 145.2116802,
-      Dining: false,
-      Park: true,
-      Restroom: true,
-    },
-    {
-      latitude: -37.9716443,
-      longitude: 145.2237479,
-      Dining: true,
-      Park: false,
-      Restroom: true,
-    },
-    {
-      latitude: -38.041583,
-      longitude: 145.209861,
-      Dining: false,
-      Park: false,
-      Restroom: false,
-    },
-    {
-      latitude: -37.9854814,
-      longitude: 145.2327025,
-      Dining: true,
-      Park: true,
-      Restroom: true,
-    },
-
-    {
-      latitude: -38.0547951,
-      longitude: 145.1159521,
-      Dining: true,
-      Park: false,
-      Restroom: true,
-    },
-  ];
-
   const CustomMarker = () => {
     return (
       <View>
