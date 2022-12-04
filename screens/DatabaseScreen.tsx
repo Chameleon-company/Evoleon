@@ -17,15 +17,6 @@ import { render } from "react-dom";
 import { SearchBar } from "react-native-screens";
 import { State } from "react-native-gesture-handler";
 
-import { Text, View } from "../components/Themed";
-import { StyleSheet, Dimensions } from "react-native";
-import MenuIcon from "../components/MenuIcon";
-import MapView, { Marker, Callout } from "react-native-maps";
-import { useEffect, useState } from "react";
-import * as Location from "expo-location";
-import main from "../styles/main";
-import { render } from "react-dom";
-import { SearchBar } from "react-native-screens";
 import { MapStyle } from "../styles/mapStyle";
 import { getChargerLocationAmenityAvailable } from "../view/mapFunctions";
 
