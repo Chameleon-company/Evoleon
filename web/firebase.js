@@ -1,5 +1,6 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, getAuth, signOut, updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 
 //Firebase config for Evoleon Application
@@ -16,6 +17,7 @@ const firebaseConfig = {
 //Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const firestoreDB = getFirestore(app);
 
 //Boolean - true if user is signed in
 var userIsAuthenticated;
@@ -63,7 +65,7 @@ export const userSignIn = async (email, password)=>{
 }
 
 //Sign up for a new user
-export const userSignUp = async (email, password, firstName)=>{
+export const userSignUp = async (email, password, firstName, lastName, country)=>{
    await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -71,6 +73,9 @@ export const userSignUp = async (email, password, firstName)=>{
       userIsAuthenticated = true;
       updateProfileDetails(firstName);
     })
+    .then(() => {
+      userFirestoreData(firstName, lastName, country);
+     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -103,6 +108,15 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 }
 
+
+//Create new Firestore document for user using unqiue user ID
+export const userFirestoreData = async (firstName, lastName, country) => {
+  await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid),{
+    firstName:  firstName,
+    lastName: lastName,
+    country: country
+  });
+}
 
 
 
