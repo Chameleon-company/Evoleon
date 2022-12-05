@@ -116,6 +116,11 @@ export const userFirestoreData = async (firstName, lastName, country) => {
     lastName: lastName,
     country: country
   });
+
+  //Create subcollection within users document to store users favourite charger locations
+  const subCollectionInitialData = {initialCollectionItem:'initial-data'};
+  const subCollection = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", "favouriteCharger");
+  await setDoc(subCollection, subCollectionInitialData, { merge: true });
 }
 
 
