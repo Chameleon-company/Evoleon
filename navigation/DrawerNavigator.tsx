@@ -131,7 +131,7 @@ function ClientsNavigator() {
         name='ClientsScreen'
         component={ClientsScreen}
         options={{
-          headerTitle:'Clients',
+          headerTitle:'Profile',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
