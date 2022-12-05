@@ -6,14 +6,14 @@ import { Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { StyleSheet, Dimensions } from 'react-native';
 import MenuIcon from '../components/MenuIcon';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
-import { getChargerLocationAmenityAvailable } from '../view/mapFunctions';
+import { addEvChargerLocationToUserFavouritesInDatabase, getChargerLocationAmenityAvailable } from '../view/mapFunctions';
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
@@ -61,6 +61,7 @@ export default function DatabaseScreen() {
 
   const markers = [
     {
+      id: 1,
       latitude: -38.0270921,
       longitude: 145.2116802,
       Dining: false,
@@ -68,6 +69,7 @@ export default function DatabaseScreen() {
       Restroom: true
     },
     {
+      id: 2,
       latitude: -37.9716443,
       longitude: 145.2237479,
       Dining: true,
@@ -75,6 +77,7 @@ export default function DatabaseScreen() {
       Restroom: true
     },
     {
+      id: 3,
       latitude: -38.041583,
       longitude: 145.209861,
       Dining: false,
@@ -82,6 +85,7 @@ export default function DatabaseScreen() {
       Restroom: false
     },
     {
+      id: 4,
       latitude: -37.9854814,
       longitude: 145.2327025,
       Dining: true,
@@ -90,6 +94,7 @@ export default function DatabaseScreen() {
     },
 
     {
+      id: 5,
       latitude: -38.0547951,
       longitude: 145.1159521,
       Dining: true,
@@ -450,7 +455,11 @@ export default function DatabaseScreen() {
                     <Image source={require('../assets/Direction.png')} style={MapStyle.IconStyle} />
                     <Image source={require('../assets/Start.png')} style={MapStyle.IconStyle} />
                     <Image source={require('../assets/Info.png')} style={MapStyle.IconStyle} />
-                    <Image source={require('../assets/Favourite.png')} style={MapStyle.IconStyle} />
+                    <CalloutSubview onPress={() => {
+                          addEvChargerLocationToUserFavouritesInDatabase(val);
+                        }}>
+                        <Image style={MapStyle.IconStyle} source={require('../assets/Favourite.png')}/>
+                    </CalloutSubview>
                   </View>
                 </View>
               </Callout>

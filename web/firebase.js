@@ -123,6 +123,18 @@ export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(subCollection, subCollectionInitialData, { merge: true });
 }
 
+// Add an EV Charger to a users favourite list in Firestore
+export const addChargerToUserFavouriteListInFirestore = async (evChargerLocationVal) => {
+
+  const newFacouriteLocation = {
+    id: evChargerLocationVal.id,
+    lat: evChargerLocationVal.latitude,
+    long: evChargerLocationVal.longitude
+  };
+
+  const subCollection = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", evChargerLocationVal.latitude + "_" + evChargerLocationVal.longitude);
+  await setDoc(subCollection, newFacouriteLocation, { merge: true });
+}
 
 
 
