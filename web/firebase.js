@@ -27,6 +27,24 @@ export const getuserIsAuthenticated = ()=> {
   return userIsAuthenticated;
 }
 
+export const getUserName = ()=> {
+  if(getuserIsAuthenticated()){
+    return auth.currentUser.displayName;
+  }
+  else {
+    return "";
+  }
+}
+
+export const getUserNameTextForProfilePage = ()=> {
+  if(getuserIsAuthenticated()){
+    return auth.currentUser.displayName + "'s account details";
+  }
+  else {
+    return "Please log into your account";
+  }
+}
+
 //Get the text for the sign in/sign out button in top left menu.
 export var getSignInSignOutButtonText = ()=> {
   var text;
@@ -45,6 +63,7 @@ export const signInSignOutButtonPressed = ()=> {
   if(userIsAuthenticated){
     userSignOut();
   }
+
 }
 
 
