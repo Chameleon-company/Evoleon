@@ -5,7 +5,7 @@ import { Image, TouchableOpacity} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import main from '../styles/main';
 import {getUserNameTextForProfilePage, signInSignOutButtonPressed } from '../web/firebase';
 import { ClientStyle } from "../styles/clientStyle";
@@ -13,19 +13,24 @@ import { ClientStyle } from "../styles/clientStyle";
 export default function ClientsScreen() {
   const navigation = useNavigation();
 
+  const [profileText, setProfileText] = useState("");
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon/>)
     });
+    navigation.addListener('focus', () => {
+      setProfileText(getUserNameTextForProfilePage());
+    });
   });
 
   return (
-    
+
     <View style={ClientStyle.content}>
       
       <View style={ClientStyle.topPageContent}>
         <Image style={ClientStyle.profileImage} source={ require("../assets/EvoleonFinal.png")}/>
-        <Text style={ClientStyle.headingText} >{getUserNameTextForProfilePage()}</Text>
+        <Text style={ClientStyle.headingText}>{profileText}</Text> 
       </View>
 
       <View style={ClientStyle.profileActionsView}>
