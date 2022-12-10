@@ -14,6 +14,7 @@ import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
 import { addEvChargerLocationToUserFavouritesInDatabase, getChargerLocationAmenityAvailable } from '../view/mapFunctions';
+import { getuserIsAuthenticated, getUsersFavouriteListInFirestore } from '../web/firebase';
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
@@ -28,8 +29,15 @@ export default function DatabaseScreen() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState(null);
+  const [favMarkers, setFavouriteMarkers] = useState([{}]);
+
 
   useEffect(() => {
+    
+    navigation.addListener('focus', async () => {
+      setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+    });
+
     (async () => {
       navigation.setOptions({
         headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon />)
@@ -92,32 +100,32 @@ export default function DatabaseScreen() {
   const markers = [
     {
       id: 1,
-      latitude: -38.0270921,
-      longitude: 145.2116802,
+      lat: -38.0270921,
+      long: 145.2116802,
       Dining: false,
       Park: true,
       Restroom: true
     },
     {
       id: 2,
-      latitude: -37.9716443,
-      longitude: 145.2237479,
+      lat: -37.9716443,
+      long: 145.2237479,
       Dining: true,
       Park: false,
       Restroom: true
     },
     {
       id: 3,
-      latitude: -38.041583,
-      longitude: 145.209861,
+      lat: -38.041583,
+      long: 145.209861,
       Dining: false,
       Park: false,
       Restroom: false
     },
     {
       id: 4,
-      latitude: -37.9854814,
-      longitude: 145.2327025,
+      lat: -37.9854814,
+      long: 145.2327025,
       Dining: true,
       Park: true,
       Restroom: true
@@ -125,97 +133,97 @@ export default function DatabaseScreen() {
 
     {
       id: 5,
-      latitude: -38.0547951,
-      longitude: 145.1159521,
+      lat: -38.0547951,
+      long: 145.1159521,
       Dining: true,
       Park: false,
       Restroom: true
     },
     {
       id: 6,
-      latitude: -38.002297,
-      longitude: 145.250432,
+      lat: -38.002297,
+      long: 145.250432,
       Dining: true,
       Park: false,
       Restroom: true
     },
     {
       id: 7,
-      latitude: -37.9219276,
-      longitude: 145.1575352,
+      lat: -37.9219276,
+      long: 145.1575352,
       Dining: false,
       Park: true,
       Restroom: true
     },
     {
       id: 8,
-      latitude: -37.9528594,
-      longitude: 145.1800715,
+      lat: -37.9528594,
+      long: 145.1800715,
       Dining: false,
       Park: true,
       Restroom: false
     },
     {
       id: 9,
-      latitude: -37.9078295,
-      longitude: 145.1311389,
+      lat: -37.9078295,
+      long: 145.1311389,
       Dining: true,
       Park: true,
       Restroom: true
     },
     {
       id: 10,
-      latitude: -37.9854814,
-      longitude: 145.2327025,
+      lat: -37.9854814,
+      long: 145.2327025,
       Dining: true,
       Park: true,
       Restroom: true
     }, {
       id: 11,
-      latitude: -38.0547951,
-      longitude: 145.1159521,
+      lat: -38.0547951,
+      long: 145.1159521,
       Dining: false,
       Park: true,
       Restroom: true
     }, {
       id: 12,
-      latitude: -38.002297,
-      longitude: 145.250432,
+      lat: -38.002297,
+      long: 145.250432,
       Dining: true,
       Park: true,
       Restroom: true
     }, {
       id: 13,
-      latitude: -37.9528594,
-      longitude: 145.1800715,
+      lat: -37.9528594,
+      long: 145.1800715,
       Dining: true,
       Park: true,
       Restroom: false
     }, {
       id: 14,
-      latitude: -37.8208618,
-      longitude: 145.0398254,
+      lat: -37.8208618,
+      long: 145.0398254,
       Dining: true,
       Park: true,
       Restroom: true
     }, {
       id: 15,
-      latitude: -37.8760732,
-      longitude: 145.0436879,
+      lat: -37.8760732,
+      long: 145.0436879,
       Dining: true,
       Park: true,
       Restroom: true
     }, {
       id: 16,
-      latitude: -37.9593761,
-      longitude: 145.0177174,
+      lat: -37.9593761,
+      long: 145.0177174,
       Dining: false,
       Park: false,
       Restroom: false
     }, {
       id: 17,
-      latitude: -37.9584609,
-      longitude: 145.0548509,
+      lat: -37.9584609,
+      long: 145.0548509,
       Dining: false,
       Park: true,
       Restroom: true
@@ -236,17 +244,17 @@ export default function DatabaseScreen() {
   const [favouriteSelected, setFavouriteSelectedSwitch] = useState(false);
   let [displayedMarkers, setMarkers] = useState(markers);
 
-  const updateMarkers = (m: React.SetStateAction<{ id: number; latitude: number; longitude: number; Dining: boolean; Park: boolean; Restroom: boolean; }[]>) => {
+  const updateMarkers = (m: any[] | ((prevState: { id: number; lat: number; long: number; Dining: boolean; Park: boolean; Restroom: boolean; }[]) => { id: number; lat: number; long: number; Dining: boolean; Park: boolean; Restroom: boolean; }[])) => {
     setMarkers(m);
   }
 
   const toggleSwitch = () => {
     setFavouriteSelectedSwitch(previousState => !previousState);
 
-    if(favouriteSelected == false){
+    if(favouriteSelected == false && getuserIsAuthenticated() == true){
       console.log("Show only favourited markers");
-      updateMarkers(favouriteMarkers);
-    } else {
+      updateMarkers(favMarkers);
+    } else if (favouriteSelected == true) {
       updateMarkers(markers);
       console.log("Show all markers");
     }
@@ -280,9 +288,9 @@ export default function DatabaseScreen() {
       >
         {
           displayedMarkers.map((val) => (
-            <Marker key={val.id} coordinate={{
-              latitude: val.latitude,
-              longitude: val.longitude,
+            <Marker coordinate={{
+              latitude: val.lat,
+              longitude: val.long,
             }}
               title='Evoleon charging point'
               description='melbourne charging locations available'

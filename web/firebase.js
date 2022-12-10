@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, getAuth, signOut, updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection, query, getDocs } from "firebase/firestore";
 
 
 //Firebase config for Evoleon Application
@@ -82,7 +82,7 @@ export const userSignIn = async (email, password)=>{
     });
     console.log('Welcome back', auth.currentUser.displayName);
 }
-
+ 
 //Sign up for a new user
 export const userSignUp = async (email, password, firstName, lastName, country)=>{
    await createUserWithEmailAndPassword(auth, email, password)
@@ -147,14 +147,48 @@ export const addChargerToUserFavouriteListInFirestore = async (evChargerLocation
 
   const newFacouriteLocation = {
     id: evChargerLocationVal.id,
-    lat: evChargerLocationVal.latitude,
-    long: evChargerLocationVal.longitude
+    lat: evChargerLocationVal.lat,
+    long: evChargerLocationVal.long,
+    Dining: evChargerLocationVal.Dining,
+    Park: evChargerLocationVal.Park,
+    Restroom: evChargerLocationVal.Restroom
   };
 
-  const subCollection = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", evChargerLocationVal.latitude + "_" + evChargerLocationVal.longitude);
+  const subCollection = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", evChargerLocationVal.lat + "_" + evChargerLocationVal.long);
   await setDoc(subCollection, newFacouriteLocation, { merge: true });
 }
 
+export let favouriteMarkers = [{}];
+
+export const getUsersFavouriteListInFirestore = async () => {
+  if(userIsAuthenticated){
+  const getSubCollection = collection(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger");
+
+  const queryVal = query(getSubCollection);
+  const querySnapshot = await getDocs(queryVal);
+  const queryMap = querySnapshot.docs.reduce((place, docSnapshot) => {
+    const {id, lat, long, Dining, Park, Restroom} = docSnapshot.data();
+    place[id] = [lat, long, Dining, Park, Restroom];
+    return place;
+  }, {});
+
+  const queryMapValues = await Object.values(queryMap);
+  favouriteMarkers = [{}];
+  
+    for(let i = 0; i < queryMapValues.length; i++){
+      const object = {
+        lat: queryMapValues[i][0],
+        long: queryMapValues[i][1],
+        Dining: queryMapValues[i][2],
+        Park: queryMapValues[i][3],
+        Restroom: queryMapValues[i][4],
+      }
+      favouriteMarkers[i] = object;
+    }                    
+    console.log("Current users favourite markers: " + favouriteMarkers);
+  }
+  return favouriteMarkers;
+}
 
 
 
