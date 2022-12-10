@@ -7,13 +7,14 @@ import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect, useState } from 'react';
 import main from '../styles/main';
-import {getUserNameTextForProfilePage, signInSignOutButtonPressed } from '../web/firebase';
+import {getSignInSignOutButtonText, getUserNameTextForProfilePage, signInSignOutButtonPressed } from '../web/firebase';
 import { ClientStyle } from "../styles/clientStyle";
 
 export default function ClientsScreen() {
   const navigation = useNavigation();
 
-  const [profileText, setProfileText] = useState("");
+  const [profileText, setProfileText] = useState("Please log into your account");
+  const [signInSignOutText, setSignInSignOutText] = useState("Sign in");
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,6 +22,7 @@ export default function ClientsScreen() {
     });
     navigation.addListener('focus', () => {
       setProfileText(getUserNameTextForProfilePage());
+      setSignInSignOutText(getSignInSignOutButtonText());
     });
   });
 
@@ -59,7 +61,7 @@ export default function ClientsScreen() {
             signInSignOutButtonPressed();
             navigation.navigate("Authenticate");
           }}>
-          <Text style={ClientStyle.profileActionsText}>Log Out</Text>
+          <Text style={ClientStyle.profileActionsText}>{signInSignOutText}</Text>
           <Image source={require('../assets/LogOut.png')} style={ClientStyle.logOutIcon} />
         </TouchableOpacity>
 
