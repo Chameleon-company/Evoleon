@@ -13,7 +13,7 @@ import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
-import { addEvChargerLocationToUserFavouritesInDatabase, getChargerLocationAmenityAvailable } from '../view/mapFunctions';
+import { addEvChargerLocationToUserFavouritesInDatabase, getChargerLocationAmenityAvailable, getFavouriteIcon } from '../view/mapFunctions';
 import { getuserIsAuthenticated, getUsersFavouriteListInFirestore } from '../web/firebase';
 
 export default function DatabaseScreen() {
@@ -265,7 +265,7 @@ export default function DatabaseScreen() {
       MapStyle.ViewStyle
     }>
       <View style={MapStyle.switchContainer}>
-        <Text style={MapStyle.switchText} >Favourites</Text>
+        <Text style={MapStyle.switchText}>Favourites</Text>
         <Switch 
           trackColor={{ false: "#767577", true: "#E9ECE6" }}
           thumbColor={favouriteSelected ? "#18A554" : "#f4f3f4"}
@@ -308,7 +308,7 @@ export default function DatabaseScreen() {
                     <CalloutSubview onPress={() => {
                           addEvChargerLocationToUserFavouritesInDatabase(val);
                         }}>
-                        <Image style={MapStyle.IconStyle} source={require('../assets/Favourite.png')}/>
+                        <Image style={MapStyle.IconStyle} source={getFavouriteIcon(val)}/>
                     </CalloutSubview>
                   </View>
                 </View>

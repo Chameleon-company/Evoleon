@@ -1,4 +1,4 @@
-import {getuserIsAuthenticated, addChargerToUserFavouriteListInFirestore} from '../web/firebase' 
+import {getuserIsAuthenticated, addChargerToUserFavouriteListInFirestore, evChargerLocationIsInFavourites} from '../web/firebase' 
 
 export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
     
@@ -31,7 +31,18 @@ export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
     } else {
       console.log("User needs to sign in to add charger to favourites");
     }
-
-    
   }
+
+
+    //Favourite icon image display in map marker popup
+    const locationInFavourites = require('../assets/Favourited.png');
+    const locationNotInFavourites = require('../assets/Favourite.png');
+  
+    export let getFavouriteIcon = (val) => {
+      if(evChargerLocationIsInFavourites(val) == true){
+        return locationInFavourites;
+      } else {
+        return locationNotInFavourites;
+      }
+    }
   

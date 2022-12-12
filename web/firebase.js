@@ -140,6 +140,7 @@ export const userSignOut = async () => {
   const displayName = auth.currentUser.displayName;
   await auth.signOut().then(() => {
     userIsAuthenticated = false;
+    favouriteMarkers = [{}];
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -209,6 +210,17 @@ export const getUsersFavouriteListInFirestore = async () => {
     console.log("Current users favourite markers: " + favouriteMarkers);
   }
   return favouriteMarkers;
+}
+
+
+export const evChargerLocationIsInFavourites = (val) => {
+
+  for(let i = 0; i < favouriteMarkers.length; i++){
+    if(val.lat == favouriteMarkers[i].lat & val.long == favouriteMarkers[i].long){
+      return true;
+    }
+  }
+  return false;
 }
 
 
