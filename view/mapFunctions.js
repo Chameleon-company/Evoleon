@@ -1,4 +1,4 @@
-import {getuserIsAuthenticated, addChargerToUserFavouriteListInFirestore, evChargerLocationIsInFavourites} from '../web/firebase' 
+import {getuserIsAuthenticated, addOrRemoveChargerFromUserFavouriteListInFirestore, evChargerLocationIsInFavourites} from '../web/firebase' 
 
 export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
     
@@ -26,8 +26,7 @@ export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
 
   export const addEvChargerLocationToUserFavouritesInDatabase = (evChargerLocationVal) => {
     if(getuserIsAuthenticated()){
-      addChargerToUserFavouriteListInFirestore(evChargerLocationVal);
-      console.log("Charger added to favourites");
+      addOrRemoveChargerFromUserFavouriteListInFirestore(evChargerLocationVal);
     } else {
       console.log("User needs to sign in to add charger to favourites");
     }

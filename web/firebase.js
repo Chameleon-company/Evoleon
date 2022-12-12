@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, Auth, getAuth, signOut, updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, collection, query, getDocs } from "firebase/firestore";
+import { getFirestore, doc, setDoc, collection, query, getDocs, deleteDoc } from "firebase/firestore";
 
 
 //Firebase config for Evoleon Application
@@ -164,10 +164,27 @@ export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(subCollection, subCollectionInitialData, { merge: true });
 }
 
-// Add an EV Charger to a users favourite list in Firestore
-export const addChargerToUserFavouriteListInFirestore = async (evChargerLocationVal) => {
+// Add or remove an EV charger from a users favourite list in Firestore
+export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (evChargerLocationVal) => {
 
-  const newFacouriteLocation = {
+  const document = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", evChargerLocationVal.lat + "_" + evChargerLocationVal.long);
+  
+  //Remove favourite EV charging location
+  if(evChargerLocationIsInFavourites(evChargerLocationVal)){
+    const deleteDocument = await deleteDoc(document)
+    .then(() => {
+      console.log("Removed EV charger location from favourites");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    });
+    
+  } else {
+
+  //Add favourite EV charging location
+  const newFavouriteLocation = {
     id: evChargerLocationVal.id,
     lat: evChargerLocationVal.lat,
     long: evChargerLocationVal.long,
@@ -176,8 +193,16 @@ export const addChargerToUserFavouriteListInFirestore = async (evChargerLocation
     Restroom: evChargerLocationVal.Restroom
   };
 
-  const subCollection = doc(firestoreDB, "UserData", auth.currentUser.uid, auth.currentUser.uid + "favouriteCharger", evChargerLocationVal.lat + "_" + evChargerLocationVal.long);
-  await setDoc(subCollection, newFacouriteLocation, { merge: true });
+  await setDoc(document, newFavouriteLocation, { merge: true })
+  .then(() => {
+    console.log("EV charger location added to favourites");
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+  });
+}
 }
 
 export let favouriteMarkers = [{}];

@@ -66,34 +66,32 @@ export default function DatabaseScreen() {
     })();
   }, []);
 
-
-
   
-  //Test data - users favourite EV Charger locations
-  const favouriteMarkers = [
-    {
-      id: 15,
-      latitude: -37.8760732,
-      longitude: 145.0436879,
-      Dining: true,
-      Park: true,
-      Restroom: true
-    }, {
-      id: 16,
-      latitude: -37.9593761,
-      longitude: 145.0177174,
-      Dining: false,
-      Park: false,
-      Restroom: false
-    }, {
-      id: 17,
-      latitude: -37.9584609,
-      longitude: 145.0548509,
-      Dining: false,
-      Park: true,
-      Restroom: true
-    }
-  ]
+  // //Test data - users favourite EV Charger locations
+  // const favouriteMarkers = [
+  //   {
+  //     id: 15,
+  //     latitude: -37.8760732,
+  //     longitude: 145.0436879,
+  //     Dining: true,
+  //     Park: true,
+  //     Restroom: true
+  //   }, {
+  //     id: 16,
+  //     latitude: -37.9593761,
+  //     longitude: 145.0177174,
+  //     Dining: false,
+  //     Park: false,
+  //     Restroom: false
+  //   }, {
+  //     id: 17,
+  //     latitude: -37.9584609,
+  //     longitude: 145.0548509,
+  //     Dining: false,
+  //     Park: true,
+  //     Restroom: true
+  //   }
+  // ]
 
 
 
