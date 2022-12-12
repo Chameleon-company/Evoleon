@@ -34,15 +34,19 @@ export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
   }
 
 
-    //Favourite icon image display in map marker popup
+    //Find the correct images for the map markers and the favourite icon in the popup
     const locationInFavourites = require('../assets/Favourited.png');
     const locationNotInFavourites = require('../assets/Favourite.png');
+    const mapMarkers = require('../assets/EvoleonFinal.png');
+    export let currentFavouriteIconInPopup = locationNotInFavourites;
   
-    export let getFavouriteIcon = (val) => {
+    export let getCorrectIconIfLocationInFavourites= (val) => {
       if(evChargerLocationIsInFavourites(val) == true){
+        currentFavouriteIconInPopup = locationInFavourites;
         return locationInFavourites;
       } else {
-        return locationNotInFavourites;
+        currentFavouriteIconInPopup = locationNotInFavourites;
+        return mapMarkers;
       }
     }
   

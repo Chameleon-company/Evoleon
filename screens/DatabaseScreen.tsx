@@ -13,7 +13,7 @@ import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
-import { addEvChargerLocationToUserFavouritesInDatabase, getChargerLocationAmenityAvailable, getFavouriteIcon } from '../view/mapFunctions';
+import { addEvChargerLocationToUserFavouritesInDatabase, currentFavouriteIconInPopup, getChargerLocationAmenityAvailable, getCorrectIconIfLocationInFavourites, getFavouriteIcon } from '../view/mapFunctions';
 import { getuserIsAuthenticated, getUsersFavouriteListInFirestore } from '../web/firebase';
 
 export default function DatabaseScreen() {
@@ -231,11 +231,12 @@ export default function DatabaseScreen() {
   ];
 
 
-  const CustomMarker = () => {
+  const CustomMarker = (props) => {
+    const {locationIcon} = props; 
     return (
 
       <View>
-        <Image source={require('../assets/EvoleonFinal.png')} style={{ height: 20, width: 20 }} />
+        <Image source={locationIcon} style={MapStyle.mapIcons}  />
       </View>
     )
   }
@@ -295,7 +296,7 @@ export default function DatabaseScreen() {
               title='Evoleon charging point'
               description='melbourne charging locations available'
             >
-              <CustomMarker />
+              <CustomMarker locationIcon={getCorrectIconIfLocationInFavourites(val)}/>
 
               <Callout tooltip={true}>
                 <View style={MapStyle.MarkerPopupStyle}>
@@ -308,7 +309,7 @@ export default function DatabaseScreen() {
                     <CalloutSubview onPress={() => {
                           addEvChargerLocationToUserFavouritesInDatabase(val);
                         }}>
-                        <Image style={MapStyle.IconStyle} source={getFavouriteIcon(val)}/>
+                        <Image style={MapStyle.IconStyle} source={currentFavouriteIconInPopup}/>
                     </CalloutSubview>
                   </View>
                 </View>

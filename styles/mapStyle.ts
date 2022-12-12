@@ -56,5 +56,10 @@ export const MapStyle = StyleSheet.create({
     color: "#ffffff",
     fontSize: 20,
     paddingRight: 12
+  },
+
+  mapIcons: {
+    height: 20,
+    width: 20
   }
 })
