@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 
 import { Text, View } from "../components/Themed";
-import { Pressable, TextInput, TouchableOpacity } from "react-native";
+import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
 import {ButtonStyle} from "../styles/buttonStyle";
 import MenuIcon from "../components/MenuIcon";
 import { useEffect } from "react";
@@ -49,10 +49,13 @@ export default function LoginScreen() {
         <TouchableOpacity
           style={LoginScreenStyle.button}
             onPress={async () => {
-              await userSignIn(email, password).then(() => {
-                navigation.navigate("Database");
+              await userSignIn(email, password).then((result) =>{
+                if(result == true){
+                  navigation.navigate("Database");
+                } else {
+                  Alert.alert('Incorrect email or password');
+                }
               });
-              
           }}>
           <Text style={ButtonStyle.Text}>Sign In</Text>
         </TouchableOpacity>

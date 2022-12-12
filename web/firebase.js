@@ -70,35 +70,56 @@ export const signInSignOutButtonPressed = ()=> {
 //Sign in for an existing user
 export const userSignIn = async (email, password)=>{
   const authInfo = auth;
+  let errorCaught = false;
   await signInWithEmailAndPassword(authInfo, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Signed in with:", user.email);
       userIsAuthenticated = true;
+      console.log('Welcome back', auth.currentUser.displayName);
+      errorCaught = false;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(error.code);
+      console.log(error.message);
+      errorCaught = true;
     });
-    console.log('Welcome back', auth.currentUser.displayName);
+
+    if(errorCaught == false){
+      return true;
+    } else {
+      return false;
+    }
 }
  
 //Sign up for a new user
 export const userSignUp = async (email, password, firstName, lastName, country)=>{
+  let errorCaught = false;
    await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log('Created new account for:', user.email);
       userIsAuthenticated = true;
       updateProfileDetails(firstName);
+      errorCaught = false;
     })
     .then(() => {
       userFirestoreData(firstName, lastName, country);
+      errorCaught = false;
      })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      errorCaught = true;
     });
+
+    if(errorCaught == false){
+      return true;
+    } else {
+      return false;
+    }
 }
 
 //Add users first name to firebase Authentication
