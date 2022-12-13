@@ -20,7 +20,7 @@ const auth = getAuth();
 const firestoreDB = getFirestore(app);
 
 //Boolean - true if user is signed in
-var userIsAuthenticated;
+var userIsAuthenticated = false;
 
 
 export const getuserIsAuthenticated = ()=> {
@@ -29,16 +29,17 @@ export const getuserIsAuthenticated = ()=> {
 
 export const getUserName = ()=> {
   if(getuserIsAuthenticated()){
-    return auth.currentUser.displayName;
+    if(auth.currentUser.displayName != null) {
+      return auth.currentUser.displayName;
+    }
   }
-  else {
-    return "";
-  }
+  return "";
 }
+
 
 export const getUserNameTextForProfilePage = ()=> {
   if(getuserIsAuthenticated()){
-    return auth.currentUser.displayName + "'s account details";
+    return auth.currentUser.displayName.concat("'s account details")
   }
   else {
     return "Please log into your account";
@@ -63,7 +64,6 @@ export const signInSignOutButtonPressed = ()=> {
   if(userIsAuthenticated){
     userSignOut();
   }
-
 }
 
 

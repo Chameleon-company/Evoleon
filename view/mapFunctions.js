@@ -24,7 +24,7 @@ export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
   }
 
 
-  export const addEvChargerLocationToUserFavouritesInDatabase = (evChargerLocationVal) => {
+  export const addorRemoveEvChargerLocationToUserFavouritesInDatabase = (evChargerLocationVal) => {
     if(getuserIsAuthenticated()){
       addOrRemoveChargerFromUserFavouriteListInFirestore(evChargerLocationVal);
     } else {

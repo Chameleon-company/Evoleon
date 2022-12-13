@@ -13,8 +13,11 @@ import main from '../styles/main';
 import { render } from 'react-dom';
 import { SearchBar } from 'react-native-screens';
 import { MapStyle } from "../styles/mapStyle";
-import { addEvChargerLocationToUserFavouritesInDatabase, currentFavouriteIconInPopup, getChargerLocationAmenityAvailable, getCorrectIconIfLocationInFavourites, getFavouriteIcon } from '../view/mapFunctions';
+import { addorRemoveEvChargerLocationToUserFavouritesInDatabase, currentFavouriteIconInPopup, getChargerLocationAmenityAvailable, getCorrectIconIfLocationInFavourites, getFavouriteIcon } from '../view/mapFunctions';
 import { getuserIsAuthenticated, getUsersFavouriteListInFirestore } from '../web/firebase';
+
+
+let userAuthStateChange = getuserIsAuthenticated();
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
@@ -31,11 +34,26 @@ export default function DatabaseScreen() {
   const [region, setRegion] = useState(null);
   const [favMarkers, setFavouriteMarkers] = useState([{}]);
 
-
+  
+  const refreshMapMarkersifRequired = async () => { 
+    let signedIn = getuserIsAuthenticated();
+      if(signedIn == true && userAuthStateChange != signedIn){
+        setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+        userAuthStateChange = signedIn;
+        setFavouriteSelectedSwitch(false);
+      }
+      if(signedIn == false && userAuthStateChange != signedIn){
+        setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+        userAuthStateChange = signedIn;
+        setFavouriteSelectedSwitch(false);
+        setMarkers(markers);
+      }
+  }
+  
   useEffect(() => {
-    
-    navigation.addListener('focus', async () => {
-      setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+
+    navigation.addListener('focus', () => {
+      refreshMapMarkersifRequired();
     });
 
     (async () => {
@@ -232,7 +250,6 @@ export default function DatabaseScreen() {
   const CustomMarker = (props) => {
     const {locationIcon} = props; 
     return (
-
       <View>
         <Image source={locationIcon} style={MapStyle.mapIcons}  />
       </View>
@@ -304,8 +321,9 @@ export default function DatabaseScreen() {
                     <Image source={require('../assets/Direction.png')} style={MapStyle.IconStyle} />
                     <Image source={require('../assets/Start.png')} style={MapStyle.IconStyle} />
                     <Image source={require('../assets/Info.png')} style={MapStyle.IconStyle} />
-                    <CalloutSubview onPress={() => {
-                          addEvChargerLocationToUserFavouritesInDatabase(val);
+                    <CalloutSubview onPress={ async () => {
+                          addorRemoveEvChargerLocationToUserFavouritesInDatabase(val);
+                          setFavouriteMarkers(await getUsersFavouriteListInFirestore());
                         }}>
                         <Image style={MapStyle.IconStyle} source={currentFavouriteIconInPopup}/>
                     </CalloutSubview>

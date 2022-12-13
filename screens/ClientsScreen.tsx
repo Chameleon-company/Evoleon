@@ -7,8 +7,9 @@ import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect, useState } from 'react';
 import main from '../styles/main';
-import {getSignInSignOutButtonText, getUserNameTextForProfilePage, signInSignOutButtonPressed } from '../web/firebase';
+import {getSignInSignOutButtonText, getuserIsAuthenticated, getUserNameTextForProfilePage, signInSignOutButtonPressed } from '../web/firebase';
 import { ClientStyle } from "../styles/clientStyle";
+
 
 export default function ClientsScreen() {
   const navigation = useNavigation();
@@ -26,13 +27,22 @@ export default function ClientsScreen() {
     });
   });
 
-  return (
+  const authActions = () => {
+    if(getuserIsAuthenticated()){
+      signInSignOutButtonPressed();
+      setProfileText("Please sign in to view account");
+      setSignInSignOutText("Sign in");
+    } else{
+      navigation.navigate("Authenticate");
+    }
+  };
 
-    <View style={ClientStyle.content}>
+  return (
+    <View  style={ClientStyle.content}>
       
       <View style={ClientStyle.topPageContent}>
         <Image style={ClientStyle.profileImage} source={ require("../assets/EvoleonFinal.png")}/>
-        <Text style={ClientStyle.headingText}>{profileText}</Text> 
+        <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
 
       <View style={ClientStyle.profileActionsView}>
@@ -57,10 +67,10 @@ export default function ClientsScreen() {
           <Image source={require('../assets/Arrow.png')} style={ClientStyle.arrow} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={() => {
-            signInSignOutButtonPressed();
-            navigation.navigate("Authenticate");
-          }}>
+        <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={ () => {
+              authActions();
+          }} >
+            
           <Text style={ClientStyle.profileActionsText}>{signInSignOutText}</Text>
           <Image source={require('../assets/LogOut.png')} style={ClientStyle.logOutIcon} />
         </TouchableOpacity>
@@ -69,3 +79,6 @@ export default function ClientsScreen() {
     </View>
   )
 };
+
+
+
