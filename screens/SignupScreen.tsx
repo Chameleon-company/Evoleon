@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import { Pressable, SafeAreaView, TextInput} from 'react-native';
+import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity} from 'react-native';
 import { useEffect } from 'react';
 
 import { Text, View } from '../components/Themed';
@@ -42,12 +42,12 @@ export default function SignupScreen() {
           </Text> 
 
           {/* Link to go to sign in page*/}
-          <Pressable
+          <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Login")
               }}>
             <Text style={ButtonStyle.SigninLink}>Sign in</Text>
-          </Pressable>
+          </TouchableOpacity>
 
           {/* Collect user information */}
           <SafeAreaView style={SignUpScreenStyle.InputArea}>
@@ -70,13 +70,18 @@ export default function SignupScreen() {
 
 
           {/* Submit button */}
-          <Pressable style={ButtonStyle.Button}
-          onPress={() => {
-            userSignUp(email, password);
-            navigation.navigate("Database");
+          <TouchableOpacity style={ButtonStyle.Button}
+          onPress={async () => {
+            await userSignUp(email, password, firstName, lastName, homeCountry).then((result) => {
+              if(result == true){
+                navigation.navigate("Database");
+              } else {
+                Alert.alert("Error when creating account");
+              }
+            });
           }}>
             <Text style={ButtonStyle.Text}>Submit</Text>
-          </Pressable>
+          </TouchableOpacity>
 
       </View>
     )

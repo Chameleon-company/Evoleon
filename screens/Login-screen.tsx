@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 
 import { Text, View } from "../components/Themed";
-import { Pressable, TextInput } from "react-native";
+import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
 import {ButtonStyle} from "../styles/buttonStyle";
 import MenuIcon from "../components/MenuIcon";
 import { useEffect } from "react";
@@ -30,37 +30,42 @@ export default function LoginScreen() {
     <SafeAreaView style={LoginScreenStyle.content}>
       <View style={LoginScreenStyle.content}>
         <Text>Don't have an account?</Text>
-        <Pressable onPress={() => {
+        <TouchableOpacity onPress={() => {
             navigation.navigate("Signup")
           }}>
           <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
-        </Pressable>
+        </TouchableOpacity>
 
 
       <View style={LoginScreenStyle.inputView}>
         <TextInput style={LoginScreenStyle.input} keyboardType="email-address" onChangeText={onChangeTextEmail} value={email} placeholder="Email"/>
         <TextInput style={LoginScreenStyle.input} secureTextEntry={true} onChangeText={onChangeTextPassword} value={password} placeholder="Password"/>
 
-        <Pressable style={LoginScreenStyle.forgotPassButton}>
+        <TouchableOpacity style={LoginScreenStyle.forgotPassButton}>
           <Text style={LoginScreenStyle.SignupLink}>Forgot your password?</Text>
-        </Pressable>
+        </TouchableOpacity>
 
         {/* Sign in button */}
-        <Pressable
+        <TouchableOpacity
           style={LoginScreenStyle.button}
-            onPress={() => {
-              userSignIn(email, password);
-              navigation.navigate("Database")
+            onPress={async () => {
+              await userSignIn(email, password).then((result) =>{
+                if(result == true){
+                  navigation.navigate("Database");
+                } else {
+                  Alert.alert('Incorrect email or password');
+                }
+              });
           }}>
           <Text style={ButtonStyle.Text}>Sign In</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={LoginScreenStyle.cancelButton}
+        <TouchableOpacity style={LoginScreenStyle.cancelButton}
           onPress={() => {
             navigation.navigate("Database")
           }}>
           <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       </View>
     </SafeAreaView>
