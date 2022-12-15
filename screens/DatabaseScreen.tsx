@@ -36,7 +36,6 @@ export default function DatabaseScreen() {
   let tempLat, tempLong, dining, restroom, park, title;
 
   const [errorMsg, setErrorMsg] = useState(null);
-  const [dbLocations, setdbLocations] = useState([]);
   const [region, setRegion] = useState(null);
   const [coords, setcoords] = useState(initialPos);
 
@@ -56,8 +55,7 @@ export default function DatabaseScreen() {
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5,
       });
-      // console.log(location);
-      // setRegion(location)
+
       setmapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
