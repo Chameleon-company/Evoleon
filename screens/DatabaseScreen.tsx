@@ -33,7 +33,7 @@ export default function DatabaseScreen() {
   });
 
   let initialPos = [{}];
-  let tempLat, tempLong, dining, restroom, park;
+  let tempLat, tempLong, dining, restroom, park, title;
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [dbLocations, setdbLocations] = useState([]);
@@ -75,6 +75,7 @@ export default function DatabaseScreen() {
         dining = locally[i][2];
         restroom = locally[i][3];
         park = locally[i][4];
+        title = locally[i][5];
 
         let newPos = {
           lat: tempLat,
@@ -82,6 +83,7 @@ export default function DatabaseScreen() {
           Dining: dining,
           Restroom: restroom,
           Park: park,
+          Title: title,
         };
 
         setcoords((coords) => [...coords, newPos]);
@@ -128,7 +130,7 @@ export default function DatabaseScreen() {
               <View style={MapStyle.MarkerPopupStyle}>
                 <Text style={MapStyle.MarkerPopupStyleTextTitle}>
                   {" "}
-                  Australia EV Station{" "}
+                  {val.Title}{" "}
                 </Text>
                 <Text style={MapStyle.MarkerPopupStyleText}>
                   {" "}
