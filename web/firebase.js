@@ -109,19 +109,6 @@ export const userSignOut = () => {
 };
 
 // Locations Database
-// export const fetchLocations = async () => {
-//   const locationRef = ref(realtimeDB, "Locations");
-
-//   return onValue(locationRef, (snapshot) => {
-//     const data = snapshot.val();
-
-//     if (snapshot.exists()) {
-//       console.log(data);
-//     } else {
-//       console.log("no");
-//     }
-//   });
-// };
 export const fetchLocations = async () => {
   const locationRef = collection(firestoreDB, "Locations");
   const q = query(locationRef);
@@ -130,11 +117,6 @@ export const fetchLocations = async () => {
   const qMap = querySnapshot.docs.reduce((place, docSnapshot) => {
     const { id, lat, long, Dining, Restroom, Park, title } = docSnapshot.data();
     place[id] = [lat, long, Dining, Restroom, Park, title];
-
-    // console.log(docSnapshot.data().id);
-    // console.log(docSnapshot.data().lat);
-    // console.log(docSnapshot.data().long);
-    // console.log();
 
     return place;
   }, {});
