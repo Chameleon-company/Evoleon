@@ -1,18 +1,17 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet } from "react-native";
+import { color } from "react-native-reanimated";
 
 export const ClientStyle = StyleSheet.create({
-
   content: {
     display: "flex",
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#E9ECE6'
+    flexDirection: "column",
+    backgroundColor: "#E9ECE6",
   },
 
   topPageContent: {
-    alignItems: 'center',
-    backgroundColor: '#E9ECE6'
+    alignItems: "center",
+    backgroundColor: "#E9ECE6",
   },
 
   profileImage: {
@@ -22,12 +21,13 @@ export const ClientStyle = StyleSheet.create({
     borderTopRightRadius: 12,
     height: 100,
     width: 200,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
 
   headingText: {
     fontSize: 20,
-    margin: 10
+    margin: 10,
+    color: "#294E4B",
   },
 
   profileActionsView: {
@@ -38,11 +38,11 @@ export const ClientStyle = StyleSheet.create({
 
   profileActionsCell: {
     backgroundColor: "rgba(178, 187, 185, 1)",
-    borderBottomColor: '#000',
+    borderBottomColor: "#000",
     borderBottomWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   profileActionsText: {
@@ -67,6 +67,5 @@ export const ClientStyle = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 20,
-  }
-
-})
+  },
+});
