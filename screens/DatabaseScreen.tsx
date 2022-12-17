@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { Image } from "react-native";
+import { Image, Switch } from "react-native";
 import { LocationContext } from "../context/locations.context";
 import { fetchLocations } from "../web/firebase";
 import MarkerItem from "../context/markerItem";
@@ -9,7 +9,7 @@ import MarkerItem from "../context/markerItem";
 import { Text, View } from "../components/Themed";
 import { StyleSheet, Dimensions } from "react-native";
 import MenuIcon from "../components/MenuIcon";
-import { Marker, Callout } from "react-native-maps";
+import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import MapView from "react-native-map-clustering";
 import { useEffect, useState, useContext } from "react";
 import * as Location from "expo-location";
@@ -19,7 +19,18 @@ import { SearchBar } from "react-native-screens";
 import { State } from "react-native-gesture-handler";
 
 import { MapStyle } from "../styles/mapStyle";
-import { getChargerLocationAmenityAvailable } from "../view/mapFunctions";
+import {
+  addorRemoveEvChargerLocationToUserFavouritesInDatabase,
+  currentFavouriteIconInPopup,
+  getChargerLocationAmenityAvailable,
+  getCorrectIconIfLocationInFavourites,
+} from "../view/mapFunctions";
+import {
+  getuserIsAuthenticated,
+  getUsersFavouriteListInFirestore,
+} from "../web/firebase";
+
+let userAuthStateChange = getuserIsAuthenticated();
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
@@ -36,11 +47,30 @@ export default function DatabaseScreen() {
   let tempLat, tempLong, dining, restroom, park, title;
 
   const [errorMsg, setErrorMsg] = useState(null);
-  const [dbLocations, setdbLocations] = useState([]);
   const [region, setRegion] = useState(null);
   const [coords, setcoords] = useState(initialPos);
+  const [favMarkers, setFavouriteMarkers] = useState([{}]);
+
+  const refreshMapMarkersifRequired = async () => {
+    let signedIn = getuserIsAuthenticated();
+    if (signedIn == true && userAuthStateChange != signedIn) {
+      setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+      userAuthStateChange = signedIn;
+      setFavouriteSelectedSwitch(false);
+    }
+    if (signedIn == false && userAuthStateChange != signedIn) {
+      setFavouriteMarkers(await getUsersFavouriteListInFirestore());
+      userAuthStateChange = signedIn;
+      setFavouriteSelectedSwitch(false);
+      setMarkers(coords);
+    }
+  };
 
   useEffect(() => {
+    navigation.addListener("focus", () => {
+      refreshMapMarkersifRequired();
+    });
+
     (async () => {
       navigation.setOptions({
         headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
@@ -56,8 +86,7 @@ export default function DatabaseScreen() {
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5,
       });
-      // console.log(location);
-      // setRegion(location)
+
       setmapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -91,19 +120,68 @@ export default function DatabaseScreen() {
     })();
   }, []);
 
-  const CustomMarker = () => {
+  const CustomMarker = (props) => {
+    const { locationIcon } = props;
     return (
       <View>
-        <Image
-          source={require("../assets/EvoleonFinal.png")}
-          style={{ height: 20, width: 20 }}
-        />
+        <Image source={locationIcon} style={MapStyle.mapIcons} />
       </View>
     );
   };
 
+  //If switch is enabled, show only the users favourited EV charger locations on the map
+  const [favouriteSelected, setFavouriteSelectedSwitch] = useState(false);
+  let [displayedMarkers, setMarkers] = useState(coords);
+
+  const updateMarkers = (
+    m:
+      | any[]
+      | ((
+          prevState: {
+            id: number;
+            lat: number;
+            long: number;
+            Dining: boolean;
+            Park: boolean;
+            Restroom: boolean;
+          }[]
+        ) => {
+          id: number;
+          lat: number;
+          long: number;
+          Dining: boolean;
+          Park: boolean;
+          Restroom: boolean;
+        }[])
+  ) => {
+    setMarkers(m);
+  };
+
+  const toggleSwitch = () => {
+    setFavouriteSelectedSwitch((previousState) => !previousState);
+
+    if (favouriteSelected == false && getuserIsAuthenticated() == true) {
+      console.log("Show only favourited markers");
+      updateMarkers(favMarkers);
+    } else if (favouriteSelected == true) {
+      updateMarkers(coords);
+      console.log("Show all markers");
+    }
+  };
+
   return (
     <View style={MapStyle.ViewStyle}>
+      <View style={MapStyle.switchContainer}>
+        <Text style={MapStyle.switchText}>Favourites</Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#E9ECE6" }}
+          thumbColor={favouriteSelected ? "#18A554" : "#f4f3f4"}
+          ios_backgroundColor="#777E7D"
+          onValueChange={toggleSwitch}
+          value={favouriteSelected}
+        />
+      </View>
+
       <MapView
         style={MapStyle.ViewStyle}
         showsUserLocation={true}
@@ -124,7 +202,9 @@ export default function DatabaseScreen() {
             title="Evoleon charging point"
             description="melbourne charging locations available"
           >
-            <CustomMarker />
+            <CustomMarker
+              locationIcon={getCorrectIconIfLocationInFavourites(val)}
+            />
 
             <Callout tooltip={true}>
               <View style={MapStyle.MarkerPopupStyle}>
@@ -149,10 +229,21 @@ export default function DatabaseScreen() {
                     source={require("../assets/Info.png")}
                     style={MapStyle.IconStyle}
                   />
-                  <Image
-                    source={require("../assets/Favourite.png")}
-                    style={MapStyle.IconStyle}
-                  />
+                  <CalloutSubview
+                    onPress={async () => {
+                      addorRemoveEvChargerLocationToUserFavouritesInDatabase(
+                        val
+                      );
+                      setFavouriteMarkers(
+                        await getUsersFavouriteListInFirestore()
+                      );
+                    }}
+                  >
+                    <Image
+                      style={MapStyle.IconStyle}
+                      source={currentFavouriteIconInPopup}
+                    />
+                  </CalloutSubview>
                 </View>
               </View>
             </Callout>

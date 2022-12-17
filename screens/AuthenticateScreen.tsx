@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import { Image, Pressable} from 'react-native';
+import { Image, Pressable, TouchableOpacity} from 'react-native';
 import { useEffect } from 'react';
 
 import { Text, View } from '../components/Themed';
@@ -31,20 +31,20 @@ export default function AuthenticateScreen() {
             <Image style={logoStyles.Logo} source={require('./EvoleonFinal.png')} />
 
             {/* Sign in button */}
-            <Pressable style={ButtonStyle.Button}
+            <TouchableOpacity style={ButtonStyle.Button}
             onPress={() => {     
                 navigation.navigate("Login");
             }}>
               <Text style={ButtonStyle.Text}>Sign in</Text>
-            </Pressable>
+            </TouchableOpacity>
 
             {/* Sign up button */}
-            <Pressable style={ButtonStyle.Button} 
+            <TouchableOpacity style={ButtonStyle.Button} 
               onPress={() => {
                 navigation.navigate("Signup")
               }}>
               <Text style={ButtonStyle.Text}>Sign up</Text>
-            </Pressable>
+            </TouchableOpacity>
        
           </View>
         
