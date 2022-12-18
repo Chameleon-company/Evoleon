@@ -6,8 +6,8 @@ export const LoginScreenStyle = StyleSheet.create({
   content: {
     display: "flex",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "rgb(233,236,230)",
   },
   upperContent: {
@@ -25,18 +25,13 @@ export const LoginScreenStyle = StyleSheet.create({
     marginTop: 50,
     marginBottom: 50,
     width: 300,
-
-    justifyContent: "center",
-    alignItems: "center",
   },
   input: {
-    height: 56,
-    width: 300,
+    borderBottomColor: "#000",
+    borderBottomWidth: 1.5,
     marginBottom: 25,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "rgba(0,0,0,0)",
-    backgroundColor: "rgba(0,0,0,0)",
+    // paddingHorizontal: 50,
+    justifyContent: "flex-start",
   },
   SignupLink: {
     color: "#294E4B",
@@ -45,6 +40,8 @@ export const LoginScreenStyle = StyleSheet.create({
   forgotPassButton: {
     marginBottom: 20,
     marginTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     alignItems: "center",
@@ -58,6 +55,8 @@ export const LoginScreenStyle = StyleSheet.create({
   cancelButton: {
     marginBottom: 20,
     marginTop: 65,
+    justifyContent: "center",
+    alignItems: "center",
   },
   cancelText: {
     color: "#294E4B",
