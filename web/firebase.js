@@ -10,12 +10,19 @@ import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   doc,
+  getDoc,
   setDoc,
   collection,
+  deleteDoc,
+  where,
+  writeBatch,
   query,
   getDocs,
-  deleteDoc,
+  get,
 } from "firebase/firestore";
+
+//Boolean - true if user is signed in
+var userIsAuthenticated = false;
 
 //Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -26,12 +33,14 @@ const firebaseConfig = {
   messagingSenderId: "425564389277",
   appId: "1:425564389277:web:c86772f8abb19ffca47974",
   measurementId: "G-GL6LC3D645",
+  databaseURL:
+    "https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 
 //Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const firestoreDB = getFirestore(app);
+export const firestoreDB = getFirestore(app);
 
 //Boolean - true if user is signed in
 var userIsAuthenticated = false;
@@ -213,7 +222,6 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
   } else {
     //Add favourite EV charging location
     const newFavouriteLocation = {
-      id: evChargerLocationVal.id,
       lat: evChargerLocationVal.lat,
       long: evChargerLocationVal.long,
       Dining: evChargerLocationVal.Dining,
@@ -282,7 +290,6 @@ export const evChargerLocationIsInFavourites = (val) => {
   return false;
 };
 
-// Locations Database
 export const fetchLocations = async () => {
   const locationRef = collection(firestoreDB, "Locations");
   const q = query(locationRef);
@@ -290,7 +297,7 @@ export const fetchLocations = async () => {
 
   const qMap = querySnapshot.docs.reduce((place, docSnapshot) => {
     const { id, lat, long, Dining, Restroom, Park, title } = docSnapshot.data();
-    place[id] = [lat, long, Dining, Restroom, Park, title, id];
+    place[id] = [lat, long, Dining, Restroom, Park, title];
 
     return place;
   }, {});

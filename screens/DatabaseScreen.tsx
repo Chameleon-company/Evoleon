@@ -2,17 +2,22 @@ import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import { Image, Switch } from "react-native";
+import { LocationContext } from "../context/locations.context";
+import { fetchLocations } from "../web/firebase";
+import MarkerItem from "../context/markerItem";
 
 import { Text, View } from "../components/Themed";
 import { StyleSheet, Dimensions } from "react-native";
 import MenuIcon from "../components/MenuIcon";
 import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import MapView from "react-native-map-clustering";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as Location from "expo-location";
 import main from "../styles/main";
 import { render } from "react-dom";
 import { SearchBar } from "react-native-screens";
+import { State } from "react-native-gesture-handler";
+
 import { MapStyle } from "../styles/mapStyle";
 import {
   addorRemoveEvChargerLocationToUserFavouritesInDatabase,
@@ -23,13 +28,13 @@ import {
 import {
   getuserIsAuthenticated,
   getUsersFavouriteListInFirestore,
-  fetchLocations,
 } from "../web/firebase";
 
 let userAuthStateChange = getuserIsAuthenticated();
 
 export default function DatabaseScreen() {
   const navigation = useNavigation();
+  const { locationFromDB } = useContext(LocationContext);
 
   const [mapRegion, setmapRegion] = useState({
     latitude: -37.840935,
@@ -38,13 +43,13 @@ export default function DatabaseScreen() {
     longitudeDelta: 0.0421,
   });
 
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [region, setRegion] = useState(null);
-  const [favMarkers, setFavouriteMarkers] = useState([{}]);
-  const [coords, setcoords] = useState([{}]);
+  let initialPos = [{}];
+  let tempLat, tempLong, dining, restroom, park, title;
 
-  let tempLat, tempLong, dining, restroom, park, title, ID;
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState(null);
+  const [coords, setcoords] = useState(initialPos);
+  const [favMarkers, setFavouriteMarkers] = useState([{}]);
 
   const refreshMapMarkersifRequired = async () => {
     let signedIn = getuserIsAuthenticated();
@@ -81,8 +86,7 @@ export default function DatabaseScreen() {
         accuracy: Location.Accuracy.Balanced,
         timeInterval: 5,
       });
-      console.log(location);
-      // setRegion(location)
+
       setmapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -101,10 +105,8 @@ export default function DatabaseScreen() {
         restroom = locally[i][3];
         park = locally[i][4];
         title = locally[i][5];
-        ID = locally[i][6];
 
         let newPos = {
-          id: ID,
           lat: tempLat,
           long: tempLong,
           Dining: dining,
@@ -191,7 +193,7 @@ export default function DatabaseScreen() {
         }}
         zoomEnabled={true}
       >
-        {displayedMarkers.map((val) => (
+        {coords.map((val) => (
           <Marker
             coordinate={{
               latitude: val.lat,

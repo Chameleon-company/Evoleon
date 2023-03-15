@@ -13,7 +13,7 @@ web-build/
 .DS_Store
 node_modules
 
-# VS Code
+# VisualStudioCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
