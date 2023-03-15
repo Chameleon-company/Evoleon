@@ -1988,6 +1988,10 @@
   "resolved" "https://registry.npmjs.org/@jest/console/-/console-27.5.1.tgz"
   "version" "27.5.1"
   dependencies:
+    "@jest/console" "^27.5.1"
+    "@jest/reporters" "^27.5.1"
+    "@jest/test-result" "^27.5.1"
+    "@jest/transform" "^27.5.1"
     "@jest/types" "^27.5.1"
     "@types/node" "*"
     "chalk" "^4.0.0"
