@@ -47,6 +47,30 @@ expo init  https://github.com/grdeakin/evoleonapp.git
 npx create-react-native-app  https://github.com/grdeakin/evoleonapp.git
 ```
 
+If the above doesn't work due to updates etc. Update your node, yarn and expo:
+```bash
+nvm install --lts
+npm install -g yarn
+npm install -g expo-cli
+``` 
+Refresh the repo packages:
+```bash
+git clone https://github.com/Chameleon-company/Evoleon
+cd Evoleon
+yarn cache clean
+npm cache clean --force
+rm -rf node_modules
+rm yarn.lock
+yarn install
+```
+Update the expo repository
+```bash
+expo upgrade
+```
+
+
+
+
 
  # Say thanks!
 [(Back to top)](#table-of-contents)
