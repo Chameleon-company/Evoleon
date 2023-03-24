@@ -193,8 +193,9 @@ export default function DatabaseScreen() {
         }}
         zoomEnabled={true}
       >
-        {coords.map((val) => (
+        {coords.map((val, index) => (
           <Marker
+            key={index}
             coordinate={{
               latitude: val.lat,
               longitude: val.long,
