@@ -37,15 +37,15 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 # Installation
 [(Back to top)](#table-of-contents)
 
-No manual setup required. Use the same way you initialize your other Expo projects.
+I'm using node 18 LTS. You can check your own by running 'node --version'
 
 ```bash
-expo init  https://github.com/grdeakin/evoleonapp.git
+git clone https://github.com/Chameleon-company/Evoleon/
+cd Evoleon
+npm install
+npm run start
 ```
 
-```bash
-npx create-react-native-app  https://github.com/grdeakin/evoleonapp.git
-```
 ## Updating 
 
 If the above doesn't work due to updates etc. Update your node, yarn and expo:
