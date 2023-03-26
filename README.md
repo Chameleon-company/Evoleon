@@ -42,7 +42,7 @@ Download the expo go app from the play / apple store. Scan the QR code shown in 
 
 The problem is with webpack, webpack is used to translate packages from react native which runs on mobile devices to a react web framework.
 
-If you can't use your mobile phone for any sort of development, another option is to temporarily comment out the <MapView> container within ./screens/DatabaseScreen.tsx.
+If you can't use your mobile phone for any sort of development, another option is to temporarily comment out the MapView container within ./screens/DatabaseScreen.tsx.
 
 If you want to fix the web view issue, it's probably within the versions of react-native, react-native-web, react-native-maps and react-native-web-maps used. Have a look within webpack.config.js and uncomment the alias lines.
   
