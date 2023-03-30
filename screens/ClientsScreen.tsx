@@ -21,7 +21,7 @@ export default function ClientsScreen() {
   const [profileText, setProfileText] = useState(
     "Please log into your account"
   );
-  const [signInSignOutText, setSignInSignOutText] = useState("Sign in");
+  const [signInSignOutText, setSignInSignOutText] = useState("Login");
 
   useEffect(() => {
     navigation.setOptions({
@@ -37,7 +37,7 @@ export default function ClientsScreen() {
     if (getuserIsAuthenticated()) {
       signInSignOutButtonPressed();
       setProfileText("Please sign in to view account");
-      setSignInSignOutText("Sign in");
+      setSignInSignOutText("Login");
     } else {
       navigation.navigate("Login");
     }

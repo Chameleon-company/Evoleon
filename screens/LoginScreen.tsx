@@ -9,7 +9,7 @@ import MenuIcon from "../components/MenuIcon";
 import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoginScreenStyle } from "../styles/loginStyle";
-import { userSignIn } from "../web/firebase";
+import { userLogin } from "../web/firebase";
 
 {
   /* Log in Screen */
@@ -60,17 +60,17 @@ export default function LoginScreen() {
           <TouchableOpacity 
             style={LoginScreenStyle.forgotPassButton}
             onPress={ () => {
-              navigation.navigate("ForgotPassword"); 
+              navigation.navigate("ForgotPasswordScreen"); 
             }}
           >
             <Text style={LoginScreenStyle.SignupLink}> Forgot your password?</Text>
           </TouchableOpacity>
 
-          {/* Sign in button */}
+          {/* Login button */}
           <TouchableOpacity
             style={LoginScreenStyle.button}
             onPress={async () => {
-              await userSignIn(email, password).then((result) => {
+              await userLogin(email, password).then((result) => {
                 if (result == true) {
                   navigation.navigate("Database");
                 } else {
@@ -79,7 +79,7 @@ export default function LoginScreen() {
               });
             }}
           >
-            <Text style={ButtonStyle.Text}>Sign In</Text>
+            <Text style={ButtonStyle.Text}>Login</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

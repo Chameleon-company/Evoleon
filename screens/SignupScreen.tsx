@@ -44,13 +44,13 @@ export default function SignupScreen() {
         Already have an account?
       </Text>
 
-      {/* Link to go to sign in page*/}
+      {/* Link to go to Login page*/}
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Login");
         }}
       >
-        <Text style={ButtonStyle.SigninLink}>Sign in</Text>
+        <Text style={ButtonStyle.SigninLink}>Login</Text>
       </TouchableOpacity>
 
       {/* Collect user information */}

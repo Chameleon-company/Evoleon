@@ -5,10 +5,11 @@ import * as React from "react";
 import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ClientsScreen from "../screens/ClientsScreen";
-import LoginScreen from "../screens/Login-screen";
+import LoginScreen from "../screens/LoginScreen";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import AuthenticateScreen from '../screens/AuthenticateScreen';
 import SignupScreen from '../screens/SignupScreen';
-import {getSignInSignOutButtonText, signInSignOutButtonPressed} from '../web/firebase' 
+import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -17,7 +18,8 @@ import {
   ClientsParamList,
   LoginParamList,
   AuthenticateParamList, 
-  SignupParamList
+  SignupParamList,
+  PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
 import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
@@ -49,33 +51,23 @@ export default function DrawerNavigator() {
       return (
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
           <DrawerItemList {...filteredTopLeftMenuItems} />
-          <DrawerItem label={getSignInSignOutButtonText()} onPress={() => {
-            signInSignOutButtonPressed();
+          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
+            LoginSignOutButtonPressed();
             props.navigation.navigate("Authenticate");
           }
         }/>
         </DrawerContentScrollView>
       )
     }}>
+      
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
-      <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
+      <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
-      <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
-
-
-      {/* <Drawer.Screen
-        name="Map"
-        component={DatabaseNavigator}/>
-      <Drawer.Screen
-        name="Saving chart"
-        component={FileSystemNavigator}
-      />
-      <Drawer.Screen
-        name="Profile"
-  component={ClientsNavigator} >*/ }
       <Drawer.Screen name="Login" component={LoginNavigator} />
+
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+
 
 
     </Drawer.Navigator>
@@ -175,7 +167,7 @@ function LoginNavigator() {
         name="LoginScreen" 
         component={LoginScreen} 
         options={{
-          headerTitle:'Sign in',
+          headerTitle:'Login in',
           headerStyle: {
             backgroundColor: '#294E4B',
           },

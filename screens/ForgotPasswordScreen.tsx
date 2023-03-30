@@ -13,21 +13,15 @@ import {
   getUserNameTextForProfilePage,
   signInSignOutButtonPressed,
 } from "../web/firebase";
+
 import { ClientStyle } from "../styles/clientStyle";
 
-export default function ForgotPassword() {
-  const navigation = useNavigation();
+export default function ForgotPasswordScreen() {
+
 
   const [profileText, setProfileText] = useState("This is a password test");
-  const [signInSignOutText, setSignInSignOutText] = useState("Sign in");
+  const [signInSignOutText, setSignInSignOutText] = useState("Login");
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-    navigation.addListener("focus", () => {
-      setProfileText(getUserNameTextForProfilePage());
-      setSignInSignOutText(getSignInSignOutButtonText());
-    });
-  });
+
+
 }
