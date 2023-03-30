@@ -57,10 +57,13 @@ export default function LoginScreen() {
             placeholder="Password"
           />
 
-          <TouchableOpacity style={LoginScreenStyle.forgotPassButton}>
-            <Text style={LoginScreenStyle.SignupLink}>
-              Forgot your password?
-            </Text>
+          <TouchableOpacity 
+            style={LoginScreenStyle.forgotPassButton}
+            onPress={ () => {
+              navigation.navigate("ForgotPassword"); 
+            }}
+          >
+            <Text style={LoginScreenStyle.SignupLink}> Forgot your password?</Text>
           </TouchableOpacity>
 
           {/* Sign in button */}

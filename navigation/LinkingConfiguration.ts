@@ -26,6 +26,11 @@ export default {
               LoginScreen: "login",
             },
           },
+          ForgotPassword: {
+            screens: {
+              ForgotPasswordScreen: "forgotpassword",
+            },
+          },
         },
       },
       NotFound: "*",

@@ -60,6 +60,8 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
+      <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
+
 
       {/* <Drawer.Screen
         name="Map"
@@ -140,6 +142,27 @@ function ClientsNavigator() {
           }
         }}/>
     </ClientsStack.Navigator>
+  );
+}
+
+const ForgotPasswordStack = createStackNavigator<ForgotPasswordParamList>();
+
+function ForgotPasswordNavigator() {
+  return (
+    <ForgotPasswordStack.Navigator>
+      <ForgotPasswordStack.Screen
+        name='ForgotPasswordScreen'
+        component={ForgotPasswordScreen}
+        options={{
+          headerTitle:'Forgot Password',
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          }
+        }}/>
+    </ForgotPasswordStack.Navigator>
   );
 }
 
