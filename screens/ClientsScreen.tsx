@@ -8,10 +8,10 @@ import MenuIcon from "../components/MenuIcon";
 import { useEffect, useState } from "react";
 import main from "../styles/main";
 import {
-  getSignInSignOutButtonText,
+  getLoginSignOutButtonText,
   getuserIsAuthenticated,
   getUserNameTextForProfilePage,
-  signInSignOutButtonPressed,
+  LoginSignOutButtonPressed,
 } from "../web/firebase";
 import { ClientStyle } from "../styles/clientStyle";
 
@@ -21,7 +21,7 @@ export default function ClientsScreen() {
   const [profileText, setProfileText] = useState(
     "Please log into your account"
   );
-  const [signInSignOutText, setSignInSignOutText] = useState("Login");
+  const [LoginSignOutText, setLoginSignOutText] = useState("Sign in");
 
   useEffect(() => {
     navigation.setOptions({
@@ -29,15 +29,15 @@ export default function ClientsScreen() {
     });
     navigation.addListener("focus", () => {
       setProfileText(getUserNameTextForProfilePage());
-      setSignInSignOutText(getSignInSignOutButtonText());
+      setLoginSignOutText(getLoginSignOutButtonText());
     });
   });
 
   const authActions = () => {
     if (getuserIsAuthenticated()) {
-      signInSignOutButtonPressed();
-      setProfileText("Please sign in to view account");
-      setSignInSignOutText("Login");
+      LoginSignOutButtonPressed();
+      setProfileText("Please login to view account");
+      setLoginSignOutText("Sign in");
     } else {
       navigation.navigate("Login");
     }
@@ -93,7 +93,7 @@ export default function ClientsScreen() {
           }}
         >
           <Text style={ClientStyle.profileActionsText}>
-            {signInSignOutText}
+            {LoginSignOutText}
           </Text>
           <Image
             source={require("../assets/LogOut.png")}

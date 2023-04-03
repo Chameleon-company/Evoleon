@@ -50,7 +50,8 @@ export default function DrawerNavigator() {
   
       return (
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
-          <DrawerItemList {...filteredTopLeftMenuItems} />
+        <DrawerItemList {...filteredTopLeftMenuItems} />
+          
           <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
             LoginSignOutButtonPressed();
             props.navigation.navigate("Authenticate");
@@ -60,15 +61,20 @@ export default function DrawerNavigator() {
       )
     }}>
       
+      {/* Database is the google map view. Authenticate is login and takes users to the Login or Signup buttons.*/}
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
+
+      {/* These represent the menus in the hamburger menu. */}
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
-      <Drawer.Screen name="Login" component={LoginNavigator} />
-
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
+
+      {/* Forgot password link to take users to the ForgotPasswordScreen. */}
+      <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
+
+      {/* Login and Signup navigation on the splash screen. */}
+      <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
-
-
 
     </Drawer.Navigator>
   );
@@ -83,7 +89,7 @@ function DatabaseNavigator() {
         name="DatabaseScreen"
         component={DatabaseScreen}
         options={{
-          headerTitle:'EV database map',
+          headerTitle:'EV Database Map',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
@@ -164,9 +170,9 @@ function LoginNavigator() {
   return (
     <LoginStack.Navigator>
       <LoginStack.Screen 
-        name="LoginScreen" 
-        component={LoginScreen} 
-        options={{
+      name="LoginScreen" 
+      component={LoginScreen} 
+      options={{
           headerTitle:'Login in',
           headerStyle: {
             backgroundColor: '#294E4B',
@@ -184,7 +190,8 @@ const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
 function AuthenticateNavigator() {
   return (
     <AuthenticateStack.Navigator>
-      <AuthenticateStack.Screen name="AuthenticateScreen" 
+      <AuthenticateStack.Screen 
+      name="AuthenticateScreen" 
       component={AuthenticateScreen} 
       options={{
         headerTitle:'EVOLEON',
@@ -205,7 +212,9 @@ const SignupStack = createStackNavigator<SignupParamList>();
 function SignupNavigator() {
   return (
     <SignupStack.Navigator>
-      <SignupStack.Screen name="SignupScreen" component={SignupScreen} 
+      <SignupStack.Screen 
+      name="SignupScreen" 
+      component={SignupScreen} 
       options={{
         headerTitle:'Sign up', 
         headerStyle: {

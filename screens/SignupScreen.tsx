@@ -50,7 +50,7 @@ export default function SignupScreen() {
           navigation.navigate("Login");
         }}
       >
-        <Text style={ButtonStyle.SigninLink}>Login</Text>
+        <Text style={ButtonStyle.LoginLink}>Login</Text>
       </TouchableOpacity>
 
       {/* Collect user information */}
