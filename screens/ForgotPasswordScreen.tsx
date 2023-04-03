@@ -45,21 +45,32 @@ export default function ForgotPasswordScreen() {
           />
 
 
-          {/* Login button */}
+          {/* Reset button */}
           <TouchableOpacity
             style={LoginScreenStyle.button}
             onPress={async () => {
-              await userLogin(email, password).then((result) => {
+              await userLogin(email).then((result) => {
                 if (result == true) {
-                  navigation.navigate("Database");
+                  navigation.navigate("" /*TODO: Navigate to a splash screen.*/);
                 } else {
-                  Alert.alert("Incorrect email or password");
+                  Alert.alert("Incorrect email.");
                 }
               });
             }}
+            // TODO: Need to configure or update button.text to allow for proper text wrapping to have "Reset Password" instead of "Reset".
           >
-            <Text style={ButtonStyle.Text}>Login</Text>
+            <Text style={ButtonStyle.Text}>Reset</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={LoginScreenStyle.cancelButton}
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          >
+            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+          </TouchableOpacity>
+          
       </View>
     </SafeAreaView>
   );

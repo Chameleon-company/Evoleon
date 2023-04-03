@@ -36,6 +36,10 @@ export type ClientsParamList = {
   ClientsScreen: undefined;
 };
 
+export type ForgotPasswordParamList = {
+  ForgotPasswordScreen: undefined;
+};
+
 export type InitialParamList = {
   InitialScreen: undefined;
 };

@@ -17,6 +17,7 @@ import {
   FileSystemParamList,
   ClientsParamList,
   LoginParamList,
+  ForgotPasswordParamList,
   AuthenticateParamList, 
   SignupParamList,
   PasswordResetParamList
@@ -36,13 +37,14 @@ export default function DrawerNavigator() {
           state: {
             ...props.state,
             routeNames: props.state.routeNames.filter(
+              // The different screens can be excluded from the hamburger menu, by routing them here. 
               (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate';
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword';
               }
             ),
             routes: props.state.routes.filter(
               (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate'
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'
             ),
           },
         };
@@ -60,21 +62,20 @@ export default function DrawerNavigator() {
         </DrawerContentScrollView>
       )
     }}>
-      
-      {/* Database is the google map view. Authenticate is login and takes users to the Login or Signup buttons.*/}
-      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
 
       {/* These represent the menus in the hamburger menu. */}
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
-      <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
+      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
 
-      {/* Forgot password link to take users to the ForgotPasswordScreen. */}
+      {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
-
-      {/* Login and Signup navigation on the splash screen. */}
+      <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+
+
+
 
     </Drawer.Navigator>
   );
@@ -173,7 +174,7 @@ function LoginNavigator() {
       name="LoginScreen" 
       component={LoginScreen} 
       options={{
-          headerTitle:'Login in',
+          headerTitle:'Login',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
