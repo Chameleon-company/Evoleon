@@ -1,3 +1,4 @@
+//import necessary libraries and components
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
@@ -16,23 +17,28 @@ import {
 import { ClientStyle } from "../styles/clientStyle";
 
 export default function ClientsScreen() {
+  //Define navigation using the useNavigation hook
   const navigation = useNavigation();
-
+  
+  // Define state variables to hold profile and sign in/out text
   const [profileText, setProfileText] = useState(
     "Please log into your account"
   );
   const [signInSignOutText, setSignInSignOutText] = useState("Sign in");
 
+  // Set the headerLeft icon to the menu icon
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
+    // Set profile and sign in/out text when screen is focused
     navigation.addListener("focus", () => {
       setProfileText(getUserNameTextForProfilePage());
       setSignInSignOutText(getSignInSignOutButtonText());
     });
   });
 
+  // Define function for sign in/out button pressed
   const authActions = () => {
     if (getuserIsAuthenticated()) {
       signInSignOutButtonPressed();
@@ -44,15 +50,19 @@ export default function ClientsScreen() {
   };
 
   return (
+    // Render the main content of the screen using a View component
     <View style={ClientStyle.content}>
       <View style={ClientStyle.topPageContent}>
+        {/* Display Evoleon logo image */}
         <Image
           style={ClientStyle.profileImage}
           source={require("../assets/EvoleonFinal.png")}
         />
+        {/* Display the profile text using a Text component */}
         <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
-
+      
+      {/* Render the profile actions using TouchableOpacity and Image components */}
       <View style={ClientStyle.profileActionsView}>
         <TouchableOpacity style={ClientStyle.profileActionsCell}>
           <Text style={ClientStyle.profileActionsText}>Edit Information</Text>
@@ -85,7 +95,8 @@ export default function ClientsScreen() {
             style={ClientStyle.arrow}
           />
         </TouchableOpacity>
-
+        
+        {/* Display the sign in/out button with its text and icon */}
         <TouchableOpacity
           style={ClientStyle.profileActionsCell}
           onPress={() => {
