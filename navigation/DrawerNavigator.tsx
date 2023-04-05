@@ -5,10 +5,11 @@ import * as React from "react";
 import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ClientsScreen from "../screens/ClientsScreen";
-import LoginScreen from "../screens/Login-screen";
+import LoginScreen from "../screens/LoginScreen";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import AuthenticateScreen from '../screens/AuthenticateScreen';
 import SignupScreen from '../screens/SignupScreen';
-import {getSignInSignOutButtonText, signInSignOutButtonPressed} from '../web/firebase' 
+import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -16,8 +17,10 @@ import {
   FileSystemParamList,
   ClientsParamList,
   LoginParamList,
+  ForgotPasswordParamList,
   AuthenticateParamList, 
-  SignupParamList
+  SignupParamList,
+  PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
 import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
@@ -34,13 +37,14 @@ export default function DrawerNavigator() {
           state: {
             ...props.state,
             routeNames: props.state.routeNames.filter(
+              // The different screens can be excluded from the hamburger menu, by routing them here. 
               (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate';
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword';
               }
             ),
             routes: props.state.routes.filter(
               (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate'
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'
             ),
           },
         };
@@ -48,32 +52,29 @@ export default function DrawerNavigator() {
   
       return (
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
-          <DrawerItemList {...filteredTopLeftMenuItems} />
-          <DrawerItem label={getSignInSignOutButtonText()} onPress={() => {
-            signInSignOutButtonPressed();
+        <DrawerItemList {...filteredTopLeftMenuItems} />
+          
+          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
+            LoginSignOutButtonPressed();
             props.navigation.navigate("Authenticate");
           }
         }/>
         </DrawerContentScrollView>
       )
     }}>
-      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
-      <Drawer.Screen name="FileSystem" component={FileSystemNavigator} />
-      <Drawer.Screen name="Clients" component={ClientsNavigator} />
 
-      {/* <Drawer.Screen
-        name="Map"
-        component={DatabaseNavigator}/>
-      <Drawer.Screen
-        name="Saving chart"
-        component={FileSystemNavigator}
-      />
-      <Drawer.Screen
-        name="Profile"
-  component={ClientsNavigator} >*/ }
-      <Drawer.Screen name="Login" component={LoginNavigator} />
+      {/* These represent the menus in the hamburger menu. */}
+      <Drawer.Screen name="File System" component={FileSystemNavigator} />
+      <Drawer.Screen name="Clients" component={ClientsNavigator} />
+      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
+
+      {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
+      <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
+      <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+
+
 
 
     </Drawer.Navigator>
@@ -89,7 +90,7 @@ function DatabaseNavigator() {
         name="DatabaseScreen"
         component={DatabaseScreen}
         options={{
-          headerTitle:'EV database map',
+          headerTitle:'EV Database Map',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
@@ -143,16 +144,37 @@ function ClientsNavigator() {
   );
 }
 
+const ForgotPasswordStack = createStackNavigator<ForgotPasswordParamList>();
+
+function ForgotPasswordNavigator() {
+  return (
+    <ForgotPasswordStack.Navigator>
+      <ForgotPasswordStack.Screen
+        name='ForgotPasswordScreen'
+        component={ForgotPasswordScreen}
+        options={{
+          headerTitle:'Forgot Password',
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          }
+        }}/>
+    </ForgotPasswordStack.Navigator>
+  );
+}
+
 const LoginStack = createStackNavigator<LoginParamList>();
 
 function LoginNavigator() {
   return (
     <LoginStack.Navigator>
       <LoginStack.Screen 
-        name="LoginScreen" 
-        component={LoginScreen} 
-        options={{
-          headerTitle:'Sign in',
+      name="LoginScreen" 
+      component={LoginScreen} 
+      options={{
+          headerTitle:'Login',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
@@ -169,7 +191,8 @@ const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
 function AuthenticateNavigator() {
   return (
     <AuthenticateStack.Navigator>
-      <AuthenticateStack.Screen name="AuthenticateScreen" 
+      <AuthenticateStack.Screen 
+      name="AuthenticateScreen" 
       component={AuthenticateScreen} 
       options={{
         headerTitle:'EVOLEON',
@@ -190,7 +213,9 @@ const SignupStack = createStackNavigator<SignupParamList>();
 function SignupNavigator() {
   return (
     <SignupStack.Navigator>
-      <SignupStack.Screen name="SignupScreen" component={SignupScreen} 
+      <SignupStack.Screen 
+      name="SignupScreen" 
+      component={SignupScreen} 
       options={{
         headerTitle:'Sign up', 
         headerStyle: {

@@ -1,5 +1,5 @@
 import {
-  signInWithEmailAndPassword,
+  LoginWithEmailAndPassword,
   createUserWithEmailAndPassword,
   Auth,
   getAuth,
@@ -67,28 +67,28 @@ export const getUserNameTextForProfilePage = () => {
 };
 
 //Get the text for the sign in/sign out button in top left menu.
-export var getSignInSignOutButtonText = () => {
+export var getLoginSignOutButtonText = () => {
   var text;
   if (userIsAuthenticated) {
     text = "Sign out of " + auth.currentUser.displayName + "'s account";
   } else {
-    text = "Sign in";
+    text = "Login";
   }
   return text;
 };
 
-export const signInSignOutButtonPressed = () => {
+export const LoginSignOutButtonPressed = () => {
   //If the user is signed in, then sign out the user.
   if (userIsAuthenticated) {
     userSignOut();
   }
 };
 
-//Sign in for an existing user
-export const userSignIn = async (email, password) => {
+//Login for an existing user
+export const userLogin = async (email, password) => {
   const authInfo = auth;
   let errorCaught = false;
-  await signInWithEmailAndPassword(authInfo, email, password)
+  await LoginWithEmailAndPassword(authInfo, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Signed in with:", user.email);
