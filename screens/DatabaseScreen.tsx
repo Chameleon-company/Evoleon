@@ -208,7 +208,7 @@ export default function DatabaseScreen() {
           onValueChange={toggleSwitch}
           value={favouriteSelected}
         />
-      </View>
+      {/* </View> */}
 
       
       {/* The map view with markers */}
