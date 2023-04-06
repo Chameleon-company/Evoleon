@@ -94,7 +94,7 @@ export const userLogin = async (email, password) => {
 
   console.log("User tried to login to account.");
 
-  // In built function for Firebase for user signing in to the Evoleon Application.
+  // In built function for Firebase for user login in to the Evoleon Application.
   await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
 
       const user = userCredential.user;
