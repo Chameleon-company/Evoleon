@@ -10,7 +10,7 @@ import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
 import { ButtonStyle } from "../styles/buttonStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoginScreenStyle } from "../styles/loginStyle";
-import { userLogin } from "../web/firebase";
+import { UserPasswordResetAuth } from "../web/firebase";
 
 import { ClientStyle } from "../styles/clientStyle";
 
@@ -49,15 +49,15 @@ export default function ForgotPasswordScreen() {
           <TouchableOpacity
             style={LoginScreenStyle.button}
             onPress={async () => {
-              await userLogin(email).then((result) => {
+              await UserPasswordResetAuth(email).then((result) => {
                 if (result == true) {
-                  navigation.navigate("" /*TODO: Navigate to a splash screen.*/);
+                  navigation.navigate("Database" /*TODO: Navigate to a splash screen.*/);
                 } else {
                   Alert.alert("Incorrect email.");
                 }
               });
             }}
-            // TODO: Need to configure or update button.text to allow for proper text wrapping to have "Reset Password" instead of "Reset".
+            // TODO: Need to configure or update ButtonStyle.Text to allow for proper text wrapping to have "Reset Password" instead of "Reset".
           >
             <Text style={ButtonStyle.Text}>Reset</Text>
           </TouchableOpacity>
