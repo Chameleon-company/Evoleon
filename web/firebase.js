@@ -72,7 +72,7 @@ export var getLoginSignOutButtonText = () => {
   if (userIsAuthenticated) {
     text = "Sign out of " + auth.currentUser.displayName + "'s account";
   } else {
-    text = "Login";
+    text = "Account";
   }
   return text;
 };
@@ -174,6 +174,31 @@ export const userSignOut = async () => {
       const errorMessage = error.message;
     });
   console.log("Signed out of " + displayName + "'s account");
+};
+
+export const UserPasswordResetAuth = async (UserEmail) => {
+
+  const AuthInfo = auth;
+  let ErrorCaught = false;
+
+  
+  AuthInfo.generatePasswordResetLink(UserEmail)
+  .then((link) => {
+    // Construct password reset email template, embed the link and send
+    // using custom SMTP server.
+    return sendCustomVerificationEmail(useremail, displayName, link);
+    })  
+    .catch((ReturnedError) => {
+
+      console.log(ReturnedError.code);
+      console.log(ReturnedError.message);
+      ErrorCaught = true;
+
+    });
+
+  if (ErrorCaught == false) return true;
+  else return false;
+
 };
 
 //Create new Firestore document for user using unqiue user ID
