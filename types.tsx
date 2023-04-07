@@ -56,4 +56,8 @@ export type SignupParamList = {
   SignupScreen: undefined;
 };
 
+export type AboutParamList = {
+  AboutScreen: undefined;
+};
+
 export type onPressFunc = (event: GestureResponderEvent) => void;

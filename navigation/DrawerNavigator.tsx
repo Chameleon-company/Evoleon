@@ -9,6 +9,7 @@ import LoginScreen from "../screens/LoginScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import AuthenticateScreen from '../screens/AuthenticateScreen';
 import SignupScreen from '../screens/SignupScreen';
+import AboutScreen from "../screens/AboutScreen";
 import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
@@ -20,6 +21,7 @@ import {
   ForgotPasswordParamList,
   AuthenticateParamList, 
   SignupParamList,
+  AboutParamList,
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
@@ -64,9 +66,11 @@ export default function DrawerNavigator() {
     }}>
 
       {/* These represent the menus in the hamburger menu. */}
+      <Drawer.Screen name="About" component={AboutNavigator}/>
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
+      
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
@@ -111,7 +115,7 @@ function FileSystemNavigator() {
         name="FileSystemScreen" 
         component={FileSystemScreen} 
         options={{
-          headerTitle:'File system',
+          headerTitle:'File System',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
@@ -227,4 +231,25 @@ function SignupNavigator() {
       }}/>
     </SignupStack.Navigator>
   )
+}
+
+const AboutStack = createStackNavigator<AboutParamList>();
+
+function AboutNavigator() {
+  return (
+    <AboutStack.Navigator>
+      <AboutStack.Screen 
+        name="AboutScreen" 
+        component={AboutScreen} 
+        options={{
+          headerTitle:'About',
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          }
+        }}/>
+    </AboutStack.Navigator>
+  );
 }
