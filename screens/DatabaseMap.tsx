@@ -7,6 +7,8 @@ import * as Location from "expo-location";
 
 import { MapStyle } from "../styles/mapStyle";
 
+import { getFavouriteMarkers, getuserIsAuthenticated } from "../web/firebase";
+
 // This is the bottom sliding card that is displayed.
 import MarkerSlidingPannel from "./DatabaseDrawer";
 
@@ -20,6 +22,8 @@ class BottomSheet extends React.Component {
       debounceTimeout: null,
       markerPressed: false,
       markerPressTimeout: null,
+      favouriteSelected: false, // This is used to toggle the favourite button on/off, could pull from user settings in future from firebase.
+      favouriteMarkers: [],
       userLocation: null,
       initialRegion: {
         latitude: -37.840935,
@@ -79,12 +83,11 @@ class BottomSheet extends React.Component {
   // This will need to be re-imagined in the future.
   onMarkerPress = (marker, index) => {
     clearTimeout(this.state.markerPressTimeout);
-    clearTimeout(this.state.debounceTimeout);
     this.setState({ activeMarkerIndex: index, markerPressed: true });
     this.props.onMarkerPress(marker);
     const markerPressTimeout = setTimeout(() => {
       this.setState({ markerPressed: false });
-    }, 250);
+    }, 200);
     this.setState({ markerPressTimeout });
     this.togglePanelVisibility(true);
   };
@@ -95,8 +98,23 @@ class BottomSheet extends React.Component {
         this.togglePanelVisibility(false);
         this.setState({ activeMarkerIndex: null });
       }
-    }, 100);
+    }, 50);
     this.setState({ debounceTimeout });
+  };
+
+  onFavouriteToggle = async () => {
+    if (getuserIsAuthenticated()) {
+      this.setState({
+        favouriteSelected: !this.state.favouriteSelected,
+      });
+      let favMarkers = await getFavouriteMarkers();
+      await this.setState({ favouriteMarkers: favMarkers });
+      console.log(this.state.favouriteMarkers);
+    } else {
+      this.setState({
+        favouriteSelected: false,
+      });
+    }
   };
 
   componentDidMount() {
@@ -105,10 +123,7 @@ class BottomSheet extends React.Component {
         this.animateMap(this.state.userLocation.coords);
       }
     });
-    console.log(this.props);
   }
-
-  componentDidUpdate(prevProps, prevState) {}
 
   render() {
     const { isVisible } = this.state;
@@ -121,9 +136,7 @@ class BottomSheet extends React.Component {
             thumbColor={this.state.favouriteSelected ? "#18A554" : "#f4f3f4"}
             ios_backgroundColor="#777E7D"
             onValueChange={() => {
-              this.setState({
-                favouriteSelected: !this.state.favouriteSelected,
-              });
+              this.onFavouriteToggle();
             }}
             value={this.state.favouriteSelected}
           />
@@ -154,20 +167,27 @@ class BottomSheet extends React.Component {
           onRegionChangeComplete={this.onRegionChange}
           zoomEnabled={true}
         >
-          {this.props.markers.map((marker, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: marker.latitude,
-                longitude: marker.longitude,
-              }}
-              title={marker.name}
-              //   description={marker.description}
-              onPress={() => {
-                this.onMarkerPress(marker, index);
-              }}
-            />
-          ))}
+          {this.props.markers.map((marker, index) => {
+            if (
+              (this.state.favouriteSelected &&
+                this.state.favouriteMarkers.includes(marker.id)) ||
+              !this.state.favouriteSelected
+            ) {
+              return (
+                <Marker
+                  key={index}
+                  coordinate={{
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                  }}
+                  title={marker.name}
+                  onPress={() => {
+                    this.onMarkerPress(marker, index);
+                  }}
+                />
+              );
+            }
+          })}
         </MapView>
         {isVisible && (
           <MarkerSlidingPannel marker={this.props.marker}></MarkerSlidingPannel>
