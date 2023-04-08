@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { MapStyle } from "../styles/mapStyle";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import BottomSheet from "./DatabaseMap";
+import DatabaseMap from "./DatabaseMap";
 import MenuIcon from "../components/MenuIcon";
 import testingCoords from "../TempMarkerLocations.json";
 
@@ -16,11 +16,12 @@ class DatabaseScreen extends React.Component {
       visibleMarkers: [],
     };
   }
-
+  // A function passed to BottomSheet to set the visible region in the parent component
   setVisibleRegion = (region) => {
     this.setState({ visibleRegion: region });
   };
 
+  // A function that uses the visible region to filter the markers
   isLocationVisible = (location) => {
     if (!this.state.visibleRegion) return false;
 
@@ -39,6 +40,7 @@ class DatabaseScreen extends React.Component {
     );
   };
 
+  // A parent function that is passed down so that we can keep track of the marker here. Currently not used so may be removed later.
   handleMarkerPress = (marker) => {
     this.setState({ selectedMarker: marker }, () => {});
   };
@@ -53,8 +55,7 @@ class DatabaseScreen extends React.Component {
   render() {
     return (
       <View style={MapStyle.ViewStyle}>
-        <BottomSheet
-          // markers={testingCoords}
+        <DatabaseMap
           markers={testingCoords.filter(this.isLocationVisible)}
           marker={this.state.selectedMarker}
           onMarkerPress={this.handleMarkerPress}

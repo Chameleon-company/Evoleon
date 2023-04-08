@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, Dimensions, Animated } from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
-
 const { height } = Dimensions.get("window");
 
 class MarkerSlidingPannel extends React.Component {
@@ -9,6 +8,7 @@ class MarkerSlidingPannel extends React.Component {
     super(props);
   }
 
+  // TODO: Work out this wizardry so that the panel can be dragged only about 30-40% of the screen height and clamp.
   static defaultProps = {
     draggableRange: { top: height + 180 - 64, bottom: 180 },
   };
