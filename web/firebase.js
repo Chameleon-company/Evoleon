@@ -1,7 +1,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  ResetPasswordWithEmail,
+  userPasswordResetAuth,
   Auth,
   getAuth,
   signOut,
@@ -185,32 +185,28 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 };
 
-export const UserPasswordResetAuth = async (UserEmail) => {
+export const userPasswordResetAuth = (UserEmail) => {
 
   const AuthInfo = auth;
-  let ErrorCaught = false;
+  let errorCaught = false;
 
-  
-  AuthInfo.generatePasswordResetLink(UserEmail)
-  .then((link) => {
-    // Construct password reset email template, embed the link and send
-    // using custom SMTP server.
-    return sendCustomVerificationEmail(useremail, displayName, link);
-    })  
-    .catch((ReturnedError) => {
+  return sendPasswordResetEmail(AuthInfo, UserEmail).then((a) => {    
+    alert("Password reset email sent");
 
-      console.log(ReturnedError.code);
-      console.log(ReturnedError.message);
-      ErrorCaught = true;
+  }).catch((error) => {
 
-    });
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
 
-  if (ErrorCaught == false) return true;
-  else return false;
+    return true;
+  });
+
+}
 
 };
 
-// Create new Firestore document for user using unqiue user ID.
+//Create new Firestore document for user using unqiue user ID
 export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
     firstName: firstName,
