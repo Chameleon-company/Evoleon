@@ -204,9 +204,7 @@ export const userPasswordResetAuth = (UserEmail) => {
 
 }
 
-};
-
-//Create new Firestore document for user using unqiue user ID
+// Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
     firstName: firstName,
@@ -214,7 +212,7 @@ export const userFirestoreData = async (firstName, lastName, country) => {
     country: country,
   });
 
-  //Create subcollection within users document to store users favourite charger locations
+  // Create subcollection within users document to store users favourite charger locations.
   const subCollectionInitialData = { initialCollectionItem: "initial-data" };
   const subCollection = doc(
     firestoreDB,
@@ -249,7 +247,7 @@ export const UserPasswordResetAuth = async (UserEmail) => {
   
 };
 
-// Add or remove an EV charger from a users favourite list in Firestore
+// Add or remove an EV charger from a users favourite list in Firestore.
 export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
   evChargerLocationVal
 ) => {
