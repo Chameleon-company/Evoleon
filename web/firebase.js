@@ -1,12 +1,14 @@
 import {
-  LoginWithEmailAndPassword,
+  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  Auth,
+  sendPasswordResetEmail,
   getAuth,
   signOut,
   updateProfile,
 } from "firebase/auth";
+
 import { initializeApp } from "firebase/app";
+
 import {
   getFirestore,
   doc,
@@ -84,31 +86,36 @@ export const LoginSignOutButtonPressed = () => {
   }
 };
 
-//Login for an existing user
+// Login for an existing user.
 export const userLogin = async (email, password) => {
-  const authInfo = auth;
+
   let errorCaught = false;
-  await LoginWithEmailAndPassword(authInfo, email, password)
-    .then((userCredential) => {
+
+  console.log("User tried to login to account.");
+
+  // In built function for Firebase for user login in to the Evoleon Application.
+  await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+
       const user = userCredential.user;
       console.log("Signed in with:", user.email);
       userIsAuthenticated = true;
       console.log("Welcome back", auth.currentUser.displayName);
       errorCaught = false;
-    })
-    .catch((error) => {
+
+    }).catch((error) => {
+
+      console.log("An Error has been caught");
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(error.code);
       console.log(error.message);
       errorCaught = true;
+
     });
 
-  if (errorCaught == false) {
-    return true;
-  } else {
-    return false;
-  }
+  if (errorCaught == false) return true;
+  else return false;
+  
 };
 
 //Sign up for a new user
@@ -120,6 +127,7 @@ export const userSignUp = async (
   country
 ) => {
   let errorCaught = false;
+
   await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -176,32 +184,26 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 };
 
-export const UserPasswordResetAuth = async (UserEmail) => {
+export const userPasswordResetAuth = (UserEmail) => {
 
   const AuthInfo = auth;
-  let ErrorCaught = false;
+  let errorCaught = false;
 
-  
-  AuthInfo.generatePasswordResetLink(UserEmail)
-  .then((link) => {
-    // Construct password reset email template, embed the link and send
-    // using custom SMTP server.
-    return sendCustomVerificationEmail(useremail, displayName, link);
-    })  
-    .catch((ReturnedError) => {
+  return sendPasswordResetEmail(AuthInfo, UserEmail).then((a) => {    
+    alert("Password reset email sent");
 
-      console.log(ReturnedError.code);
-      console.log(ReturnedError.message);
-      ErrorCaught = true;
+  }).catch((error) => {
 
-    });
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
 
-  if (ErrorCaught == false) return true;
-  else return false;
+    return true;
+  });
 
-};
+}
 
-//Create new Firestore document for user using unqiue user ID
+// Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
     firstName: firstName,
