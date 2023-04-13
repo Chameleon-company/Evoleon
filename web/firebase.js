@@ -1,7 +1,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  userPasswordResetAuth,
+  sendPasswordResetEmail,
   Auth,
   getAuth,
   signOut,
@@ -204,6 +204,7 @@ export const userPasswordResetAuth = (UserEmail) => {
 
 }
 
+
 // Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
@@ -222,29 +223,6 @@ export const userFirestoreData = async (firstName, lastName, country) => {
     "favouriteCharger"
   );
   await setDoc(subCollection, subCollectionInitialData, { merge: true });
-};
-
-export const UserPasswordResetAuth = async (UserEmail) => {
-
-  const AuthInfo = auth;
-  let ErrorCaught = false;
-
-  await ResetPasswordWithEmail(AuthInfo, UserEmail)
-    .then((UserCredential) => {
-      const UserData = UserCredential.UserData;
-      console.log("Users email: ", UserData.email);
-    })
-    .catch((ReturnedError) => {
-
-      console.log(ReturnedError.code);
-      console.log(ReturnedError.message);
-      ErrorCaught = true;
-
-    });
-
-  if (ErrorCaught == false) return true;
-  else return false;
-  
 };
 
 // Add or remove an EV charger from a users favourite list in Firestore.

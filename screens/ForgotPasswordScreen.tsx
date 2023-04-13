@@ -52,7 +52,7 @@ export default function ForgotPasswordScreen() {
             onPress={async () => {
               await userPasswordResetAuth(email).then((error) => {
                 if (error == true) {
-                  Alert.alert("Incorrect email or password");
+                  Alert.alert("Incorrect account email");
                 } else {
                   navigation.navigate("Login");
                 }
