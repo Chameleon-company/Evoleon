@@ -336,3 +336,23 @@ export const fetchLocations = async () => {
 
   return qMap;
 };
+
+//Updating user details in Firebase
+export const handleSave = () => {
+  const userId = firebase.auth().currentUser.uid;
+  const userDetailsRef = firebase.database().ref(`userDetails/${userId}`);
+  userDetailsRef.update({
+    name,
+    email,
+    phone,
+    residentialAddress,
+    registrationNumber,
+    carType,
+  })
+  .then(() => {
+    console.log('User details updated successfully!');
+  })
+  .catch((error) => {
+    console.error('Error updating user details:', error);
+  });
+};
