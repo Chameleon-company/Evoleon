@@ -19,8 +19,9 @@ export const ButtonStyle = StyleSheet.create({
     color: 'white',
   },
 
-  SigninLink: {
+  LoginLink: {
     color: '#294E4B',
     fontWeight: 'bold'
   }
+  
 });

@@ -15,7 +15,7 @@ An android application to find the nearest charging point for electric cars with
 With gesture-navigation being the standard for Android 10+, the need for a clickable way to open and close app drawers has resurfaced.
 This template provides that.
 
-Uses: Expo v39, React Native 0.63, React Navigation 5.0, Typescript
+Uses: Expo v48, React Native 0.71, React Navigation 5.9, Typescript
 
 Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, deep linking, custom font support, splash screen, dark/light mode support
 
@@ -34,17 +34,57 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 - [Say thanks!](#say-thanks)
   
 
+
+# Usage
+[(Back to top)](#table-of-contents)
+
+Download the expo go app from the play / apple store. Scan the QR code shown in the terminal after running 'npm run start' and you will be able to view the app. At the moment, there is a problem with the web view for development. It's recommended to just use your phone for the moment.
+
+The problem is with webpack, webpack is used to translate packages from react native which runs on mobile devices to a react web framework.
+
+If you can't use your mobile phone for any sort of development, another option is to temporarily comment out the MapView container within ./screens/DatabaseScreen.tsx.
+
+If you want to fix the web view issue, it's probably within the versions of react-native, react-native-web, react-native-maps and react-native-web-maps used. Have a look within webpack.config.js and uncomment the alias lines.
+  
+
 # Installation
 [(Back to top)](#table-of-contents)
 
-No manual setup required. Use the same way you initialize your other Expo projects.
+I'm using node 18 LTS. You can check your own by running 'node --version'
 
 ```bash
-expo init  https://github.com/grdeakin/evoleonapp.git
+git clone https://github.com/Chameleon-company/Evoleon/
+cd Evoleon
+npm install
+npm run start
 ```
 
+## Updating 
+
+If the above doesn't work due to updates etc. Update your node, yarn and expo:
+
 ```bash
-npx create-react-native-app  https://github.com/grdeakin/evoleonapp.git
+vm install --lts
+npm install -g yarn
+npm install -g expo-cli
+```
+
+Refresh the repo packages:
+
+```bash
+git clone https://github.com/Chameleon-company/Evoleon
+cd Evoleon
+yarn cache clean
+npm cache clean --force
+rm -rf node_modules
+rm yarn.lock
+yarn install
+```
+
+Update the expo version:
+
+```bash
+expo upgrade
 ```
 
 

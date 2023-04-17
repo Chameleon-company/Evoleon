@@ -23,19 +23,20 @@ export default function AuthenticateScreen() {
           headerLeft: (props: StackHeaderLeftButtonProps) => (<MenuIcon/>)
         });
       });
-
+      
+      
       return (
           <View style={AuthScreenStyle.Centered}>
 
             {/* Logo - to be updated with current logo */}
             <Image style={logoStyles.Logo} source={require('./EvoleonFinal.png')} />
 
-            {/* Sign in button */}
+            {/* Login button */}
             <TouchableOpacity style={ButtonStyle.Button}
             onPress={() => {     
                 navigation.navigate("Login");
             }}>
-              <Text style={ButtonStyle.Text}>Sign in</Text>
+              <Text style={ButtonStyle.Text}>Login</Text>
             </TouchableOpacity>
 
             {/* Sign up button */}

@@ -9,10 +9,10 @@ import MenuIcon from "../components/MenuIcon";
 import { useEffect, useState } from "react";
 import main from "../styles/main";
 import {
-  getSignInSignOutButtonText,
+  getLoginSignOutButtonText,
   getuserIsAuthenticated,
   getUserNameTextForProfilePage,
-  signInSignOutButtonPressed,
+  LoginSignOutButtonPressed,
 } from "../web/firebase";
 import { ClientStyle } from "../styles/clientStyle";
 
@@ -24,7 +24,7 @@ export default function ClientsScreen() {
   const [profileText, setProfileText] = useState(
     "Please log into your account"
   );
-  const [signInSignOutText, setSignInSignOutText] = useState("Sign in");
+  const [LoginSignOutText, setLoginSignOutText] = useState("Sign in");
 
   // Set the headerLeft icon to the menu icon
   useEffect(() => {
@@ -34,16 +34,16 @@ export default function ClientsScreen() {
     // Set profile and sign in/out text when screen is focused
     navigation.addListener("focus", () => {
       setProfileText(getUserNameTextForProfilePage());
-      setSignInSignOutText(getSignInSignOutButtonText());
+      setLoginSignOutText(getLoginSignOutButtonText());
     });
   });
 
   // Define function for sign in/out button pressed
   const authActions = () => {
     if (getuserIsAuthenticated()) {
-      signInSignOutButtonPressed();
-      setProfileText("Please sign in to view account");
-      setSignInSignOutText("Sign in");
+      LoginSignOutButtonPressed();
+      setProfileText("Please login to view account");
+      setLoginSignOutText("Sign in");
     } else {
       navigation.navigate("Login");
     }
@@ -104,7 +104,7 @@ export default function ClientsScreen() {
           }}
         >
           <Text style={ClientStyle.profileActionsText}>
-            {signInSignOutText}
+            {LoginSignOutText}
           </Text>
           <Image
             source={require("../assets/LogOut.png")}

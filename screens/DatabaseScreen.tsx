@@ -208,7 +208,7 @@ export default function DatabaseScreen() {
           onValueChange={toggleSwitch}
           value={favouriteSelected}
         />
-      </View>
+      {/* </View> */}
 
       
       {/* The map view with markers */}
@@ -223,8 +223,9 @@ export default function DatabaseScreen() {
         }}
         zoomEnabled={true}
       >
-        {coords.map((val) => (
+        {coords.map((val, index) => (
           <Marker
+            key={index}
             coordinate={{
               latitude: val.lat,
               longitude: val.long,
