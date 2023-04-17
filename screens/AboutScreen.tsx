@@ -16,7 +16,6 @@ function AboutScreen() {
     const deviceAppVersion = 'Pickles' //DeviceInfo.getVersion();
     const upDateButton = 'Update';
 
-
     console.log(EvoleonAppDeets.expo.version);
     
     useEffect(() => {
