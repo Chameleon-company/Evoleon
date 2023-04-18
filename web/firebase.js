@@ -2,6 +2,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  deleteUser,
   Auth,
   getAuth,
   signOut,
@@ -204,6 +205,26 @@ export const userPasswordResetAuth = (UserEmail) => {
 
 }
 
+export const userDeleteAccount = () => {
+
+  const AuthInfo = auth;
+  const user = AuthInfo.currentUser;
+  let errorCaught = false;
+  
+  // User needs to be logged in in order to delete their account.
+  return deleteUser(user).then(() => {
+    console.log("User deleted");
+  
+  }).catch((error) => {
+
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+
+    return true;
+  });
+
+}
 
 // Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
