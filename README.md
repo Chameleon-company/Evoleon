@@ -1,28 +1,31 @@
 <!--- Add banner here --->
 
-<img src="screens/evoleon app.png" width="500" height="500" >
+# Welcome to Evoleon 
+Hi and welcome, if you're here to take a look around then feel free to skip this section. If you're here to contribute, then please carefully read the next section so you're able to contribute effectively, efficiently, and securely. 
 
-# Evoleon App (react native)
+First things first, please read the Chameleon <a href="https://github.com/Chameleon-company/Chameleon-Documents/blob/master/Chameleon_Policies_and_Guides/GitHub%20Repository%20Use%20Policy.md" target="_blank">GitHub Repository Use Policy</a>. This document outlines how contributors should interact with the repository to keep the code-base clean and secure. 
 
-<!-- Add buttons here -->
-<!-- ![Github last commit](https://img.shields.io/github/last-commit/kathawala/expo-hamburger-menu-template)
-![Github repo size](https://img.shields.io/github/repo-size/kathawala/expo-hamburger-menu-template) -->
+## Technical Skills required 
+The tech stack for this project includes the following. You will want some familiarity with these frameworks and languages or spend the time up-skilling yourself before trying to contribute. 
+* React and React Native 
+* Javascript 
+* Typescript 
+* Firebase 
+* Expo 
 
-
+# About the Evoleon App (react native)
 <!-- Describe your project in brief -->
-
 An android application to find the nearest charging point for electric cars with the help of navigation. This source code is useful for building a cross-platform mobile app with hamburger-menu-style navigation built in.This builds on top of the drawer-style navigation included in React Navigation by adding a hamburger menu button to the top-left of the screen which can open and close the drawer.
 With gesture-navigation being the standard for Android 10+, the need for a clickable way to open and close app drawers has resurfaced.
 This template provides that.
 
-Uses: Expo v48, React Native 0.71, React Navigation 5.9, Typescript
+**Uses:** Expo, React Native, React Navigation, Typescript. 
 
-Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, deep linking, custom font support, splash screen, dark/light mode support
+Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, deep linking, custom font support, splash screen, dark/light mode support.
 
 # Preview
 
 <!-- Add a demo for your project -->
-
 <!-- ![Demo GIF](https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4) -->
 <video src='https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4' width=180 />)
 # Table of contents
@@ -33,7 +36,6 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 - [Installation](#installation)
 - [Say thanks!](#say-thanks)
   
-
 
 # Usage
 [(Back to top)](#table-of-contents)
@@ -88,7 +90,7 @@ expo upgrade
 ```
 
 
- # Say thanks!
+ # Thanks for Visiting
 [(Back to top)](#table-of-contents)
 
 If this saved you development time or you otherwise found it useful, leave a star or follow in GitHub.
