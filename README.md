@@ -14,7 +14,7 @@ The tech stack for this project includes the following. You will want some famil
 * Expo 
 
 ## Repository Directory 
-For Chameleon company wide policies, guides, branding, templates, and other general documentation please see the <a href="https://github.com/Chameleon-company/Chameleon-Documents" target="_blank">Chameleon Documentation</a>repository. 
+For Chameleon company wide policies, guides, branding, templates, and other general documentation please see the <a href="https://github.com/Chameleon-company/Chameleon-Documents" target="_blank">Chameleon Documentation</a> repository. 
 
 | Directory | Document | Description|
 |:---   |:---   |:---   |
