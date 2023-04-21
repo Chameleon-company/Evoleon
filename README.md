@@ -28,71 +28,22 @@ Sets up for you: evoleon app menu, drawer navigation, tests (with jest), hooks, 
 <!-- Add a demo for your project -->
 <!-- ![Demo GIF](https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4) -->
 <video src='https://user-images.githubusercontent.com/103167070/192455518-93640be9-7136-4de2-8cb1-47cd96a8e8d7.mp4' width=180 />)
-# Table of contents
 
+Get the App on Expo.
 - [Evoleon App]
-- [Preview](#preview)
-- [Table of contents](#table-of-contents)
-- [Installation](#installation)
-- [Say thanks!](#say-thanks)
+
+# Directory Lists 
+For Chameleon company wide policies, guides, branding, templates, and other general documentation please see the [https://github.com/Chameleon-company/Chameleon-Documents](Chameleon Documentation) repository. 
+
+| Directory | Document | Description|
+|:---   |:---   |:---   |
+| _Documentation |    | Project specific Documentation including recommended up-skilling & how to guides. |
+|   | Getting Started | Setting up your environment and running the App ready to contribute. |
+|   | Code Base Walk Through | An overview of the code base and what is kept where. |
+|   | Coding Best Practice | Coding conventions for the Evoleon App. |
   
-
-# Usage
-[(Back to top)](#table-of-contents)
-
-Download the expo go app from the play / apple store. Scan the QR code shown in the terminal after running 'npm run start' and you will be able to view the app. At the moment, there is a problem with the web view for development. It's recommended to just use your phone for the moment.
-
-The problem is with webpack, webpack is used to translate packages from react native which runs on mobile devices to a react web framework.
-
-If you can't use your mobile phone for any sort of development, another option is to temporarily comment out the MapView container within ./screens/DatabaseScreen.tsx.
-
-If you want to fix the web view issue, it's probably within the versions of react-native, react-native-web, react-native-maps and react-native-web-maps used. Have a look within webpack.config.js and uncomment the alias lines.
-  
-
-# Installation
-[(Back to top)](#table-of-contents)
-
-I'm using node 18 LTS. You can check your own by running 'node --version'
-
-```bash
-git clone https://github.com/Chameleon-company/Evoleon/
-cd Evoleon
-npm install
-npm run start
-```
-
-## Updating 
-
-If the above doesn't work due to updates etc. Update your node, yarn and expo:
-
-```bash
-vm install --lts
-npm install -g yarn
-npm install -g expo-cli
-```
-
-Refresh the repo packages:
-
-```bash
-git clone https://github.com/Chameleon-company/Evoleon
-cd Evoleon
-yarn cache clean
-npm cache clean --force
-rm -rf node_modules
-rm yarn.lock
-yarn install
-```
-
-Update the expo version:
-
-```bash
-expo upgrade
-```
-
 
  # Thanks for Visiting
-[(Back to top)](#table-of-contents)
-
 If this saved you development time or you otherwise found it useful, leave a star or follow in GitHub.
 
 
