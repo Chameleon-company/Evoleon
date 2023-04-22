@@ -49,14 +49,14 @@ export default function TermsAndConditionsScreen() {
         </Text>
 
 
-        <TouchableOpacity
+        <Pressable
           style={SignUpScreenStyle.button}
           onPress={() => {
             navigation.navigate("Signup");
           }}   
         >
           <Text style={ButtonStyle.Text}>Okay</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </SafeAreaView>
   </View>

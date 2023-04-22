@@ -123,7 +123,7 @@ export default function SignupScreen() {
       </View>
 
       {/* Submit button */}
-      <TouchableOpacity
+      <Pressable
         style={ButtonStyle.Button}
         onPress={async () => {
           await userSignUp(
@@ -142,7 +142,7 @@ export default function SignupScreen() {
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
