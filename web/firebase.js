@@ -1,7 +1,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  ResetPasswordWithEmail,
+  sendPasswordResetEmail,
   Auth,
   getAuth,
   signOut,
@@ -185,6 +185,26 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 };
 
+export const userPasswordResetAuth = (UserEmail) => {
+
+  const AuthInfo = auth;
+  let errorCaught = false;
+
+  return sendPasswordResetEmail(AuthInfo, UserEmail).then((a) => {    
+    alert("Password reset email sent");
+
+  }).catch((error) => {
+
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+
+    return true;
+  });
+
+}
+
+
 // Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
@@ -193,7 +213,7 @@ export const userFirestoreData = async (firstName, lastName, country) => {
     country: country,
   });
 
-  //Create subcollection within users document to store users favourite charger locations
+  // Create subcollection within users document to store users favourite charger locations.
   const subCollectionInitialData = { initialCollectionItem: "initial-data" };
   const subCollection = doc(
     firestoreDB,
@@ -205,30 +225,7 @@ export const userFirestoreData = async (firstName, lastName, country) => {
   await setDoc(subCollection, subCollectionInitialData, { merge: true });
 };
 
-export const UserPasswordResetAuth = async (UserEmail) => {
-
-  const AuthInfo = auth;
-  let ErrorCaught = false;
-
-  await ResetPasswordWithEmail(AuthInfo, UserEmail)
-    .then((UserCredential) => {
-      const UserData = UserCredential.UserData;
-      console.log("Users email: ", UserData.email);
-    })
-    .catch((ReturnedError) => {
-
-      console.log(ReturnedError.code);
-      console.log(ReturnedError.message);
-      ErrorCaught = true;
-
-    });
-
-  if (ErrorCaught == false) return true;
-  else return false;
-  
-};
-
-// Add or remove an EV charger from a users favourite list in Firestore
+// Add or remove an EV charger from a users favourite list in Firestore.
 export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
   evChargerLocationVal
 ) => {
@@ -335,4 +332,24 @@ export const fetchLocations = async () => {
   }, {});
 
   return qMap;
+};
+
+//Updating user details in Firebase
+export const handleSave = () => {
+  const userId = firebase.auth().currentUser.uid;
+  const userDetailsRef = firebase.database().ref(`userDetails/${userId}`);
+  userDetailsRef.update({
+    name,
+    email,
+    phone,
+    residentialAddress,
+    registrationNumber,
+    carType,
+  })
+  .then(() => {
+    console.log('User details updated successfully!');
+  })
+  .catch((error) => {
+    console.error('Error updating user details:', error);
+  });
 };
