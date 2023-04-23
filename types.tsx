@@ -52,6 +52,10 @@ export type AuthenticateParamList = {
   AuthenticateScreen: undefined;
 };
 
+export type TermsAndConditionsParamList = {
+  TermsAndConditionsScreen: undefined;
+};
+
 export type SignupParamList = {
   SignupScreen: undefined;
 };
