@@ -8,6 +8,7 @@ import ClientsScreen from "../screens/ClientsScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import AuthenticateScreen from '../screens/AuthenticateScreen';
+import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
 import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
@@ -19,6 +20,7 @@ import {
   ClientsParamList,
   LoginParamList,
   ForgotPasswordParamList,
+  TermsAndConditionsParamList,
   AuthenticateParamList, 
   SignupParamList,
   AboutParamList,
@@ -26,6 +28,7 @@ import {
 } from "../types";
 import { color } from "react-native-reanimated";
 import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -41,12 +44,12 @@ export default function DrawerNavigator() {
             routeNames: props.state.routeNames.filter(
               // The different screens can be excluded from the hamburger menu, by routing them here. 
               (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword';
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen';
               }
             ),
             routes: props.state.routes.filter(
               (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen'
             ),
           },
         };
@@ -74,9 +77,11 @@ export default function DrawerNavigator() {
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
+      <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+      
 
 
 
@@ -211,6 +216,26 @@ function AuthenticateNavigator() {
   )
 }
 
+const TermsAndConditionsStack = createStackNavigator<TermsAndConditionsParamList>();
+
+function TermsAndConditionsNavigator() {
+  return (
+    <TermsAndConditionsStack.Navigator>
+      <TermsAndConditionsStack.Screen
+        name="TermsAndConditionsScreen"
+        component={TermsAndConditionsScreen}
+          options={{
+            headerTitle:'Terms and Conditions',
+            headerStyle: {
+              backgroundColor: '#294E4B',
+            },
+            headerTitleStyle: {
+              color: 'white'
+            },
+          }}/>
+    </TermsAndConditionsStack.Navigator>
+  )
+}
 
 const SignupStack = createStackNavigator<SignupParamList>();
 

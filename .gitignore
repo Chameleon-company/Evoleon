@@ -21,3 +21,6 @@ node_modules
 !.vscode/extensions.json
 .history
 .idea/codeStyles/
+
+# JetBrains  
+.idea
