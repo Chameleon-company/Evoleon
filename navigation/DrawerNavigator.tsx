@@ -11,6 +11,7 @@ import AuthenticateScreen from '../screens/AuthenticateScreen';
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
+import UpdateUserDetailsScreen from "../screens/UpdateUserDetails"
 import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
@@ -24,6 +25,7 @@ import {
   AuthenticateParamList, 
   SignupParamList,
   AboutParamList,
+  UpdateUserDetailsParamList
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
@@ -73,7 +75,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="Clients" component={ClientsNavigator} />
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
-      
+      <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
@@ -276,5 +278,26 @@ function AboutNavigator() {
           }
         }}/>
     </AboutStack.Navigator>
+  );
+}
+
+const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
+
+function UpdateUserDetailsNavigator() {
+  return (
+    <UpdateUserDetailsStack.Navigator>
+      <UpdateUserDetailsStack.Screen 
+        name="UpdateUserDetailsScreen" 
+        component={UpdateUserDetailsScreen} 
+        options={{
+          headerTitle:'Update Details',
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          }
+        }}/>
+    </UpdateUserDetailsStack.Navigator>
   );
 }

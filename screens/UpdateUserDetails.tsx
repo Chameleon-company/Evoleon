@@ -1,6 +1,9 @@
 //Import required modules
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import MenuIcon from "../components/MenuIcon";
+import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import { UserDetailsPageStyle } from "../styles/updateUserDetails";
 import { handleSave } from "../web/firebase";
 
@@ -14,9 +17,18 @@ interface UserDetails {
   carType: string;
 }
 
-//User Details component
-const UserDetails = () => {
-  // Initializing user details state with the useState hook
+//React component for screen, uses useNavigation hook to get navigation object
+export default function UpdateUserDetailsScreen() {
+  const navigation = useNavigation();
+
+  //This hook helps to set options for screen's header
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
+    });
+  }, [navigation]);
+
+  //Initializing user details state with the useState hook
   const [userDetails, setUserDetails] = useState<UserDetails>({
     name: "",
     email: "",
@@ -25,7 +37,6 @@ const UserDetails = () => {
     registrationNumber: "",
     carType: "",
   });
-
 
   //Function to handle update to user details
   const handleUpdate = (key: keyof UserDetails, value: string) => {
@@ -94,5 +105,5 @@ const UserDetails = () => {
         <Text style={UserDetailsPageStyle.userDetailsButtonText}>Save</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+);
+}
