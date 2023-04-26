@@ -89,34 +89,19 @@ export const LoginSignOutButtonPressed = () => {
 
 // Login for an existing user.
 export const userLogin = async (email, password) => {
-
-  let errorCaught = false;
-
-  console.log("User tried to login to account.");
-
-  // In built function for Firebase for user login in to the Evoleon Application.
-  await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-
-      const user = userCredential.user;
-      console.log("Signed in with:", user.email);
-      userIsAuthenticated = true;
-      console.log("Welcome back", auth.currentUser.displayName);
-      errorCaught = false;
-
-    }).catch((error) => {
-
-      console.log("An Error has been caught");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(error.code);
-      console.log(error.message);
-      errorCaught = true;
-
-    });
-
-  if (errorCaught == false) return true;
-  else return false;
-  
+  try {
+    console.log("User tried to login to account.");
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    console.log("Signed in with:", user.email);
+    console.log("Welcome back", user.displayName);
+    return { success: true, user };
+  } catch (err) {
+    console.error("An Error has been caught");
+    console.error("Error code:", err.code);
+    console.error("Error message:", err.message);
+    return { success: false, error: err };
+  }
 };
 
 //Sign up for a new user
@@ -185,24 +170,19 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 };
 
-export const userPasswordResetAuth = (UserEmail) => {
-
-  const AuthInfo = auth;
-  let errorCaught = false;
-
-  return sendPasswordResetEmail(AuthInfo, UserEmail).then((a) => {    
+export const userPasswordResetAuth = async (UserEmail) => {
+  try {
+    const AuthInfo = auth;
+    // Attempt to send a password reset email using the provided email address
+    await sendPasswordResetEmail(AuthInfo, UserEmail);
     alert("Password reset email sent");
-
-  }).catch((error) => {
-
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-
-    return true;
-  });
-
-}
+    return { success: true };
+  } catch (error) {
+    // Log the error message and return it
+    console.log(error.message);
+    return { success: false, error };
+  }
+};
 
 
 // Create new Firestore document for user using unqiue user ID.
