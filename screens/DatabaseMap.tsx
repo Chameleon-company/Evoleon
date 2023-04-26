@@ -7,10 +7,14 @@ import * as Location from "expo-location";
 
 import { MapStyle } from "../styles/mapStyle";
 
-import { getFavouriteMarkers, getuserIsAuthenticated } from "../web/firebase";
+import {
+  getFavouriteMarkers,
+  getuserIsAuthenticated,
+  addFavouriteMarker,
+} from "../web/firebase";
 
 // This is the bottom sliding card that is displayed.
-import MarkerSlidingPannel from "./DatabaseDrawer";
+import DatabaseDrawer from "./DatabaseDrawer";
 
 export default class DatabaseMap extends React.Component {
   constructor(props) {
@@ -79,6 +83,19 @@ export default class DatabaseMap extends React.Component {
     } else {
       this.setState({ isVisible: !this.state.isVisible });
     }
+  };
+
+  //passthrough function for the drawer to favourite a marker
+  favouriteMarker = async (marker) => {
+    let res = await addFavouriteMarker(marker.id);
+    if (!res) {
+      console.log("Couldn't favourite marker: " + marker.id);
+      return;
+    }
+    await this.setState({
+      favouriteMarkers: [...this.state.favouriteMarkers, marker.id],
+    });
+    console.log("Marker " + marker.id + "set in favourites");
   };
 
   // This is gross but needed. The onMapPress will always fire, even if you're pressing a marker.
@@ -174,6 +191,7 @@ export default class DatabaseMap extends React.Component {
           zoomEnabled={true}
         >
           {this.props.markers.map((marker, index) => {
+            // Little conditional that just says "if we are showing favourites and the favroute is in the list show it " or "if we are not showing favourites show them all"
             if (
               (this.state.favouriteSelected &&
                 this.state.favouriteMarkers.includes(marker.id)) ||
@@ -196,7 +214,10 @@ export default class DatabaseMap extends React.Component {
           })}
         </MapView>
         {isVisible && (
-          <MarkerSlidingPannel marker={this.props.marker}></MarkerSlidingPannel>
+          <DatabaseDrawer
+            favourite={this.favouriteMarker}
+            marker={this.props.marker}
+          ></DatabaseDrawer>
         )}
       </>
     );

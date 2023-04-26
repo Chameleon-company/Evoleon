@@ -313,6 +313,7 @@ export const addFavouriteMarker = async (markerId) => {
     
     // Check if the user is authenticated
     if (!user) {
+      console.log("You're not signed in!");
       return false;
     }
     

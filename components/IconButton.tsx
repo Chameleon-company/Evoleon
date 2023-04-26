@@ -1,0 +1,55 @@
+import React from "react";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+// This just exports a touchable button with the width and height defined so it's cleaner within code.
+// Use like this:
+// <IconButton
+//  icon="heart"
+//  onPress={() => {
+//    someFunction()
+//  }}
+// />
+
+const IconButton = ({
+  icon,
+  onPress,
+  style,
+  iconSize = 28,
+  touchable = true,
+  ...props
+}) => {
+  if (touchable) {
+    return (
+      <TouchableOpacity
+        style={[styles.favButton, style]}
+        onPress={onPress}
+        {...props}
+      >
+        <View style={styles.iconCircle}>
+          <Ionicons name={icon} size={iconSize} color="white" />
+        </View>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <View style={styles.iconCircle}>
+        <Ionicons name={icon} size={iconSize} color="white" />
+      </View>
+    );
+  }
+};
+
+const styles = StyleSheet.create({
+  favButton: {},
+  iconCircle: {
+    width: 48, // Adjust the size of the circle
+    height: 48, // Adjust the size of the circle
+    borderRadius: 24, // Set the borderRadius to half of the width and height
+    backgroundColor: "#00a651",
+    alignItems: "center", // Center the icon horizontally
+    justifyContent: "center", // Center the icon vertically
+  },
+});
+
+export default IconButton;
