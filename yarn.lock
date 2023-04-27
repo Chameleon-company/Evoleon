@@ -5321,6 +5321,11 @@ expo-haptics@~12.2.1:
   resolved "https://registry.npmjs.org/expo-haptics/-/expo-haptics-12.2.1.tgz"
   integrity sha512-XRZtmIQi901Q4+/cZnVrULRFOqShsgCuSP0SCbVEhnq8sK0OA4jgun12O93Pu5aGvTyoqsAcIArE8tX+8AEqRA==
 
+expo-image@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/expo-image/-/expo-image-1.2.1.tgz"
+  integrity sha512-pYZFN0ctuIBA+sqUiw70rHQQ04WDyEcF549ObArdj0MNgSUCBJMFmu/jrWDmxOpEMF40lfLVIZKigJT7Bw+GYA==
+
 expo-keep-awake@~12.0.1:
   version "12.0.1"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-12.0.1.tgz"

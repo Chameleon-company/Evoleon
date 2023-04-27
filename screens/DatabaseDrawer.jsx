@@ -1,170 +1,245 @@
-import { Text, View, Dimensions, Animated } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Text,
+  View,
+  Dimensions,
+  Animated,
+  Linking,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
-import { TouchableOpacity } from "react-native";
-const { height } = Dimensions.get("window");
-import React, { useRef } from "react";
 import IconButton from "../components/IconButton";
-import { Entypo } from "@expo/vector-icons";
 import StarRating from "../components/StarRating";
-export default class DatabaseDrawer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  static defaultProps = {
-    draggableRange: { top: height + 180 - 64, bottom: 180 },
+import { FlatList } from "react-native-gesture-handler";
+import { Image } from "expo-image";
+
+const { height } = Dimensions.get("window");
+
+const DatabaseDrawer = (props) => {
+  const defaultProps = {
+    draggableRange: { top: height + 180 - 90, bottom: 180 },
   };
 
-  _draggedValue = new Animated.Value(180);
+  const [draggedValue] = useState(new Animated.Value(180));
+  const panelRef = useRef(null);
 
-  render() {
-    const marker = this.props.marker;
+  // usestate for the marker data
+  [markerData, setMarkerData] = useState(null);
 
-    const { top, bottom } = this.props.draggableRange;
+  const marker = props.marker;
 
-    const backgoundOpacity = this._draggedValue.interpolate({
-      inputRange: [height - 48, height],
-      outputRange: [1, 0],
-      extrapolate: "clamp",
+  const { top, bottom } = props.draggableRange || defaultProps.draggableRange;
+
+  //on marker change
+  useEffect(() => {
+    console.log("marker change");
+    fetchPlugshareLocation(marker.id).then((data) => {
+      setMarkerData(data);
+    });
+  }, [props.marker]);
+
+  const backgoundOpacity = draggedValue.interpolate({
+    inputRange: [height - 48, height],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
+
+  const iconTranslateY = draggedValue.interpolate({
+    inputRange: [height - 56, height, top],
+    outputRange: [0, 56, 180 - 32],
+    extrapolate: "clamp",
+  });
+
+  const textTranslateY = draggedValue.interpolate({
+    inputRange: [bottom, top],
+    outputRange: [0, 8],
+    extrapolate: "clamp",
+  });
+
+  const textTranslateX = draggedValue.interpolate({
+    inputRange: [bottom, top],
+    outputRange: [0, -112],
+    extrapolate: "clamp",
+  });
+
+  const textScale = draggedValue.interpolate({
+    inputRange: [bottom, top],
+    outputRange: [1, 0.7],
+    extrapolate: "clamp",
+  });
+
+  // dont sue me plugshare, i'm just a student
+  async function fetchPlugshareLocation(locationId) {
+    const url = `https://api.plugshare.com/v3/locations/${locationId}`;
+    const headers = new Headers({
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0",
+      Accept: "application/json, text/plain, */*",
+      "Accept-Language": "en",
+      "Accept-Encoding": "gzip, deflate, br",
+      Referer: "https://www.plugshare.com/",
+      Authorization: "Basic d2ViX3YyOkVOanNuUE54NHhXeHVkODU=",
+      Origin: "https://www.plugshare.com",
+      Connection: "keep-alive",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-site",
+      TE: "trailers",
     });
 
-    const iconTranslateY = this._draggedValue.interpolate({
-      inputRange: [height - 56, height, top],
-      outputRange: [0, 56, 180 - 32],
-      extrapolate: "clamp",
-    });
-
-    const textTranslateY = this._draggedValue.interpolate({
-      inputRange: [bottom, top],
-      outputRange: [0, 8],
-      extrapolate: "clamp",
-    });
-
-    const textTranslateX = this._draggedValue.interpolate({
-      inputRange: [bottom, top],
-      outputRange: [0, -112],
-      extrapolate: "clamp",
-    });
-
-    const textScale = this._draggedValue.interpolate({
-      inputRange: [bottom, top],
-      outputRange: [1, 0.7],
-      extrapolate: "clamp",
-    });
-
-    // dont sue me plugshare, i'm just a student
-    async function fetchPlugshareLocation(locationId) {
-      const url = `https://api.plugshare.com/v3/locations/${locationId}`;
-      const headers = new Headers({
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0",
-        Accept: "application/json, text/plain, */*",
-        "Accept-Language": "en",
-        "Accept-Encoding": "gzip, deflate, br",
-        Referer: "https://www.plugshare.com/",
-        Authorization: "Basic d2ViX3YyOkVOanNuUE54NHhXeHVkODU=",
-        Origin: "https://www.plugshare.com",
-        Connection: "keep-alive",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-site",
-        TE: "trailers",
-      });
-
-      try {
-        const response = await fetch(url, { method: "GET", headers });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        return null;
+    try {
+      const response = await fetch(url, { method: "GET", headers });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
       }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return null;
     }
-    // on database drawer open, fetch the data from plugshare
-    fetchPlugshareLocation(185320).then((data) => {
-      marker.data = data;
-    });
+  }
 
-    return (
-      <>
-        <SlidingUpPanel
-          ref={(c) => (this._panel = c)}
-          draggableRange={this.props.draggableRange}
-          animatedValue={this._draggedValue}
-          snappingPoints={[480, height]} //this defines the snapping points of the view.
-          height={height + 180}
-          friction={0.7}
-        >
-          <View style={styles.panel}>
-            <IconButton
-              icon="chevron-up"
+  return (
+    <>
+      <SlidingUpPanel
+        ref={panelRef}
+        draggableRange={props.draggableRange || defaultProps.draggableRange}
+        animatedValue={draggedValue}
+        snappingPoints={[480, height]}
+        height={height + 180}
+        friction={0.7}
+      >
+        <View style={styles.panel}>
+          <IconButton
+            icon="chevron-up"
+            style={{
+              position: "absolute",
+              top: -24,
+              right: 18,
+              width: 48,
+              height: 48,
+              zIndex: 1,
+            }}
+            onPress={() => {
+              if (draggedValue._value == 480) {
+                panelRef.current.show();
+              } else {
+                panelRef.current.show(480);
+              }
+            }}
+          />
+          <View style={styles.panelHeader}>
+            <Animated.View
               style={{
-                position: "absolute",
-                top: -24,
-                right: 18,
-                width: 48,
-                height: 48,
-                zIndex: 1,
+                transform: [
+                  { translateY: textTranslateY },
+                  { translateX: textTranslateX },
+                  { scale: textScale },
+                ],
               }}
-              onPress={() => {
-                if (this._draggedValue._value == 480) {
-                  this._panel.show();
-                } else {
-                  this._panel.show(480);
-                }
-              }}
-            />
-            <View style={styles.panelHeader}>
-              <Animated.View
-                style={{
-                  transform: [
-                    { translateY: textTranslateY },
-                    { translateX: textTranslateX },
-                    { scale: textScale },
-                  ],
-                }}
-              >
-                <View>
+            >
+              <View>
+                <View style={{ bottom: 20 }}>
                   <Text style={styles.textHeader}>{marker.name}</Text>
-                  <IconButton
-                    icon="heart"
-                    onPress={() => {
-                      this.props.favourite(marker);
-                    }}
-                  />
-                  {marker.data !== undefined && (
-                    <Text>{marker.data.cost_description}</Text>
-                  )}
-                  {/* Since they don't have rankings we are just randomly picking a value */}
+                  {/* If there is no rating / score we will make one up with the id as the seed for a float between 1 and 10 */}
                   <StarRating
                     score={
                       marker.rating == undefined ? marker.id : marker.rating
                     }
                   ></StarRating>
                 </View>
-              </Animated.View>
-            </View>
-            <View style={styles.container}>
-              <Text>Bottom sheet content</Text>
-            </View>
+                {/* / */}
+                <View style={{ flexDirection: "row" }}>
+                  <IconButton
+                    icon="heart"
+                    style={{ marginRight: 10 }}
+                    onPress={() => {
+                      props.favourite(marker);
+                    }}
+                  />
+                  <IconButton
+                    icon="direction"
+                    onPress={() => {
+                      if (Platform.OS === "ios") {
+                        Linking.openURL(
+                          `http://maps.apple.com/?address=${encodeURIComponent(
+                            marker.address
+                          )}`
+                        );
+                      } else {
+                        Linking.openURL(
+                          `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                            marker.address
+                          )}`
+                        );
+                      }
+                    }}
+                  />
+                </View>
+                {markerData !== undefined && (
+                  <>
+                    {/* Gotta make it fit the page */}
+                    <Text style={{ maxWidth: 500, color: "#ffffff" }}>
+                      {markerData?.cost_description !== undefined &&
+                      markerData?.cost_description !== ""
+                        ? markerData?.cost_description.length > 50
+                          ? markerData?.cost_description.substring(0, 50) +
+                            "..."
+                          : markerData?.cost_description
+                        : "Visit location for cost information"}
+                    </Text>
+                  </>
+                )}
+              </View>
+            </Animated.View>
           </View>
-        </SlidingUpPanel>
-      </>
-    );
-  }
-}
+          {/* Larger view screen after being scrolled into full view */}
+          <View style={styles.container}>
+            <Text>Description:</Text>
+            <Text>
+              {markerData?.description.replace(/\r?\n|\r/g, "").length > 100
+                ? markerData?.description
+                    .replace(/\r?\n|\r/g, "")
+                    .slice(0, 100) + "..."
+                : markerData?.description.replace(/\r?\n|\r/g, "") ||
+                  "No Description"}
+            </Text>
+            {markerData?.photos?.length > 0 && (
+              <>
+                <Text>Photos:</Text>
+                <FlatList
+                  data={markerData?.photos}
+                  renderItem={({ item }) => (
+                    <Image
+                      key={item.id}
+                      source={{ uri: item.url }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                  horizontal={true}
+                />
+              </>
+            )}
+          </View>
+        </View>
+      </SlidingUpPanel>
+    </>
+  );
+};
+
+export default DatabaseDrawer;
 
 // Can move this out once the component is outa dev but easier to work with this here
-
 const styles = {
   container: {
     flex: 1,
     backgroundColor: "#f8f9fa",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   panel: {
     flex: 1,
@@ -178,8 +253,8 @@ const styles = {
     padding: 24,
   },
   textHeader: {
-    paddingBottom: 70, //this takes the text to the top of the panel
-    fontSize: 28,
+    // bottom: 20,
+    fontSize: 24,
     color: "#FFF",
   },
   textFavHeader: {

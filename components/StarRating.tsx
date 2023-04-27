@@ -3,10 +3,12 @@ import { FontAwesome } from "@expo/vector-icons";
 import { View, StyleSheet } from "react-native";
 
 const StarRating = ({ score }) => {
+  // This is to generate a random float between 1 and 10 using the input score as a seed
+  // Mainly for display purposes during testing
   if (score > 10) {
     const x = Math.sin(score) * 10000;
     const random = x - Math.floor(x);
-    const floatInRange = 1 + random * 9; // This generates a float between 1 and 10
+    const floatInRange = 1 + random * 9;
     score = floatInRange;
   }
   const rating = (score / 10) * 5;
@@ -27,7 +29,7 @@ const StarRating = ({ score }) => {
         key={i}
         name={iconName}
         size={24}
-        color={iconName !== "star-outlined" ? "black" : "lightgray"}
+        color={iconName !== "star-o" ? "gold" : "lightgray"}
         style={styles.star}
       />
     );

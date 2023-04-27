@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
 // This just exports a touchable button with the width and height defined so it's cleaner within code.
 // Use like this:
@@ -27,14 +27,14 @@ const IconButton = ({
         {...props}
       >
         <View style={styles.iconCircle}>
-          <Ionicons name={icon} size={iconSize} color="white" />
+          <Entypo name={icon} size={iconSize} color="white" />
         </View>
       </TouchableOpacity>
     );
   } else {
     return (
       <View style={styles.iconCircle}>
-        <Ionicons name={icon} size={iconSize} color="white" />
+        <Entypo name={icon} size={iconSize} color="white" />
       </View>
     );
   }
