@@ -10,7 +10,7 @@ import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
 import { ButtonStyle } from "../styles/buttonStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoginScreenStyle } from "../styles/loginStyle";
-import { userLogin } from "../web/firebase";
+import { userPasswordResetAuth } from "../web/firebase";
 
 import { ClientStyle } from "../styles/clientStyle";
 
@@ -31,48 +31,54 @@ export default function ForgotPasswordScreen() {
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
   });
-  
+
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
-        <View style={LoginScreenStyle.inputView}>
-          <TextInput
-            style={LoginScreenStyle.input}
-            keyboardType="email-address"
-            onChangeText={onChangeTextEmail}
-            value={email}
-            placeholderTextColor="grey"
-            placeholder="Email"
-          />
+      <View style={LoginScreenStyle.inputView}>
+        <TextInput
+          style={LoginScreenStyle.input}
+          keyboardType="email-address"
+          onChangeText={onChangeTextEmail}
+          value={email}
+          placeholderTextColor="grey"
+          placeholder="Email"
+        />
 
+        {/* Reset button */}
+        <TouchableOpacity
+          style={ButtonStyle.Button}
+          onPress={async () => {
+            // Call the userPasswordResetAuth function and await its result
+            const { success, error } = await userPasswordResetAuth(email);
+            if (!success) {
+              // Check the error code and display the appropriate message
+              if (
+                error.code === "auth/invalid-email" ||
+                error.code === "auth/missing-email"
+              ) {
+                Alert.alert("Error", "Please enter the email");
+              } else {
+                // If there's an error, display an alert with the error message
+                Alert.alert("Incorrect account email", error.message);
+              }
+            } else {
+              // If successful, navigate to the Login screen
+              navigation.navigate("Authenticate");
+            }
+          }}
+        >
+          <Text style={ButtonStyle.Text}>Reset Password</Text>
+        </TouchableOpacity>
 
-          {/* Reset button */}
-          <TouchableOpacity
-            style={LoginScreenStyle.button}
-            onPress={async () => {
-              await userLogin(email).then((result) => {
-                if (result == true) {
-                  navigation.navigate("" /*TODO: Navigate to a splash screen.*/);
-                } else {
-                  Alert.alert("Incorrect email.");
-                }
-              });
-            }}
-            // TODO: Need to configure or update button.text to allow for proper text wrapping to have "Reset Password" instead of "Reset".
-          >
-            <Text style={ButtonStyle.Text}>Reset</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={LoginScreenStyle.cancelButton}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
-            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
-          </TouchableOpacity>
-          
+        <TouchableOpacity
+          style={LoginScreenStyle.cancelButton}
+          onPress={() => {
+            navigation.navigate("Database");
+          }}
+        >
+          <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
-
