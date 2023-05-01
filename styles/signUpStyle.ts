@@ -48,6 +48,13 @@ export const SignUpScreenStyle = StyleSheet.create({
     marginBottom: 20,
     marginTop: 50,
   },
+
+  termsConditionsButton: {
+    marginBottom: 20,
+    marginTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   button: {
     alignItems: "center",
     justifyContent: "center",
@@ -93,4 +100,5 @@ export const SignUpScreenStyle = StyleSheet.create({
     marginBottom: 10,
     color: "rgba(55, 72, 55, 0.8)",
   },
+
 });

@@ -106,13 +106,24 @@ export default function SignupScreen() {
           onValueChange={setChecked}
           color={isChecked ? "#294E4B" : undefined}
         />
-        <Text style={SignUpScreenStyle.CheckBoxText}>
-          I agree to Terms and Conditions and the Privacy Policy
-        </Text>
+
+       <TouchableOpacity 
+        ///style={SignUpScreenStyle.termsConditionsButton}
+       /// onPress={() => {
+       /// navigation.navigate('TermsAndConditionsScreen');
+        ///  }}
+          />
+          <Text style={SignUpScreenStyle.CheckBoxText}>
+  I agree to 
+  <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
+    <Text style={SignUpScreenStyle.SignupLink}>Terms and Conditions</Text>
+  </TouchableOpacity> 
+  and the Privacy Policy
+</Text>
       </View>
 
       {/* Submit button */}
-      <TouchableOpacity
+      <Pressable
         style={ButtonStyle.Button}
         onPress={async () => {
           await userSignUp(
@@ -131,7 +142,7 @@ export default function SignupScreen() {
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
