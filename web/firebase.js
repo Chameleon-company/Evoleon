@@ -22,6 +22,9 @@ import {
   query,
   getDocs,
   get,
+  updateDoc,
+	arrayUnion,
+	arrayRemove
 } from "firebase/firestore";
 
 //Boolean - true if user is signed in
@@ -250,6 +253,113 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
   }
 };
 
+// Gets the users favourite markers from Firestore
+// The favourite markers are stored within an array called "favouriteMarkers" in the users document
+// The array contains only ID's of the EV charger locations
+export const getFavouriteMarkers = async () => {
+	const user = auth.currentUser;
+  
+	if (!user) {
+	  return false;
+	}
+  
+	const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  
+	try {
+	  const querySnapshot = await getDoc(userDocRef);
+  
+	  if (querySnapshot.exists()) {
+		const data = querySnapshot.data();
+		const favouriteMarkers = data.favouriteMarkers || [];
+		return favouriteMarkers;
+	  } else {
+		console.error("No such document!");
+		return [];
+	  }
+	} catch (error) {
+	  console.error("Error getting document:", error);
+	  return [];
+	}
+};
+
+// Adds a marker to the users favourite markers in Firestore
+// It is created in this manor to reduce the amount of reads and writes to Firestore
+export const addFavouriteMarker = async (markerId) => {
+    // Get the current user
+    const user = auth.currentUser;
+    
+    // Check if the user is authenticated
+    if (!user) {
+      console.log("You're not signed in!");
+      return false;
+    }
+    
+    // Get the user's document reference
+    const userDocRef = doc(firestoreDB, "UserData", user.uid);
+    
+    try {
+      // Try to update the document with the markerId using arrayUnion
+      await updateDoc(userDocRef, {
+      favouriteMarkers: arrayUnion(markerId)
+      });
+    } catch (error) {
+      console.error("Error updating document:", error);
+    
+      // Check if the error is due to the document not being created
+      if (error.code === "not-found") {
+      try {
+        // Create the document and add the markerId
+        await setDoc(userDocRef, { favouriteMarkers: [markerId] });
+      } catch (createError) {
+        console.error("Error creating document:", createError);
+        return false;
+      }
+      } else {
+      return false;
+      }
+    }
+    
+    return true;
+};
+
+  // Similar to above, but removes the marker from the users favourite markers in Firestore
+export const removeFavouriteMarker = async (markerId) => {
+    // Get the current user
+    const user = auth.currentUser;
+    
+    // Check if the user is authenticated
+    if (!user) {
+      return false;
+    }
+    
+    // Get the user's document reference
+    const userDocRef = doc(firestoreDB, "UserData", user.uid);
+    
+    try {
+      // Try to remove the markerId from the favouriteMarkers array using arrayRemove
+      await updateDoc(userDocRef, {
+      favouriteMarkers: arrayRemove(markerId)
+      });
+    } catch (error) {
+      console.error("Error updating document:", error);
+    
+      // Check if the error is due to the array not existing
+      if (error.code === "not-found") {
+      try {
+        // Create an empty favouriteMarkers array
+        await setDoc(userDocRef, { favouriteMarkers: [] });
+      } catch (createError) {
+        console.error("Error creating document:", createError);
+        return false;
+      }
+      } else {
+      return false;
+      }
+    }
+    
+    return true;
+};
+
 export let favouriteMarkers = [{}];
 
 export const getUsersFavouriteListInFirestore = async () => {
@@ -299,37 +409,24 @@ export const evChargerLocationIsInFavourites = (val) => {
   return false;
 };
 
+// Get all EV charger locations from Firestore, return as object instead of array
 export const fetchLocations = async () => {
-  const locationRef = collection(firestoreDB, "Locations");
-  const q = query(locationRef);
-  const querySnapshot = await getDocs(q);
+	const locationRef = collection(firestoreDB, 'Locations');
+	const q = query(locationRef);
+	const querySnapshot = await getDocs(q);
 
-  const qMap = querySnapshot.docs.reduce((place, docSnapshot) => {
-    const { id, lat, long, Dining, Restroom, Park, title } = docSnapshot.data();
-    place[id] = [lat, long, Dining, Restroom, Park, title];
-
-    return place;
-  }, {});
-
-  return qMap;
-};
-
-//Updating user details in Firebase
-export const handleSave = () => {
-  const userId = firebase.auth().currentUser.uid;
-  const userDetailsRef = firebase.database().ref(`userDetails/${userId}`);
-  userDetailsRef.update({
-    name,
-    email,
-    phone,
-    residentialAddress,
-    registrationNumber,
-    carType,
-  })
-  .then(() => {
-    console.log('User details updated successfully!');
-  })
-  .catch((error) => {
-    console.error('Error updating user details:', error);
-  });
+	const locations = querySnapshot.docs.map((docSnapshot) => {
+		const { id, lat, long, Dining, Restroom, Park, title } = docSnapshot.data();
+		const location = {
+			id,
+			lat,
+			long,
+			Dining,
+			Restroom,
+			Park,
+			title
+		};
+		return location;
+	});
+	return locations;
 };
