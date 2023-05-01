@@ -5,7 +5,7 @@ export const ButtonStyle = StyleSheet.create({  // export const ButtonStyle = St
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 40,
+    paddingHorizontal: 60,
     borderRadius: 50,
     backgroundColor: '#294E4B',
     marginBottom: 20,

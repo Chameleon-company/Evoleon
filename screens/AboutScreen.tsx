@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 //import DeviceInfo from 'react-native-device-info';
@@ -18,7 +18,15 @@ function AboutScreen() {
     const termsButton = ' Ts & Cs ';
     const clearCache = ' Clear Cache ';
 
-    console.log(EvoleonAppDeets.expo.version);
+    const clearCacheAlert = () => // A place holder alert to add the clear cache functionality to. 
+    Alert.alert('Confirmation Required', 'Press OK to clear the cache.', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
     
     useEffect(() => {
         navigation.setOptions({
@@ -41,7 +49,8 @@ function AboutScreen() {
           <TouchableOpacity style={ButtonStyle.Button}>
             <Text style={ButtonStyle.Text}>{termsButton}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ButtonStyle.Button}>
+          <TouchableOpacity style={ButtonStyle.Button}
+            onPress={clearCacheAlert}>
             <Text style={ButtonStyle.Text}>{clearCache}</Text>
           </TouchableOpacity>
         </View>
