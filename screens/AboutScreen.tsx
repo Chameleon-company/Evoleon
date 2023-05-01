@@ -13,13 +13,14 @@ import { ButtonStyle } from '../styles/buttonStyle';
 function AboutScreen() {
     const navigation = useNavigation();
     const EvoleonAppDeets = require('../app.json');
-    const deviceAppVersion = 'Pickles' //DeviceInfo.getVersion();
+    const deviceAppVersion = 'Pickles' // DeviceInfo.getVersion();
     const upDateButton = '     Update     ';
     const termsButton = ' Ts & Cs ';
     const clearCache = ' Clear Cache ';
 
-    const clearCacheAlert = () => // A place holder alert to add the clear cache functionality to. 
-    Alert.alert('Confirmation Required', 'Press OK to clear the cache.', [
+    // A place holder alert to add the clear cache functionality to. 
+    const clearCacheAlert = () => 
+      Alert.alert('Confirmation Required', 'Press OK to clear the cache.', [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -28,6 +29,7 @@ function AboutScreen() {
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);
     
+    // Header menu, needs to be replaced with << back. 
     useEffect(() => {
         navigation.setOptions({
           headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
