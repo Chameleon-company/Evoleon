@@ -14,7 +14,9 @@ function AboutScreen() {
     const navigation = useNavigation();
     const EvoleonAppDeets = require('../app.json');
     const deviceAppVersion = 'Pickles' //DeviceInfo.getVersion();
-    const upDateButton = 'Update';
+    const upDateButton = '     Update     ';
+    const termsButton = ' Ts & Cs ';
+    const clearCache = ' Clear Cache ';
 
     console.log(EvoleonAppDeets.expo.version);
     
@@ -35,6 +37,14 @@ function AboutScreen() {
             <Text style={ButtonStyle.Text}>{upDateButton}</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.termsButton}>
+          <TouchableOpacity style={ButtonStyle.Button}>
+            <Text style={ButtonStyle.Text}>{termsButton}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={ButtonStyle.Button}>
+            <Text style={ButtonStyle.Text}>{clearCache}</Text>
+          </TouchableOpacity>
+        </View>
     </View>
     );
 
@@ -44,6 +54,10 @@ export const styles = StyleSheet.create({
   currentVersion: {
     position: 'absolute',
     top: 100,
+  },
+  termsButton: {
+    position: 'absolute',
+    top: 300,
   },
   updateButton: {
     position: 'absolute',
