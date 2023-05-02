@@ -66,11 +66,17 @@ export const getUserName = () => {
 
 export const getUserNameTextForProfilePage = () => {
   if (getuserIsAuthenticated()) {
-    return auth.currentUser.displayName.concat("'s account details");
+    const username = auth.currentUser.displayName;
+    if (username) {
+      return `${username}'s account details`;
+    } else {
+      return "undefined's account details";
+    }
   } else {
     return "Please log into your account";
   }
 };
+
 
 //Get the text for the sign in/sign out button in top left menu.
 export var getLoginSignOutButtonText = () => {
@@ -96,6 +102,7 @@ export const userLogin = async (email, password) => {
     console.log("User tried to login to account.");
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    userIsAuthenticated = true;
     console.log("Signed in with:", user.email);
     console.log("Welcome back", user.displayName);
     return { success: true, user };
