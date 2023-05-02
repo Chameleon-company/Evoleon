@@ -56,11 +56,11 @@ export default function DrawerNavigator() {
 
   
       return (
+        
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          
-          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
-            LoginSignOutButtonPressed();
+          <DrawerItem label={getLoginSignOutButtonText().first} onPress={() => {
+
             props.navigation.navigate("Authenticate");
           }
         }/>

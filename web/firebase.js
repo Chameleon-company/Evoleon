@@ -25,10 +25,7 @@ import {
   get,
 } from "firebase/firestore";
 
-//Boolean - true if user is signed in
-var userIsAuthenticated = false;
-
-//Firebase config for Evoleon Application
+// Firebase config for Evoleon Application.
 const firebaseConfig = {
   apiKey: "AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg",
   authDomain: "evoleonapp.firebaseapp.com",
@@ -46,7 +43,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
-//Boolean - true if user is signed in
+// Boolean - true if user is logged in.
 var userIsAuthenticated = false;
 
 export const getuserIsAuthenticated = () => {
@@ -70,19 +67,24 @@ export const getUserNameTextForProfilePage = () => {
   }
 };
 
-//Get the text for the sign in/sign out button in top left menu.
+//Get the text for the logged in/sign out button in top left menu.
 export var getLoginSignOutButtonText = () => {
   var text;
   if (userIsAuthenticated) {
     text = "Sign out of " + auth.currentUser.displayName + "'s account";
+
+    return { first: text, second: true };
   } else {
+
     text = "Account";
+
+    return { first: text, second: false };
   }
-  return text;
+
 };
 
 export const LoginSignOutButtonPressed = () => {
-  //If the user is signed in, then sign out the user.
+  // If the user is logged in, then sign out the user.
   if (userIsAuthenticated) {
     userSignOut();
   }
@@ -90,37 +92,33 @@ export const LoginSignOutButtonPressed = () => {
 
 // Login for an existing user.
 export const userLogin = async (email, password) => {
-
   let errorCaught = false;
 
   console.log("User tried to login to account.");
 
   // In built function for Firebase for user login in to the Evoleon Application.
-  await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-
+  await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
       const user = userCredential.user;
       console.log("Signed in with:", user.email);
       userIsAuthenticated = true;
       console.log("Welcome back", auth.currentUser.displayName);
       errorCaught = false;
-
-    }).catch((error) => {
-
+    })
+    .catch((error) => {
       console.log("An Error has been caught");
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(error.code);
       console.log(error.message);
       errorCaught = true;
-
     });
 
   if (errorCaught == false) return true;
   else return false;
-  
 };
 
-//Sign up for a new user
+// Sign up for a new user.
 export const userSignUp = async (
   email,
   password,
@@ -155,12 +153,12 @@ export const userSignUp = async (
   }
 };
 
-//Add users first name to firebase Authentication
+// Add users first name to firebase Authentication.
 export const updateProfileDetails = async (name) => {
   await updateProfile(auth.currentUser, {
     displayName: name,
   })
-    .then(() => {
+  .then(() => {
       console.log("Profile updated.");
       console.log("Display name added: " + auth.currentUser.displayName);
     })
@@ -183,48 +181,46 @@ export const userSignOut = async () => {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
+
   console.log("Signed out of " + displayName + "'s account");
 };
 
 export const userPasswordResetAuth = (UserEmail) => {
-
   const AuthInfo = auth;
   let errorCaught = false;
 
-  return sendPasswordResetEmail(AuthInfo, UserEmail).then((a) => {    
-    alert("Password reset email sent");
+  return sendPasswordResetEmail(AuthInfo, UserEmail)
+    .then(() => {
+      alert("Password reset email sent");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
 
-  }).catch((error) => {
-
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-
-    return true;
-  });
-
-}
+      return true;
+    });
+};
 
 export const userDeleteAccount = () => {
-
   const AuthInfo = auth;
   const user = AuthInfo.currentUser;
   let errorCaught = false;
-  
+
   // User needs to be logged in in order to delete their account.
-  return deleteUser(user).then(() => {
-    console.log("User deleted");
-  
-  }).catch((error) => {
+  return deleteUser(user)
+    .then(() => {
+      userSignOut();
+      console.log("User account has been deleted.");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
 
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-
-    return true;
-  });
-
-}
+      return true;
+    });
+};
 
 // Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
@@ -258,7 +254,7 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
     evChargerLocationVal.lat + "_" + evChargerLocationVal.long
   );
 
-  //Remove favourite EV charging location
+  // Remove favourite EV charging location.
   if (evChargerLocationIsInFavourites(evChargerLocationVal)) {
     const deleteDocument = await deleteDoc(document)
       .then(() => {
@@ -359,18 +355,19 @@ export const fetchLocations = async () => {
 export const handleSave = () => {
   const userId = firebase.auth().currentUser.uid;
   const userDetailsRef = firebase.database().ref(`userDetails/${userId}`);
-  userDetailsRef.update({
-    name,
-    email,
-    phone,
-    residentialAddress,
-    registrationNumber,
-    carType,
-  })
-  .then(() => {
-    console.log('User details updated successfully!');
-  })
-  .catch((error) => {
-    console.error('Error updating user details:', error);
-  });
+  userDetailsRef
+    .update({
+      name,
+      email,
+      phone,
+      residentialAddress,
+      registrationNumber,
+      carType,
+    })
+    .then(() => {
+      console.log("User details updated successfully!");
+    })
+    .catch((error) => {
+      console.error("Error updating user details:", error);
+    });
 };

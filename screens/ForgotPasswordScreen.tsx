@@ -15,10 +15,7 @@ import { userPasswordResetAuth } from "../web/firebase";
 import { ClientStyle } from "../styles/clientStyle";
 
 import {
-  getLoginSignOutButtonText,
   getuserIsAuthenticated,
-  getUserNameTextForProfilePage,
-  LoginSignOutButtonPressed,
 } from "../web/firebase";
 
 export default function ForgotPasswordScreen() {

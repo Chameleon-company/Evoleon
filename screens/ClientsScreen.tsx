@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { Image, TouchableOpacity, ScrollView} from "react-native";
+import { Image, TouchableOpacity, ScrollView, Alert } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import MenuIcon from "../components/MenuIcon";
@@ -13,6 +13,7 @@ import {
   getuserIsAuthenticated,
   getUserNameTextForProfilePage,
   LoginSignOutButtonPressed,
+  userDeleteAccount,
 } from "../web/firebase";
 import { ClientStyle } from "../styles/clientStyle";
 
@@ -20,48 +21,46 @@ export default function ClientsScreen() {
   // Define navigation using the useNavigation hook.
   const navigation = useNavigation();
 
-  const [LoginSignOutText, setLoginSignOutText] = useState("Sign in");
+  const [LoginSignOutText, setLoginSignOutText] = useState("Login");
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [buttonVisibleUserAuth, setButtonVisibleUserAuth] = useState(false);
 
-  
-  // Define state variables to hold profile and sign in/out text.
+  // Define state variables to hold profile and login or sign out text.
   const [profileText, setProfileText] = useState(
-    "Please log into your account"
+    "Please login to your account"
   );
-
-
 
   // Set the headerLeft icon to the menu icon.
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
-      // Set profile and sign in/out text when screen is focused.
-      navigation.addListener("focus", () => {
+    // Set profile and login or sign out text when screen is focused.
+    navigation.addListener("focus", () => {
       setProfileText(getUserNameTextForProfilePage());
-      setLoginSignOutText(getLoginSignOutButtonText());
-    });
 
-    if(getuserIsAuthenticated()) {
-      setIsVisible(true); 
-    } else {
-      setIsVisible(false); 
-    }
-    
-    
+      setLoginSignOutText(getLoginSignOutButtonText().first);
+    });
   });
 
   // Define function for login sign out button pressed.
   const authActions = () => {
+
     if (getuserIsAuthenticated()) {
       LoginSignOutButtonPressed();
       setProfileText("Please login to view account");
       setLoginSignOutText("Login");
-      setIsVisible(false);
-
     } else {
       navigation.navigate("Login");
+    }
+
+    // This is used to hide the delete button or other buttons not required for non-authenticated users.
+    if (getuserIsAuthenticated()) {
+      setButtonVisibleUserAuth(true);
+      navigation.navigate("Authenticate");
+    } else {  
+      setButtonVisibleUserAuth(false);
+      navigation.navigate("Authenticate");
     }
 
   };
@@ -71,79 +70,104 @@ export default function ClientsScreen() {
     This content is rendered in a scroll view, which allows for a dynamic menu that can be moved up and down.
     */
     <ScrollView style={ClientStyle.scrollView}>
-    <View style={ClientStyle.content}>
-      <View style={ClientStyle.topPageContent}>
-        {/* Display Evoleon logo image */}
-        <Image
-          style={ClientStyle.profileImage}
-          source={require("../assets/EvoleonFinal.png")}
-        />
-        {/* Display the profile text using a Text component */}
-        <Text style={ClientStyle.headingText}>{profileText}</Text>
+      <View style={ClientStyle.content}>
+        <View style={ClientStyle.topPageContent}>
+          {/* Display Evoleon logo image */}
+          <Image
+            style={ClientStyle.profileImage}
+            source={require("../assets/EvoleonFinal.png")}
+          />
+          {/* Display the profile text using a Text component */}
+          <Text style={ClientStyle.headingText}>{profileText}</Text>
+        </View>
+
+        {/* Render the profile actions using TouchableOpacity and Image components */}
+        <View style={ClientStyle.profileActionsView}>
+          <TouchableOpacity style={ClientStyle.profileActionsCell}>
+            <Text style={ClientStyle.profileActionsText}>Edit Information</Text>
+            <Image
+              source={require("../assets/Arrow.png")}
+              style={ClientStyle.arrow}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={ClientStyle.profileActionsCell}>
+            <Text style={ClientStyle.profileActionsText}>
+              Dark Mode Enabled
+            </Text>
+            <Image
+              source={require("../assets/LightMode.png")}
+              style={ClientStyle.lightModeIcon}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={ClientStyle.profileActionsCell}>
+            <Text style={ClientStyle.profileActionsText}>About</Text>
+            <Image
+              source={require("../assets/Arrow.png")}
+              style={ClientStyle.arrow}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={ClientStyle.profileActionsCell}>
+            <Text style={ClientStyle.profileActionsText}>Help and Support</Text>
+            <Image
+              source={require("../assets/Arrow.png")}
+              style={ClientStyle.arrow}
+            />
+          </TouchableOpacity>
+
+          {/* This hides the delete button when the status chnages. */}
+          {getLoginSignOutButtonText().second && (
+            <TouchableOpacity
+              style={ClientStyle.profileActionsCell}
+              onPress={() => {
+                console.log("User request deletion of data.");
+                Alert.alert(
+                  "Deletion request.",
+                  "Are you sure you want to delete your account?\nThis action cannot be undone.",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => navigation.navigate("Clients"),
+                    },
+                    {
+                      text: "Agree",
+                      onPress: () => {
+                        userDeleteAccount();
+                        navigation.navigate("Authenticate");
+                      },
+                    },
+                  ],
+                  { cancelable: false }
+                );
+              }}
+            >
+              <Text style={ClientStyle.profileActionsText}>Delete Account</Text>
+              <Image
+                source={require("../assets/Arrow.png")}
+                style={ClientStyle.arrow}
+              />
+            </TouchableOpacity>
+          )}
+
+          {/* Display the login or sign out button with its text and icon */}
+          <TouchableOpacity
+            style={ClientStyle.profileActionsCell}
+            onPress={() => {
+              authActions();
+            }}
+          >
+            <Text style={ClientStyle.profileActionsText}>
+              {LoginSignOutText}
+            </Text>
+            <Image
+              source={require("../assets/LogOut.png")}
+              style={ClientStyle.logOutIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      
-      {/* Render the profile actions using TouchableOpacity and Image components */}
-      <View style={ClientStyle.profileActionsView}>
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Edit Information</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Dark Mode Enabled</Text>
-          <Image
-            source={require("../assets/LightMode.png")}
-            style={ClientStyle.lightModeIcon}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>About</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Help and Support</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-      
-      {/* This hides the delete button when the status chnages. */}
-      {isVisible && (
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Delete Account</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-      )}
-        
-        {/* Display the login or sign out button with its text and icon */}
-        <TouchableOpacity
-          style={ClientStyle.profileActionsCell}
-          onPress={() => {
-            authActions();
-          }}
-        >
-          <Text style={ClientStyle.profileActionsText}>
-            {LoginSignOutText}
-          </Text>
-          <Image
-            source={require("../assets/LogOut.png")}
-            style={ClientStyle.logOutIcon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
     </ScrollView>
   );
 }

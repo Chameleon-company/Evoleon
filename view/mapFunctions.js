@@ -1,4 +1,9 @@
-import {getuserIsAuthenticated, addOrRemoveChargerFromUserFavouriteListInFirestore, evChargerLocationIsInFavourites} from '../web/firebase' 
+import 
+{
+  getuserIsAuthenticated, 
+  addOrRemoveChargerFromUserFavouriteListInFirestore, 
+  evChargerLocationIsInFavourites
+} from '../web/firebase' 
 
 export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
     
@@ -39,8 +44,8 @@ export const getChargerLocationAmenityAvailable = (evChargerLocationVal) => {
     const mapMarkers = require('../assets/EvoleonFinal.png');
     export let currentFavouriteIconInPopup = locationNotInFavourites;
   
-    export let getCorrectIconIfLocationInFavourites= (val) => {
-      if(evChargerLocationIsInFavourites(val) == true){
+    export let getCorrectIconIfLocationInFavourites= (locationIcon) => {
+      if(evChargerLocationIsInFavourites(locationIcon) == true){
         currentFavouriteIconInPopup = locationInFavourites;
         return locationInFavourites;
       } else {
