@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 //import DeviceInfo from 'react-native-device-info';
@@ -13,11 +13,23 @@ import { ButtonStyle } from '../styles/buttonStyle';
 function AboutScreen() {
     const navigation = useNavigation();
     const EvoleonAppDeets = require('../app.json');
-    const deviceAppVersion = 'Pickles' //DeviceInfo.getVersion();
-    const upDateButton = 'Update';
+    const deviceAppVersion = 'Pickles' // DeviceInfo.getVersion();
+    const upDateButton = '     Update     ';
+    const termsButton = ' Ts & Cs ';
+    const clearCache = ' Clear Cache ';
 
-    console.log(EvoleonAppDeets.expo.version);
+    // A place holder alert to add the clear cache functionality to. 
+    const clearCacheAlert = () => 
+      Alert.alert('Confirmation Required', 'Press OK to clear the cache.', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
     
+    // Header menu, needs to be replaced with << back. 
     useEffect(() => {
         navigation.setOptions({
           headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
@@ -35,6 +47,15 @@ function AboutScreen() {
             <Text style={ButtonStyle.Text}>{upDateButton}</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.termsButton}>
+          <TouchableOpacity style={ButtonStyle.Button}>
+            <Text style={ButtonStyle.Text}>{termsButton}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={ButtonStyle.Button}
+            onPress={clearCacheAlert}>
+            <Text style={ButtonStyle.Text}>{clearCache}</Text>
+          </TouchableOpacity>
+        </View>
     </View>
     );
 
@@ -44,6 +65,10 @@ export const styles = StyleSheet.create({
   currentVersion: {
     position: 'absolute',
     top: 100,
+  },
+  termsButton: {
+    position: 'absolute',
+    top: 300,
   },
   updateButton: {
     position: 'absolute',

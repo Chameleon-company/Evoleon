@@ -21,14 +21,14 @@ export default function ClientsScreen() {
   // Define navigation using the useNavigation hook.
   const navigation = useNavigation();
 
+  // Define state variables to hold profile and login sign out text.
+  const [profileText, setProfileText] = useState(
+    "Please log into your account"
+  );
+
   const [LoginSignOutText, setLoginSignOutText] = useState("Login");
 
   const [buttonVisibleUserAuth, setButtonVisibleUserAuth] = useState(false);
-
-  // Define state variables to hold profile and login or sign out text.
-  const [profileText, setProfileText] = useState(
-    "Please login to your account"
-  );
 
   // Set the headerLeft icon to the menu icon.
   useEffect(() => {
@@ -43,24 +43,20 @@ export default function ClientsScreen() {
     });
   });
 
-  // Define function for login sign out button pressed.
+  // Define function for login and sign out button pressed.
   const authActions = () => {
 
     if (getuserIsAuthenticated()) {
       LoginSignOutButtonPressed();
       setProfileText("Please login to view account");
       setLoginSignOutText("Login");
+
+      /*  After the user is sign out, this will navigate them to the authentication screen,
+      in order to update the client screen. 
+      */
+      navigation.navigate("Authenticate");
     } else {
       navigation.navigate("Login");
-    }
-
-    // This is used to hide the delete button or other buttons not required for non-authenticated users.
-    if (getuserIsAuthenticated()) {
-      setButtonVisibleUserAuth(true);
-      navigation.navigate("Authenticate");
-    } else {  
-      setButtonVisibleUserAuth(false);
-      navigation.navigate("Authenticate");
     }
 
   };
@@ -117,12 +113,11 @@ export default function ClientsScreen() {
             />
           </TouchableOpacity>
 
-          {/* This hides the delete button when the status chnages. */}
+          {/* This hides the delete button when the status changes. */}
           {getLoginSignOutButtonText().second && (
             <TouchableOpacity
               style={ClientStyle.profileActionsCell}
               onPress={() => {
-                console.log("User request deletion of data.");
                 Alert.alert(
                   "Deletion request.",
                   "Are you sure you want to delete your account?\nThis action cannot be undone.",
@@ -133,9 +128,9 @@ export default function ClientsScreen() {
                     },
                     {
                       text: "Agree",
-                      onPress: () => {
-                        userDeleteAccount();
-                        navigation.navigate("Authenticate");
+                      onPress: async () => {
+                        await userDeleteAccount();
+                        setLoginSignOutText(getLoginSignOutButtonText().first);
                       },
                     },
                   ],
@@ -151,7 +146,7 @@ export default function ClientsScreen() {
             </TouchableOpacity>
           )}
 
-          {/* Display the login or sign out button with its text and icon */}
+          {/* Display the login or sign out button with its text and icon. */}
           <TouchableOpacity
             style={ClientStyle.profileActionsCell}
             onPress={() => {

@@ -23,6 +23,9 @@ import {
   query,
   getDocs,
   get,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 
 // Firebase config for Evoleon Application.
@@ -61,13 +64,18 @@ export const getUserName = () => {
 
 export const getUserNameTextForProfilePage = () => {
   if (getuserIsAuthenticated()) {
-    return auth.currentUser.displayName.concat("'s account details");
+    const username = auth.currentUser.displayName;
+    if (username) {
+      return `${username}'s account details`;
+    } else {
+      return "undefined's account details";
+    }
   } else {
     return "Please log into your account";
   }
 };
 
-//Get the text for the logged in/sign out button in top left menu.
+// Get the text for the logged in/sign out button in top left menu.
 export var getLoginSignOutButtonText = () => {
   var text;
   if (userIsAuthenticated) {
@@ -75,12 +83,10 @@ export var getLoginSignOutButtonText = () => {
 
     return { first: text, second: true };
   } else {
-
     text = "Account";
 
     return { first: text, second: false };
   }
-
 };
 
 export const LoginSignOutButtonPressed = () => {
@@ -88,34 +94,25 @@ export const LoginSignOutButtonPressed = () => {
   if (userIsAuthenticated) {
     userSignOut();
   }
+
 };
 
 // Login for an existing user.
 export const userLogin = async (email, password) => {
-  let errorCaught = false;
-
-  console.log("User tried to login to account.");
-
-  // In built function for Firebase for user login in to the Evoleon Application.
-  await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log("Signed in with:", user.email);
-      userIsAuthenticated = true;
-      console.log("Welcome back", auth.currentUser.displayName);
-      errorCaught = false;
-    })
-    .catch((error) => {
-      console.log("An Error has been caught");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(error.code);
-      console.log(error.message);
-      errorCaught = true;
-    });
-
-  if (errorCaught == false) return true;
-  else return false;
+  try {
+    console.log("User tried to login to account.");
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    userIsAuthenticated = true;
+    console.log("Signed in with:", user.email);
+    console.log("Welcome back", user.displayName);
+    return { success: true, user };
+  } catch (err) {
+    console.error("An Error has been caught");
+    console.error("Error code:", err.code);
+    console.error("Error message:", err.message);
+    return { success: false, error: err };
+  }
 };
 
 // Sign up for a new user.
@@ -158,7 +155,7 @@ export const updateProfileDetails = async (name) => {
   await updateProfile(auth.currentUser, {
     displayName: name,
   })
-  .then(() => {
+    .then(() => {
       console.log("Profile updated.");
       console.log("Display name added: " + auth.currentUser.displayName);
     })
@@ -185,41 +182,41 @@ export const userSignOut = async () => {
   console.log("Signed out of " + displayName + "'s account");
 };
 
-export const userPasswordResetAuth = (UserEmail) => {
-  const AuthInfo = auth;
-  let errorCaught = false;
-
-  return sendPasswordResetEmail(AuthInfo, UserEmail)
-    .then(() => {
-      alert("Password reset email sent");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-
-      return true;
-    });
+export const userPasswordResetAuth = async (UserEmail) => {
+  try {
+    const AuthInfo = auth;
+    // Attempt to send a password reset email using the provided email address
+    await sendPasswordResetEmail(AuthInfo, UserEmail);
+    alert("Password reset email sent");
+    return { success: true };
+  } catch (error) {
+    // Log the error message and return it
+    console.log(error.message);
+    return { success: false, error };
+  }
 };
 
-export const userDeleteAccount = () => {
+// User needs to be logged in in order to delete their account.
+// The button should not be visible for users not logged in.
+export const userDeleteAccount = async () => {
   const AuthInfo = auth;
-  const user = AuthInfo.currentUser;
-  let errorCaught = false;
+  const CurrUser = auth.currentUser;
+  try {
 
-  // User needs to be logged in in order to delete their account.
-  return deleteUser(user)
-    .then(() => {
-      userSignOut();
-      console.log("User account has been deleted.");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-
-      return true;
-    });
+    /* 
+    Sign out the user from their account as we have already attained CurrUser infomation. 
+    If this is done after the account is deleted, an error will be thrown and the app won't display correctly.
+    */
+    userSignOut();
+    // Deleteing users account, this action is irreversable and cannot be undone.
+    await deleteUser(CurrUser);
+    
+    return { success: true };
+  } catch (error) {
+    // Log the error message and return it
+    console.log(error.message);
+    return { success: false, error };
+  }
 };
 
 // Create new Firestore document for user using unqiue user ID.
@@ -287,6 +284,113 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
   }
 };
 
+// Gets the users favourite markers from Firestore
+// The favourite markers are stored within an array called "favouriteMarkers" in the users document
+// The array contains only ID's of the EV charger locations
+export const getFavouriteMarkers = async () => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    return false;
+  }
+
+  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+
+  try {
+    const querySnapshot = await getDoc(userDocRef);
+
+    if (querySnapshot.exists()) {
+      const data = querySnapshot.data();
+      const favouriteMarkers = data.favouriteMarkers || [];
+      return favouriteMarkers;
+    } else {
+      console.error("No such document!");
+      return [];
+    }
+  } catch (error) {
+    console.error("Error getting document:", error);
+    return [];
+  }
+};
+
+// Adds a marker to the users favourite markers in Firestore
+// It is created in this manor to reduce the amount of reads and writes to Firestore
+export const addFavouriteMarker = async (markerId) => {
+  // Get the current user
+  const user = auth.currentUser;
+
+  // Check if the user is authenticated
+  if (!user) {
+    console.log("You're not signed in!");
+    return false;
+  }
+
+  // Get the user's document reference
+  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+
+  try {
+    // Try to update the document with the markerId using arrayUnion
+    await updateDoc(userDocRef, {
+      favouriteMarkers: arrayUnion(markerId),
+    });
+  } catch (error) {
+    console.error("Error updating document:", error);
+
+    // Check if the error is due to the document not being created
+    if (error.code === "not-found") {
+      try {
+        // Create the document and add the markerId
+        await setDoc(userDocRef, { favouriteMarkers: [markerId] });
+      } catch (createError) {
+        console.error("Error creating document:", createError);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+// Similar to above, but removes the marker from the users favourite markers in Firestore
+export const removeFavouriteMarker = async (markerId) => {
+  // Get the current user
+  const user = auth.currentUser;
+
+  // Check if the user is authenticated
+  if (!user) {
+    return false;
+  }
+
+  // Get the user's document reference
+  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+
+  try {
+    // Try to remove the markerId from the favouriteMarkers array using arrayRemove
+    await updateDoc(userDocRef, {
+      favouriteMarkers: arrayRemove(markerId),
+    });
+  } catch (error) {
+    console.error("Error updating document:", error);
+
+    // Check if the error is due to the array not existing
+    if (error.code === "not-found") {
+      try {
+        // Create an empty favouriteMarkers array
+        await setDoc(userDocRef, { favouriteMarkers: [] });
+      } catch (createError) {
+        console.error("Error creating document:", createError);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export let favouriteMarkers = [{}];
 
 export const getUsersFavouriteListInFirestore = async () => {
@@ -336,38 +440,24 @@ export const evChargerLocationIsInFavourites = (val) => {
   return false;
 };
 
+// Get all EV charger locations from Firestore, return as object instead of array
 export const fetchLocations = async () => {
   const locationRef = collection(firestoreDB, "Locations");
   const q = query(locationRef);
   const querySnapshot = await getDocs(q);
 
-  const qMap = querySnapshot.docs.reduce((place, docSnapshot) => {
+  const locations = querySnapshot.docs.map((docSnapshot) => {
     const { id, lat, long, Dining, Restroom, Park, title } = docSnapshot.data();
-    place[id] = [lat, long, Dining, Restroom, Park, title];
-
-    return place;
-  }, {});
-
-  return qMap;
-};
-
-//Updating user details in Firebase
-export const handleSave = () => {
-  const userId = firebase.auth().currentUser.uid;
-  const userDetailsRef = firebase.database().ref(`userDetails/${userId}`);
-  userDetailsRef
-    .update({
-      name,
-      email,
-      phone,
-      residentialAddress,
-      registrationNumber,
-      carType,
-    })
-    .then(() => {
-      console.log("User details updated successfully!");
-    })
-    .catch((error) => {
-      console.error("Error updating user details:", error);
-    });
+    const location = {
+      id,
+      lat,
+      long,
+      Dining,
+      Restroom,
+      Park,
+      title,
+    };
+    return location;
+  });
+  return locations;
 };
