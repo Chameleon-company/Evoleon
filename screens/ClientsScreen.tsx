@@ -19,7 +19,7 @@ import { ClientStyle } from "../styles/clientStyle";
 export default function ClientsScreen() {
   //Define navigation using the useNavigation hook
   const navigation = useNavigation();
-  
+
   // Define state variables to hold profile and sign in/out text
   const [profileText, setProfileText] = useState(
     "Please log into your account"
@@ -61,7 +61,7 @@ export default function ClientsScreen() {
         {/* Display the profile text using a Text component */}
         <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
-      
+
       {/* Render the profile actions using TouchableOpacity and Image components */}
       <View style={ClientStyle.profileActionsView}>
         <TouchableOpacity style={ClientStyle.profileActionsCell}>
@@ -80,7 +80,10 @@ export default function ClientsScreen() {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
+        <TouchableOpacity style={ClientStyle.profileActionsCell}
+        onPress={() => {
+          navigation.navigate("About");
+        }}>
           <Text style={ClientStyle.profileActionsText}>About</Text>
           <Image
             source={require("../assets/Arrow.png")}
@@ -95,7 +98,7 @@ export default function ClientsScreen() {
             style={ClientStyle.arrow}
           />
         </TouchableOpacity>
-        
+
         {/* Display the sign in/out button with its text and icon */}
         <TouchableOpacity
           style={ClientStyle.profileActionsCell}
@@ -103,9 +106,7 @@ export default function ClientsScreen() {
             authActions();
           }}
         >
-          <Text style={ClientStyle.profileActionsText}>
-            {LoginSignOutText}
-          </Text>
+          <Text style={ClientStyle.profileActionsText}>{LoginSignOutText}</Text>
           <Image
             source={require("../assets/LogOut.png")}
             style={ClientStyle.logOutIcon}
