@@ -15,12 +15,11 @@ export const ClientStyle = StyleSheet.create({
   },
 
   profileImage: {
-    padding: 30,
+    padding: 25,
     marginTop: 55,
-    marginBottom: 40,
-    borderTopRightRadius: 12,
-    height: 100,
-    width: 200,
+    marginBottom: 35,
+    height: 150,
+    width: 250,
     resizeMode: "contain",
   },
 
@@ -48,24 +47,13 @@ export const ClientStyle = StyleSheet.create({
   profileActionsText: {
     backgroundColor: "rgba(178, 187, 185, 1)",
     fontSize: 20,
-    padding: 20,
+    padding: 21,
   },
 
-  arrow: {
-    height: 25,
-    width: 25,
+  buttonIcon: {
+    height: 27,
+    width: 27,
     marginRight: 20,
   },
 
-  logOutIcon: {
-    height: 33,
-    width: 33,
-    marginRight: 20,
-  },
-
-  lightModeIcon: {
-    height: 30,
-    width: 30,
-    marginRight: 20,
-  },
 });

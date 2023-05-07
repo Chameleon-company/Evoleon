@@ -12,7 +12,7 @@ import AuthenticateScreen from '../screens/AuthenticateScreen';
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
-import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
+import {getUserAuthStatus, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -60,7 +60,7 @@ export default function DrawerNavigator() {
         
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          <DrawerItem label={getLoginSignOutButtonText().first} onPress={() => {
+          <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
 
             props.navigation.navigate("Authenticate");
           }

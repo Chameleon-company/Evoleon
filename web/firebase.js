@@ -75,17 +75,20 @@ export const getUserNameTextForProfilePage = () => {
   }
 };
 
-// Get the text for the logged in/sign out button in top left menu.
-export var getLoginSignOutButtonText = () => {
-  var text;
+/* Determines the users status and produced the correct login/signout text.
+A booleon value is also produced in order to be used to determine the status of the user.
+*/
+export var getUserAuthStatus = () => {
+  var UserAuthText;
+
   if (userIsAuthenticated) {
-    text = "Sign out of " + auth.currentUser.displayName + "'s account";
+    UserAuthText = "Sign out of " + auth.currentUser.displayName + "'s account";
 
-    return { first: text, second: true };
+    return { Text: UserAuthText, Status: true };
   } else {
-    text = "Account";
+    UserAuthText = "Account";
 
-    return { first: text, second: false };
+    return { Text: UserAuthText, Status: false };
   }
 };
 
@@ -94,7 +97,6 @@ export const LoginSignOutButtonPressed = () => {
   if (userIsAuthenticated) {
     userSignOut();
   }
-
 };
 
 // Login for an existing user.

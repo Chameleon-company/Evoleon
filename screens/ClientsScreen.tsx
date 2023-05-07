@@ -1,4 +1,3 @@
-//import necessary libraries and components
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
@@ -9,7 +8,7 @@ import MenuIcon from "../components/MenuIcon";
 import { useEffect, useState } from "react";
 import main from "../styles/main";
 import {
-  getLoginSignOutButtonText,
+  getUserAuthStatus,
   getuserIsAuthenticated,
   getUserNameTextForProfilePage,
   LoginSignOutButtonPressed,
@@ -21,10 +20,10 @@ export default function ClientsScreen() {
   // Define navigation using the useNavigation hook.
   const navigation = useNavigation();
 
+  const UnauthProfileText = "Please login to view account.";
+
   // Define state variables to hold profile and login sign out text.
-  const [profileText, setProfileText] = useState(
-    "Please log into your account"
-  );
+  const [profileText, setProfileText] = useState(UnauthProfileText);
 
   const [LoginSignOutText, setLoginSignOutText] = useState("Login");
 
@@ -39,16 +38,15 @@ export default function ClientsScreen() {
     navigation.addListener("focus", () => {
       setProfileText(getUserNameTextForProfilePage());
 
-      setLoginSignOutText(getLoginSignOutButtonText().first);
+      setLoginSignOutText(getUserAuthStatus().Text);
     });
   });
 
   // Define function for login and sign out button pressed.
   const authActions = () => {
-
     if (getuserIsAuthenticated()) {
       LoginSignOutButtonPressed();
-      setProfileText("Please login to view account");
+      setProfileText(UnauthProfileText);
       setLoginSignOutText("Login");
 
       /*  After the user is sign out, this will navigate them to the authentication screen,
@@ -58,7 +56,6 @@ export default function ClientsScreen() {
     } else {
       navigation.navigate("Login");
     }
-
   };
 
   return (
@@ -71,7 +68,7 @@ export default function ClientsScreen() {
           {/* Display Evoleon logo image */}
           <Image
             style={ClientStyle.profileImage}
-            source={require("../assets/EvoleonFinal.png")}
+            source={require("../assets/EvoleonProfileTemp.png")}
           />
           {/* Display the profile text using a Text component */}
           <Text style={ClientStyle.headingText}>{profileText}</Text>
@@ -83,7 +80,7 @@ export default function ClientsScreen() {
             <Text style={ClientStyle.profileActionsText}>Edit Information</Text>
             <Image
               source={require("../assets/Arrow.png")}
-              style={ClientStyle.arrow}
+              style={ClientStyle.buttonIcon}
             />
           </TouchableOpacity>
 
@@ -93,7 +90,7 @@ export default function ClientsScreen() {
             </Text>
             <Image
               source={require("../assets/LightMode.png")}
-              style={ClientStyle.lightModeIcon}
+              style={ClientStyle.buttonIcon}
             />
           </TouchableOpacity>
 
@@ -101,7 +98,7 @@ export default function ClientsScreen() {
             <Text style={ClientStyle.profileActionsText}>About</Text>
             <Image
               source={require("../assets/Arrow.png")}
-              style={ClientStyle.arrow}
+              style={ClientStyle.buttonIcon}
             />
           </TouchableOpacity>
 
@@ -109,18 +106,18 @@ export default function ClientsScreen() {
             <Text style={ClientStyle.profileActionsText}>Help and Support</Text>
             <Image
               source={require("../assets/Arrow.png")}
-              style={ClientStyle.arrow}
+              style={ClientStyle.buttonIcon}
             />
           </TouchableOpacity>
 
           {/* This hides the delete button when the status changes. */}
-          {getLoginSignOutButtonText().second && (
+          {getUserAuthStatus().Status && (
             <TouchableOpacity
               style={ClientStyle.profileActionsCell}
               onPress={() => {
                 Alert.alert(
                   "Deletion request.",
-                  "Are you sure you want to delete your account?\nThis action cannot be undone.",
+                  "Are you sure you want to delete your account?",
                   [
                     {
                       text: "Cancel",
@@ -129,8 +126,25 @@ export default function ClientsScreen() {
                     {
                       text: "Agree",
                       onPress: async () => {
-                        await userDeleteAccount();
-                        setLoginSignOutText(getLoginSignOutButtonText().first);
+                        Alert.alert(
+                          "This action cannot be undone.",
+                          "All user data will be removed from the application after this request.",
+                          [
+                            {
+                              text: "Cancel",
+                              onPress: () => navigation.navigate("Clients"),
+                            },
+                            {
+                              text: "Understood",
+                              onPress: async () => {
+                                await userDeleteAccount();
+                                setLoginSignOutText(getUserAuthStatus().Text);
+                                setProfileText(UnauthProfileText);
+                              },
+                            },
+                          ],
+                          { cancelable: false }
+                        );
                       },
                     },
                   ],
@@ -140,8 +154,8 @@ export default function ClientsScreen() {
             >
               <Text style={ClientStyle.profileActionsText}>Delete Account</Text>
               <Image
-                source={require("../assets/Arrow.png")}
-                style={ClientStyle.arrow}
+                source={require("../assets/Delete.png")}
+                style={ClientStyle.buttonIcon}
               />
             </TouchableOpacity>
           )}
@@ -158,7 +172,7 @@ export default function ClientsScreen() {
             </Text>
             <Image
               source={require("../assets/LogOut.png")}
-              style={ClientStyle.logOutIcon}
+              style={ClientStyle.buttonIcon}
             />
           </TouchableOpacity>
         </View>
