@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import MenuIcon from "../components/MenuIcon";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import { UserDetailsPageStyle } from "../styles/updateUserDetails";
-import { handleSave } from "../web/firebase";
+import { ButtonStyle } from "../styles/buttonStyle";
+import { updateUserData } from "../web/firebase";
 
 //Declare an interface for user details
 interface UserDetails {
@@ -99,10 +100,10 @@ export default function UpdateUserDetailsScreen() {
       </View>
       {/* Button to save user details */}
       <TouchableOpacity
-        style={UserDetailsPageStyle.userDetailsButton}
-        onPress={handleSave}// Handle button press event using function from firebase JS file
+        style={ButtonStyle.Button}
+        onPress={updateUserData}// Handle button press event using function from firebase JS file
       >
-        <Text style={UserDetailsPageStyle.userDetailsButtonText}>Save</Text>
+        <Text style={ButtonStyle.Text}>Save</Text>
       </TouchableOpacity>
     </View>
 );

@@ -26,7 +26,7 @@ import {
   AuthenticateParamList, 
   SignupParamList,
   AboutParamList,
-  UpdateUserDetailsParamList
+  UpdateUserDetailsParamList,
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
