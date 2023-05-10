@@ -13,7 +13,8 @@ import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
-import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
+import {getUserAuthStatus, LoginSignOutButtonPressed} from '../web/firebase' 
+
 
 import {
   DrawerParamList,
@@ -59,11 +60,11 @@ export default function DrawerNavigator() {
 
   
       return (
+        
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          
-          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
-            LoginSignOutButtonPressed();
+          <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
+
             props.navigation.navigate("Authenticate");
           }
         }/>
