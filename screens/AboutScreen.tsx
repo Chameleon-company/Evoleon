@@ -16,6 +16,7 @@ function AboutScreen() {
     const deviceAppVersion = 'Pickles' // DeviceInfo.getVersion();
     const upDateButton = '     Update     ';
     const termsButton = ' Ts & Cs ';
+    const privacyButton = 'Privacy Policy';
     const clearCache = ' Clear Cache ';
 
     // A place holder alert to add the clear cache functionality to. 
@@ -48,6 +49,9 @@ function AboutScreen() {
           </TouchableOpacity>
         </View>
         <View style={styles.termsButton}>
+          <TouchableOpacity style={ButtonStyle.Button}>
+            <Text style={ButtonStyle.Text}>{privacyButton}</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={ButtonStyle.Button}>
             <Text style={ButtonStyle.Text}>{termsButton}</Text>
           </TouchableOpacity>
