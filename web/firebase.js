@@ -50,10 +50,10 @@ const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
 //Boolean - true if user is signed in
-var userIsAuthenticated = false;
+var userIsAuthenticated = false; //we don't have to use this anymore, phase this out
 
 export const getuserIsAuthenticated = () => {
-  return userIsAuthenticated;
+  return auth.currentUser ? true : false;
 };
 
 export const getUserName = () => {
@@ -116,19 +116,12 @@ export const userLogin = async (email, password) => {
 };
 
 //Sign up for a new user
-
-export const userSignUp = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  country
-) => {
+export const userSignUp = async (email, password, firstName, lastName, country) => {
   try {
     console.log("User tried to create a new account.");
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
     userIsAuthenticated = true;
+    const user = res.user;
     await sendEmailVerification(user);
     console.log("Updating profile details");
     await updateProfileDetails(firstName);
@@ -137,24 +130,37 @@ export const userSignUp = async (
     return true;
   } catch (err) {
     console.error("An Error has been caught");
-    console.error("Error message:", err)
+    console.error("Error message:", err);
     return false;
   }
 };
 
 //Add users first name to firebase Authentication
 export const updateProfileDetails = async (name) => {
-  await updateProfile(auth.currentUser, {
-    displayName: name,
-  })
-    .then(() => {
-      console.log("Profile updated.");
-      console.log("Display name added: " + auth.currentUser.displayName);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+  try {
+    await updateProfile(auth.currentUser, { displayName: name });
+    console.log("Profile updated.");
+    console.log("Display name added: " + auth.currentUser.displayName);
+    return true;
+  } catch (error) {
+    console.error("Error updating profile details:", error);
+    return false;
+  }
+};
+
+// Create new Firestore document for user using unqiue user ID.
+export const userFirestoreData = async (firstName, lastName, country) => {
+  try {
+    await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
+      firstName,
+      lastName,
+      country,
     });
+    return true;
+  } catch (err) {
+    console.error("Error updating firestore data:", err);
+    return false;
+  }
 };
 
 //Sign out of user account
@@ -187,21 +193,6 @@ export const userPasswordResetAuth = async (UserEmail) => {
   }
 };
 
-
-// Create new Firestore document for user using unqiue user ID.
-export const userFirestoreData =  (firstName, lastName, country) => {
-  return new Promise((resolve, reject) => { 
-    setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
-      firstName: firstName,
-      lastName: lastName,
-      country: country,
-    }).then((res) => {
-      resolve(true);
-    }).catch((err) => {
-      reject(false);
-    });
-   })
-};
 
 // Add or remove an EV charger from a users favourite list in Firestore.
 export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
