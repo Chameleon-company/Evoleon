@@ -12,6 +12,7 @@ import AuthenticateScreen from '../screens/AuthenticateScreen';
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
+import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
@@ -25,6 +26,7 @@ import {
   AuthenticateParamList, 
   SignupParamList,
   AboutParamList,
+  PrivacyParamList,
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
@@ -76,12 +78,13 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       
 
-      {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
+      {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
-      <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+      <Drawer.Screen name="Signup" component={SignupNavigator} />  
+      <Drawer.Screen name="PrivacyPolicy" component={PrivacyNavigator}/>  
       
 
 
@@ -277,5 +280,26 @@ function AboutNavigator() {
           } 
         }}/>
     </AboutStack.Navigator>
+  );
+}
+
+const PrivacyStack = createStackNavigator<PrivacyParamList>();
+
+function PrivacyNavigator() {
+  return (
+    <PrivacyStack.Navigator>
+      <PrivacyStack.Screen 
+        name="PrivacyPolicy" 
+        component={PrivacyPolicyScreen} 
+        options={{
+          headerTitle:'Privacy Policy',
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          } 
+        }}/>
+    </PrivacyStack.Navigator>
   );
 }

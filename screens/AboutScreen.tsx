@@ -49,10 +49,14 @@ function AboutScreen() {
           </TouchableOpacity>
         </View>
         <View style={styles.termsButton}>
-          <TouchableOpacity style={ButtonStyle.Button}>
+          <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
+                        navigation.navigate("PrivacyPolicy");
+                    }}>
             <Text style={ButtonStyle.Text}>{privacyButton}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ButtonStyle.Button}>
+          <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
+                        navigation.navigate("TermsAndConditionsScreen");
+                    }}>
             <Text style={ButtonStyle.Text}>{termsButton}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={ButtonStyle.Button}
