@@ -1,8 +1,12 @@
 //Import required modules
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import MenuIcon from "../components/MenuIcon";
+import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import { UserDetailsPageStyle } from "../styles/updateUserDetails";
-import { handleSave } from "../web/firebase";
+import { ButtonStyle } from "../styles/buttonStyle";
+import { updateUserData } from "../web/firebase";
 
 //Declare an interface for user details
 interface UserDetails {
@@ -14,9 +18,18 @@ interface UserDetails {
   carType: string;
 }
 
-//User Details component
-const UserDetails = () => {
-  // Initializing user details state with the useState hook
+//React component for screen, uses useNavigation hook to get navigation object
+export default function UpdateUserDetailsScreen() {
+  const navigation = useNavigation();
+
+  //This hook helps to set options for screen's header
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
+    });
+  }, [navigation]);
+
+  //Initializing user details state with the useState hook
   const [userDetails, setUserDetails] = useState<UserDetails>({
     name: "",
     email: "",
@@ -25,7 +38,6 @@ const UserDetails = () => {
     registrationNumber: "",
     carType: "",
   });
-
 
   //Function to handle update to user details
   const handleUpdate = (key: keyof UserDetails, value: string) => {
@@ -88,11 +100,11 @@ const UserDetails = () => {
       </View>
       {/* Button to save user details */}
       <TouchableOpacity
-        style={UserDetailsPageStyle.userDetailsButton}
-        onPress={handleSave}// Handle button press event using function from firebase JS file
+        style={ButtonStyle.Button}
+        onPress={updateUserData}// Handle button press event using function from firebase JS file
       >
-        <Text style={UserDetailsPageStyle.userDetailsButtonText}>Save</Text>
+        <Text style={ButtonStyle.Text}>Save</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+);
+}

@@ -28,7 +28,16 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 
-// Firebase config for Evoleon Application.
+import { 
+  getDatabase, 
+  ref, 
+  set 
+} from "firebase/database";
+
+//Boolean - true if user is signed in
+var userIsAuthenticated = false;
+
+// Firebase config for Evoleon Application
 const firebaseConfig = {
   apiKey: "AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg",
   authDomain: "evoleonapp.firebaseapp.com",
@@ -463,3 +472,53 @@ export const fetchLocations = async () => {
   });
   return locations;
 };
+
+// Updating user data in realtime
+export const updateUserData = async (userId, name, email, phone, residentialAddress, registrationNumber, carType) => {
+  // Getting a reference to the user's data in the database
+  const userRef = ref(db, 'users/' + userId);
+  // Getting a snapshot of the user's current data
+  const userSnapshot = await get(userRef);
+  // Extracting the user's data from the snapshot
+  const userData = userSnapshot.val();
+  // Empty object to hold the updates
+  const updates = {};
+  
+  // Checking if any of the user's data needs to be updated
+  if (userData.name !== name) {
+    updates.name = name;
+  }
+  if (userData.email !== email) {
+    updates.email = email;
+  }
+  if (userData.phone !== phone) {
+    updates.phone = phone;
+  }
+  if (userData.residentialAddress !== residentialAddress) {
+    updates.residentialAddress = residentialAddress;
+  }
+  if (userData.registrationNumber !== registrationNumber) {
+    updates.registrationNumber = registrationNumber;
+  }
+  if (userData.carType !== carType) {
+    updates.carType = carType;
+  }
+  
+  // Checking if any updates were made
+  if (Object.keys(updates).length > 0) {
+    try {
+      // Updating user's data in the database with the updates object
+      await update(userRef, updates);
+      // Return true if update was successful
+      return true;
+      // Log any errors and return false if update fails
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  }
+  
+  // Return true if no updates were made
+  return true;
+};
+
