@@ -1,7 +1,7 @@
 import { StyleSheet, } from 'react-native';
 
 export default StyleSheet.create({
-    Logo: {
+    frontPageLogo: {
         width: 200,
         height: 200,
         marginBottom: 125

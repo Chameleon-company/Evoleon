@@ -3,7 +3,7 @@
 # Welcome to Evoleon 
 Hi and welcome, if you're here to take a look around then feel free to skip this section. If you're here to contribute, then please carefully read the next section so you're able to contribute effectively, efficiently, and securely. 
 
-First things first, please read the Chameleon <a href="https://github.com/Chameleon-company/Chameleon-Documents/blob/master/Chameleon_Policies_and_Guides/GitHub%20Repository%20Use%20Policy.md" target="_blank">GitHub Repository Use Policy</a>. This document outlines how contributors should interact with the repository to keep the code-base clean and secure. 
+First things first, please read the Chameleon <a href="https://github.com/Chameleon-company/Chameleon-Documents/blob/61db40ed582b4df86fd817c9560675ef5ec13c07/Chameleon%20Policies%20and%20Guides/GitHub%20Repository%20Use%20Policy.md" target="_blank">GitHub Repository Use Policy</a>. This document outlines how contributors should interact with the repository to keep the code-base clean and secure. 
 
 ## Technical Skills required 
 The tech stack for this project includes the following. You will want some familiarity with these frameworks and languages or spend the time up-skilling yourself before trying to contribute. 
