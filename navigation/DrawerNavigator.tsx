@@ -290,22 +290,24 @@ function AboutNavigator() {
 const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
 
 function UpdateUserDetailsNavigator() {
-  return (
-    <UpdateUserDetailsStack.Navigator>
-      <UpdateUserDetailsStack.Screen 
-        name="UpdateUserDetailsScreen" 
-        component={UpdateUserDetailsScreen} 
-        options={{
-          headerTitle:'Update Details',
-          headerStyle: {
-            backgroundColor: '#294E4B',
-          },
-          headerTitleStyle: {
-            color: 'white'
-          }
-        }}/>
-    </UpdateUserDetailsStack.Navigator>
-
+	return (
+		<UpdateUserDetailsStack.Navigator>
+			<UpdateUserDetailsStack.Screen
+				name="UpdateUserDetailsScreen"
+				component={UpdateUserDetailsScreen}
+				options={{
+					headerTitle: "Update Details",
+					headerStyle: {
+						backgroundColor: "#294E4B",
+					},
+					headerTitleStyle: {
+						color: "white",
+					},
+				}}
+			/>
+		</UpdateUserDetailsStack.Navigator>
+	);
+}
 const PrivacyStack = createStackNavigator<PrivacyParamList>();
 
 function PrivacyNavigator() {
