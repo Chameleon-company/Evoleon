@@ -14,7 +14,7 @@ import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetails"
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
-import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
+import {getUserAuthStatus, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -28,7 +28,9 @@ import {
   SignupParamList,
   AboutParamList,
   UpdateUserDetailsParamList,
+=========
   PrivacyParamList,
+>>>>>>>>> Temporary merge branch 2
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
@@ -61,11 +63,11 @@ export default function DrawerNavigator() {
 
   
       return (
+        
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          
-          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
-            LoginSignOutButtonPressed();
+          <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
+
             props.navigation.navigate("Authenticate");
           }
         }/>
@@ -288,20 +290,48 @@ function AboutNavigator() {
 const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
 
 function UpdateUserDetailsNavigator() {
+	return (
+		<UpdateUserDetailsStack.Navigator>
+			<UpdateUserDetailsStack.Screen
+				name="UpdateUserDetailsScreen"
+				component={UpdateUserDetailsScreen}
+				options={{
+					headerTitle: "Update Details",
+					headerStyle: {
+						backgroundColor: "#294E4B",
+					},
+					headerTitleStyle: {
+						color: "white",
+					},
+				}}
+			/>
+		</UpdateUserDetailsStack.Navigator>
+	);
+}
+const PrivacyStack = createStackNavigator<PrivacyParamList>();
+
+function PrivacyNavigator() {
   return (
-    <UpdateUserDetailsStack.Navigator>
-      <UpdateUserDetailsStack.Screen 
-        name="UpdateUserDetailsScreen" 
-        component={UpdateUserDetailsScreen} 
+    <PrivacyStack.Navigator>
+      <PrivacyStack.Screen 
+        name="PrivacyPolicy" 
+        component={PrivacyPolicyScreen} 
         options={{
-          headerTitle:'Update Details',
+          headerTitle:'Privacy Policy',
+
           headerStyle: {
             backgroundColor: '#294E4B',
           },
           headerTitleStyle: {
             color: 'white'
+<<<<<<<<< Temporary merge branch 1
           }
         }}/>
     </UpdateUserDetailsStack.Navigator>
+=========
+          } 
+        }}/>
+    </PrivacyStack.Navigator>
+>>>>>>>>> Temporary merge branch 2
   );
 }
