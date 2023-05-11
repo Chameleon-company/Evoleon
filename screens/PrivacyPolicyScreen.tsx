@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { Text, View } from "../components/Themed";
 import { SignUpScreenStyle } from "../styles/signUpStyle";
 import { ButtonStyle } from '../styles/buttonStyle';
-// import { ScrollView } from 'react-native-gesture-handler';
 
 
 function PrivacyPolicyScreen() {
