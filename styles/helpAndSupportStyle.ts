@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const HelpAndSupportPageStyles = StyleSheet.create({
+export const HelpAndSupportPageStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
