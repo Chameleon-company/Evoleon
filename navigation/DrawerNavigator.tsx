@@ -13,6 +13,7 @@ import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetails"
+import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
@@ -27,6 +28,7 @@ import {
   SignupParamList,
   AboutParamList,
   UpdateUserDetailsParamList,
+  PrivacyParamList,
   PasswordResetParamList
 } from "../types";
 import { color } from "react-native-reanimated";
@@ -78,12 +80,13 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
 
-      {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
+      {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
-      <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+      <Drawer.Screen name="Signup" component={SignupNavigator} />  
+      <Drawer.Screen name="PrivacyPolicy" component={PrivacyNavigator}/>  
       
 
 
