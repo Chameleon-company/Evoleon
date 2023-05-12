@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 
 import { HelpAndSupportPageStyle } from "../styles/helpAndSupportStyle";
 
+//Defining FAQ interface
 interface Faq {
   question: string;
   answer: string | string[];
 }
 
 const HelpAndSupport = () => {
+  //Defining FAQ questions and answers
   const [faqs, setFaqs] = useState<Faq[]>([
     {
       question: "How far can an EV travel without recharging?",
@@ -51,8 +53,10 @@ const HelpAndSupport = () => {
     },
   ]);
 
+  //Defining currently selected FAQ as state and setting initial value to null
   const [selectedFaq, setSelectedFaq] = useState<Faq | null>(null);
 
+  //Function to toggle the FAQ answers
   const toggleFaq = (faq: Faq) => {
     if (selectedFaq === faq) {
       setSelectedFaq(null);
@@ -62,14 +66,14 @@ const HelpAndSupport = () => {
   };
 
  
-  
+  //Function to render a FAQ
   const renderFaq = (faq: Faq) => {
     const isSelected = faq === selectedFaq;
     const chevronIcon = isSelected
       ? require("../assets/chevron-icon-up.png")
       : require("../assets/chevron-icon-down.png");
 
-   
+    //Render the whole screen and scroll through if content exceeds screen space 
     return (
         <View key={faq.question} style={HelpAndSupportPageStyle.faqContainer}>
          <TouchableOpacity onPress={() => toggleFaq(faq)}>
