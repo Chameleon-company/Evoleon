@@ -94,7 +94,9 @@ export default function ClientsScreen() {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity style={ClientStyle.profileActionsCell}>
+          <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={() => {
+                        navigation.navigate("About");
+                    }}>
             <Text style={ClientStyle.profileActionsText}>About</Text>
             <Image
               source={require("../assets/Arrow.png")}
