@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import { StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { Text, View } from "../components/Themed";
 import { SignUpScreenStyle } from "../styles/signUpStyle";
 import { ButtonStyle } from '../styles/buttonStyle';
 
+const windowHeight = Dimensions.get("window").height;
 
 function PrivacyPolicyScreen() {
     const navigation = useNavigation();
@@ -15,7 +16,6 @@ function PrivacyPolicyScreen() {
     return ( //SignUpScreenStyle.content
         <SafeAreaView style={styles.container}> 
             <View style={SignUpScreenStyle.inputView}>
-            
                 <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
                         navigation.navigate("About");
                     }}>
@@ -82,36 +82,41 @@ function PrivacyPolicyScreen() {
                         Chameleon may contact you by a variety of measures including, but not limited to telephone, email, sms or mail.
                     </Text>
                 </ScrollView>
-                
-                
             </View>
         </SafeAreaView>
     )
     
 }
 
-export const styles = StyleSheet.create({
-    pageTitle: {
-        margin:20,
-        fontSize: 16,
-        textAlign: 'center',
-    },
-    sectionHeading: {
-        position: 'relative',
-        marginBottom: 1,
-        marginTop: 4,
-        textAlign: 'left',
-        fontWeight: 'bold',
-    },
-    textParagraph: {
-        padding: 5,
-        marginTop: 0,
-        textAlign: 'justify',
-    },
-    container: {
-      flex: 1,
-      paddingTop: StatusBar.currentHeight,
-    },
-  })
+const styles = StyleSheet.create({
+       container: {
+           flex: 1,
+           paddingTop: StatusBar.currentHeight,
+       },
+       scrollView: {
+           height: windowHeight - 100,
+       },
+       inputView: {
+           paddingHorizontal: 10,
+           paddingBottom: 10,
+       },
+       pageTitle: {
+           margin: 20,
+           fontSize: 16,
+           textAlign: "center",
+       },
+       sectionHeading: {
+           position: "relative",
+           marginBottom: 1,
+           marginTop: 4,
+           textAlign: "left",
+           fontWeight: "bold",
+       },
+       textParagraph: {
+           padding: 5,
+           marginTop: 0,
+           textAlign: "justify",
+       },
+    });
   
   export default PrivacyPolicyScreen;
