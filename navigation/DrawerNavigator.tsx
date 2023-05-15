@@ -28,10 +28,8 @@ import {
   SignupParamList,
   AboutParamList,
   UpdateUserDetailsParamList,
-=========
   PrivacyParamList,
->>>>>>>>> Temporary merge branch 2
-  PasswordResetParamList
+  PasswordResetParamList,
 } from "../types";
 import { color } from "react-native-reanimated";
 import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
@@ -303,8 +301,7 @@ function UpdateUserDetailsNavigator() {
 					headerTitleStyle: {
 						color: "white",
 					},
-				}}
-			/>
+				}}/>
 		</UpdateUserDetailsStack.Navigator>
 	);
 }
@@ -324,14 +321,8 @@ function PrivacyNavigator() {
           },
           headerTitleStyle: {
             color: 'white'
-<<<<<<<<< Temporary merge branch 1
-          }
-        }}/>
-    </UpdateUserDetailsStack.Navigator>
-=========
-          } 
+          },
         }}/>
     </PrivacyStack.Navigator>
->>>>>>>>> Temporary merge branch 2
   );
 }
