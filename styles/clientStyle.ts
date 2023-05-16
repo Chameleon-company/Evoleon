@@ -64,6 +64,5 @@ export const ClientStyle = StyleSheet.create({
     height: 27,
     width: 27,
     marginRight: 20,
-    tintColor: "#294E4B", // Icon color
   },
 });
