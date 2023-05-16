@@ -82,14 +82,17 @@ export const styles = StyleSheet.create({
     top: 100,
   },
   termsButton: {
+    backgroundColor: '#E9ECE6',
     position: 'absolute',
     top: 300,
   },
   updateButton: {
+    backgroundColor: '#E9ECE6',
     position: 'absolute',
     top: 160,
   },
   updateVersion: {
+    backgroundColor: '#E9ECE6',
     position: 'absolute',
     top: 120,
   },

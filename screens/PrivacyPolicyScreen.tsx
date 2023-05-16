@@ -80,22 +80,27 @@ function PrivacyPolicyScreen() {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#E9ECE6',
         flex: 1,
         paddingTop: StatusBar.currentHeight,
     },
     scrollView: {
         height: windowHeight - 100,
+        backgroundColor: '#E9ECE6'
     },
     inputView: {
+        backgroundColor: '#E9ECE6',
         paddingHorizontal: 10,
         paddingBottom: 10,
     },
     pageTitle: {
+        backgroundColor: '#E9ECE6',
         margin: 20,
         fontSize: 16,
         textAlign: "center",
     },
     sectionHeading: {
+        backgroundColor: '#E9ECE6',
         position: "relative",
         marginBottom: 1,
         marginTop: 4,
@@ -103,6 +108,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     textParagraph: {
+        backgroundColor: '#E9ECE6',
         padding: 5,
         marginTop: 0,
         textAlign: "justify",
