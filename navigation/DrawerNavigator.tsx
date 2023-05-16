@@ -49,12 +49,12 @@ export default function DrawerNavigator() {
             routeNames: props.state.routeNames.filter(
               // The different screens can be excluded from the hamburger menu, by routing them here. 
               (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !== 'PrivacyPolicy' && routeName !== 'About'
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
               }
             ),
             routes: props.state.routes.filter(
               (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== 'PrivacyPolicy' && route.name !== 'About'
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
             ),
           },
         };
@@ -64,24 +64,27 @@ export default function DrawerNavigator() {
         
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
+          {/* <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
 
-            props.navigation.navigate("Authenticate");
+            props.navigation.navigate("Account");
           }
-        }/>
+        }/> */}
         </DrawerContentScrollView>
       )
     }}>
 
       {/* These represent the menus in the hamburger menu. */}
-      <Drawer.Screen name="About" component={AboutNavigator}/>
-      <Drawer.Screen name="File System" component={FileSystemNavigator} />
-      <Drawer.Screen name="Clients" component={ClientsNavigator} />
+
+      {/* NOTE: THIS IS IN FACT INVISIBLE. THE ABOVE DRAWER ITEM REDIRECTS TO THIS. THIS IS THE USERNAME IS DISPLAYED . */}
+      <Drawer.Screen name={getUserAuthStatus().Text} component={ClientsNavigator} />     
+
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
-      <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
+      <Drawer.Screen name="File System" component={FileSystemNavigator} />
+      <Drawer.Screen name="About" component={AboutNavigator}/>
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
+      <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
@@ -144,10 +147,10 @@ function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
       <ClientsStack.Screen
-        name='ClientsScreen'
+        name='Account'
         component={ClientsScreen}
         options={{
-          headerTitle:'Profile',
+          headerTitle:'Account',
           headerStyle: {
             backgroundColor: '#294E4B',
           },

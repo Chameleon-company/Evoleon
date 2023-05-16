@@ -91,7 +91,7 @@ export var getUserAuthStatus = () => {
   var UserAuthText;
 
   if (userIsAuthenticated) {
-    UserAuthText = "Sign out of " + auth.currentUser.displayName + "'s account";
+    UserAuthText = auth.currentUser.displayName + "'s account";
 
     return { Text: UserAuthText, Status: true };
   } else {
@@ -473,52 +473,106 @@ export const fetchLocations = async () => {
   return locations;
 };
 
-// Updating user data in realtime
-export const updateUserData = async (userId, name, email, phone, residentialAddress, registrationNumber, carType) => {
-  // Getting a reference to the user's data in the database
-  const userRef = ref(db, 'users/' + userId);
-  // Getting a snapshot of the user's current data
-  const userSnapshot = await get(userRef);
-  // Extracting the user's data from the snapshot
-  const userData = userSnapshot.val();
-  // Empty object to hold the updates
-  const updates = {};
-  
-  // Checking if any of the user's data needs to be updated
-  if (userData.name !== name) {
-    updates.name = name;
-  }
-  if (userData.email !== email) {
-    updates.email = email;
-  }
-  if (userData.phone !== phone) {
-    updates.phone = phone;
-  }
-  if (userData.residentialAddress !== residentialAddress) {
-    updates.residentialAddress = residentialAddress;
-  }
-  if (userData.registrationNumber !== registrationNumber) {
-    updates.registrationNumber = registrationNumber;
-  }
-  if (userData.carType !== carType) {
-    updates.carType = carType;
-  }
-  
-  // Checking if any updates were made
-  if (Object.keys(updates).length > 0) {
-    try {
-      // Updating user's data in the database with the updates object
-      await update(userRef, updates);
-      // Return true if update was successful
-      return true;
-      // Log any errors and return false if update fails
-    } catch (error) {
-      console.log(error.message);
-      return false;
+export const updateUserData = async(userDetails) => {
+    // if not logged in
+    if (!userIsAuthenticated) {
+      return null;
     }
-  }
-  
-  // Return true if no updates were made
-  return true;
-};
+  // Get the user's document reference
+  const user = auth.currentUser;
+  const userDocRef = doc(firestoreDB, "UserData", user.uid);
 
+  // Initialize an object to hold the updates
+  let updates = {};
+
+  // Check each field in userDetails. If it's not empty or null, add it to the updates
+  if (userDetails.name && userDetails.name !== '') {
+    updates.name = userDetails.name;
+  }
+
+  if (userDetails.displayName && userDetails.displayName !== '') {
+    updates.displayName = userDetails.displayName;
+    await updateProfile(auth.currentUser, {
+      displayName: userDetails.displayName,
+    })
+  }
+
+  if (userDetails.email && userDetails.email !== '') {
+    updates.email = userDetails.email;
+  }
+
+  if (userDetails.phone && userDetails.phone !== '') {
+    updates.phone = userDetails.phone;
+  }
+
+  if (userDetails.residentialAddress && userDetails.residentialAddress !== '') {
+    updates.residentialAddress = userDetails.residentialAddress;
+  }
+
+  if (userDetails.registrationNumber && userDetails.registrationNumber !== '') {
+    updates.registrationNumber = userDetails.registrationNumber;
+  }
+
+  if (userDetails.carType && userDetails.carType !== '') {
+    updates.carType = userDetails.carType;
+  }
+
+  // If there are any updates, write them to the document in Firestore
+  if (Object.keys(updates).length > 0) {
+    await updateDoc(userDocRef, updates);
+  }
+}
+
+
+export const fetchUserDetails = async () => {
+  // if not logged in
+  if (!userIsAuthenticated) {
+    return null;
+  }
+
+  // Get the current user
+  const user = auth.currentUser;
+
+  // Get the user's document reference
+  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+
+  // Fetch the document
+  const userDoc = await getDoc(userDocRef);
+
+  console.log(userDoc.data());
+
+  // Check if the document exists
+  if (userDoc.exists()) {
+    const data = userDoc.data();
+    const fields = ['name', 'displayName', 'email', 'phone', 'residentialAddress', 'registrationNumber', 'carType'];
+
+    // Create an object with only the available fields
+    let userDetails = {};
+    fields.forEach(field => {
+      if (data[field]) {
+        userDetails[field] = data[field];
+      }
+    });
+
+    return userDetails;
+  } else {
+    // If the document does not exist, return null or handle this situation as you see fit
+    return null;
+  }
+}
+
+export const logoutUser = () => {
+  // if not logged in
+  if (!userIsAuthenticated) {
+    return null;
+  }
+signOut(auth)
+  .then(() => {
+    // Update the authentication status
+    userIsAuthenticated = false;
+    console.log("User logged out");
+  })
+  .catch((error) => {
+    console.error("Error logging out:", error);
+  });
+};

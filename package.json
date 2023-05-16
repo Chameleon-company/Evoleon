@@ -24,6 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.7",
+    "react-native-boring-avatars": "^1.0.1",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-map-clustering": "^3.4.2",
     "react-native-maps": "1.3.2",

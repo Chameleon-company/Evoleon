@@ -52,6 +52,14 @@ export default function AuthenticateScreen() {
       >
         <Text style={ButtonStyle.Text}>Sign up</Text>
       </TouchableOpacity>
+    {/* Back button */}
+    <TouchableOpacity
+        style={[{marginTop: 20}, ButtonStyle.Button]}
+        onPress={() => {
+            navigation.goBack();
+        }}>
+        <Text style={ButtonStyle.Text}>Back</Text>
+    </TouchableOpacity>
     </View>
   );
 }
