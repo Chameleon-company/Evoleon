@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const UserDetailsPageStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+    backgroundColor: '#E9ECE6'
     },
     profileContainer: {
         justifyContent: "center",

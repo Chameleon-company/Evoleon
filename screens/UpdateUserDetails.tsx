@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, {useState, useEffect} from "react";
+import {View, Text, TextInput, TouchableOpacity} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 import MenuIcon from "../components/MenuIcon";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { UserDetailsPageStyle } from "../styles/updateUserDetails";
-import { ButtonStyle } from "../styles/buttonStyle";
-import { updateUserData, fetchUserDetails, getuserIsAuthenticated } from "../web/firebase";
-import Avatar from 'react-native-boring-avatars';
-import { useFocusEffect } from '@react-navigation/native';
+import {StackHeaderLeftButtonProps} from "@react-navigation/stack";
+import {UserDetailsPageStyle} from "../styles/updateUserDetails";
+import {ButtonStyle} from "../styles/buttonStyle";
+import {updateUserData, fetchUserDetails, getuserIsAuthenticated} from "../web/firebase";
+import Avatar from "react-native-boring-avatars";
+import {useFocusEffect} from "@react-navigation/native";
 
 interface UserDetails {
     name: string;
@@ -28,7 +28,6 @@ export default function UpdateUserDetailsScreen() {
         });
     }, [navigation]);
 
-
     useFocusEffect(
         React.useCallback(() => {
             if (getuserIsAuthenticated()) {
@@ -36,18 +35,17 @@ export default function UpdateUserDetailsScreen() {
                     setUserDetails((prevUserDetails) => ({
                         ...prevUserDetails,
                         ...details,
-                      }));
-                      if (details.name) {
+                    }));
+                    if (details.name) {
                         setName(details.name);
-                      }
+                    }
                 });
             }
-          return () => {
-            // Cleanup logic goes here
-          };
+            return () => {
+                // Cleanup logic goes here
+            };
         }, [])
-      );
-
+    );
 
     const [userDetails, setUserDetails] = useState<UserDetails>({
         name: "",
@@ -59,7 +57,7 @@ export default function UpdateUserDetailsScreen() {
         carType: "",
     });
 
-    const [name , setName] = useState<string>("");
+    const [name, setName] = useState<string>("");
 
     const handleUpdate = (key: keyof UserDetails, value: string) => {
         setUserDetails((prevUserDetails) => ({
@@ -71,11 +69,7 @@ export default function UpdateUserDetailsScreen() {
     return (
         <View style={UserDetailsPageStyle.container}>
             <View style={UserDetailsPageStyle.profileContainer}>
-            <Avatar
-                size={90}
-                variant="beam"
-                name={name}
-              />
+                <Avatar size={90} variant="beam" name={name} />
             </View>
             <View style={UserDetailsPageStyle.userDetailsForm}>
                 <Text style={UserDetailsPageStyle.userDetailsLabel}>Name:</Text>
@@ -126,16 +120,22 @@ export default function UpdateUserDetailsScreen() {
                     onChangeText={(text) => handleUpdate("carType", text)}
                     value={userDetails.carType}
                 />
-            {/* Button to save user details */}
-            <TouchableOpacity
-                style={ButtonStyle.Button}
-                onPress={() => {
-                  updateUserData(userDetails) 
-                }}
-                
-            >
-                <Text style={ButtonStyle.Text}>Save</Text>
-            </TouchableOpacity>
+                {/* Button to save user details */}
+                <TouchableOpacity
+                    style={ButtonStyle.Button}
+                    onPress={() => {
+                        updateUserData(userDetails);
+                    }}>
+                    <Text style={ButtonStyle.Text}>Save</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[{marginTop: 20}, ButtonStyle.Button]}
+                    onPress={() => {
+                        navigation.goBack();
+                    }}>
+                    <Text style={ButtonStyle.Text}>Back</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

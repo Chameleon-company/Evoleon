@@ -63,6 +63,13 @@ function AboutScreen() {
             onPress={clearCacheAlert}>
             <Text style={ButtonStyle.Text}>{clearCache}</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[{ marginTop: 20 }, ButtonStyle.Button]}
+            onPress={() => {
+                navigation.goBack();
+            }}>
+            <Text style={ButtonStyle.Text}>Back</Text>
+        </TouchableOpacity>
         </View>
     </View>
     );

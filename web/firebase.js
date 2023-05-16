@@ -91,7 +91,7 @@ export var getUserAuthStatus = () => {
   var UserAuthText;
 
   if (userIsAuthenticated) {
-    UserAuthText = "Sign out of " + auth.currentUser.displayName + "'s account";
+    UserAuthText = auth.currentUser.displayName + "'s account";
 
     return { Text: UserAuthText, Status: true };
   } else {
@@ -492,6 +492,9 @@ export const updateUserData = async(userDetails) => {
 
   if (userDetails.displayName && userDetails.displayName !== '') {
     updates.displayName = userDetails.displayName;
+    await updateProfile(auth.currentUser, {
+      displayName: userDetails.displayName,
+    })
   }
 
   if (userDetails.email && userDetails.email !== '') {
@@ -557,3 +560,19 @@ export const fetchUserDetails = async () => {
     return null;
   }
 }
+
+export const logoutUser = () => {
+  // if not logged in
+  if (!userIsAuthenticated) {
+    return null;
+  }
+signOut(auth)
+  .then(() => {
+    // Update the authentication status
+    userIsAuthenticated = false;
+    console.log("User logged out");
+  })
+  .catch((error) => {
+    console.error("Error logging out:", error);
+  });
+};

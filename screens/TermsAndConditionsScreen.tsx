@@ -50,9 +50,9 @@ export default function TermsAndConditionsScreen() {
 
 
         <Pressable
-          style={SignUpScreenStyle.button}
+          style={[{marginTop: 20}, ButtonStyle.Button]}
           onPress={() => {
-            navigation.navigate("Signup");
+            navigation.goBack();
           }}   
         >
           <Text style={ButtonStyle.Text}>Okay</Text>

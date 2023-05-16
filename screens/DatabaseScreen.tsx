@@ -42,12 +42,12 @@ const DatabaseScreen = (props) => {
 
   return (
     <View style={MapStyle.ViewStyle}>
-      {/* <DatabaseMap
+      <DatabaseMap
         markers={testingCoords.filter(isLocationVisible)}
         marker={selectedMarker}
         onMarkerPress={handleMarkerPress}
         onRegionChange={setVisibleRegion}
-      /> */}
+      />
     </View>
   );
 };
