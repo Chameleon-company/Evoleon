@@ -28,10 +28,7 @@ export default function AuthenticateScreen() {
   return (
     <View style={AuthScreenStyle.Centered}>
       {/* Logo - to be updated with current logo */}
-      <Image
-        style={logoStyles.frontPageLogo}
-        source={require("../assets/EvoleonProfileTemp.png")}
-      />
+      <Image style={logoStyles.frontPageLogo} source={require("./EvoleonFinal.png")} />
 
       {/* Login button */}
       <TouchableOpacity

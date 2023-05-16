@@ -4,6 +4,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
   Auth,
+  sendEmailVerification,
   getAuth,
   signOut,
   updateProfile,
@@ -55,11 +56,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
-// Boolean - true if user is logged in.
-var userIsAuthenticated = false;
+//Boolean - true if user is signed in
+var userIsAuthenticated = false; //we don't have to use this anymore, phase this out
 
 export const getuserIsAuthenticated = () => {
-  return userIsAuthenticated;
+  return auth.currentUser ? true : false;
 };
 
 export const getUserName = () => {
@@ -126,54 +127,52 @@ export const userLogin = async (email, password) => {
   }
 };
 
-// Sign up for a new user.
-export const userSignUp = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  country
-) => {
-  let errorCaught = false;
-
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log("Created new account for:", user.email);
-      userIsAuthenticated = true;
-      updateProfileDetails(firstName);
-      errorCaught = false;
-    })
-    .then(() => {
-      userFirestoreData(firstName, lastName, country);
-      errorCaught = false;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      errorCaught = true;
-    });
-
-  if (errorCaught == false) {
+//Sign up for a new user
+export const userSignUp = async (email, password, firstName, lastName, country) => {
+  try {
+    console.log("User tried to create a new account.");
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    userIsAuthenticated = true;
+    const user = res.user;
+    await sendEmailVerification(user);
+    console.log("Updating profile details");
+    await updateProfileDetails(firstName);
+    console.log("Updating firestore data");
+    await userFirestoreData(firstName, lastName, country);
     return true;
-  } else {
+  } catch (err) {
+    console.error("An Error has been caught");
+    console.error("Error message:", err);
     return false;
   }
 };
 
 // Add users first name to firebase Authentication.
 export const updateProfileDetails = async (name) => {
-  await updateProfile(auth.currentUser, {
-    displayName: name,
-  })
-    .then(() => {
-      console.log("Profile updated.");
-      console.log("Display name added: " + auth.currentUser.displayName);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+  try {
+    await updateProfile(auth.currentUser, { displayName: name });
+    console.log("Profile updated.");
+    console.log("Display name added: " + auth.currentUser.displayName);
+    return true;
+  } catch (error) {
+    console.error("Error updating profile details:", error);
+    return false;
+  }
+};
+
+// Create new Firestore document for user using unqiue user ID.
+export const userFirestoreData = async (firstName, lastName, country) => {
+  try {
+    await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
+      firstName,
+      lastName,
+      country,
     });
+    return true;
+  } catch (err) {
+    console.error("Error updating firestore data:", err);
+    return false;
+  }
 };
 
 //Sign out of user account
@@ -228,26 +227,6 @@ export const userDeleteAccount = async () => {
     console.log(error.message);
     return { success: false, error };
   }
-};
-
-// Create new Firestore document for user using unqiue user ID.
-export const userFirestoreData = async (firstName, lastName, country) => {
-  await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
-    firstName: firstName,
-    lastName: lastName,
-    country: country,
-  });
-
-  // Create subcollection within users document to store users favourite charger locations.
-  const subCollectionInitialData = { initialCollectionItem: "initial-data" };
-  const subCollection = doc(
-    firestoreDB,
-    "UserData",
-    auth.currentUser.uid,
-    auth.currentUser.uid + "favouriteCharger",
-    "favouriteCharger"
-  );
-  await setDoc(subCollection, subCollectionInitialData, { merge: true });
 };
 
 // Add or remove an EV charger from a users favourite list in Firestore.
@@ -450,6 +429,17 @@ export const evChargerLocationIsInFavourites = (val) => {
   }
   return false;
 };
+
+
+export const sendVerificaiton = (email) => {
+  const user = auth.currentUser;
+  sendEmailVerification(user).then((res) => {
+    return true;
+  }).catch((err) => {
+    throw false;
+  })
+}
+
 
 // Get all EV charger locations from Firestore, return as object instead of array
 export const fetchLocations = async () => {
