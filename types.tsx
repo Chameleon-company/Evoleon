@@ -64,4 +64,7 @@ export type AboutParamList = {
   AboutScreen: undefined;
 };
 
+export type UpdateUserDetailsParamList = {
+  UpdateUserDetailsScreen: undefined;
+};
 export type onPressFunc = (event: GestureResponderEvent) => void;

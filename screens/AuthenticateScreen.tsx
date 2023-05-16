@@ -11,11 +11,11 @@ import { AuthScreenStyle } from "../styles/authenticateStyle";
 import { ButtonStyle } from "../styles/buttonStyle";
 import logoStyles from "../styles/logoStyle";
 
-{
-  /* Initial screen for authentication proccess.
-    To do: improve user interface code and update links
-  */
-}
+
+ /* Initial screen for authentication proccess.
+  To do: improve user interface code and update links
+*/
+
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
 
@@ -28,7 +28,7 @@ export default function AuthenticateScreen() {
   return (
     <View style={AuthScreenStyle.Centered}>
       {/* Logo - to be updated with current logo */}
-      <Image style={logoStyles.Logo} source={require("./EvoleonFinal.png")} />
+      <Image style={logoStyles.frontPageLogo} source={require("./EvoleonFinal.png")} />
 
       {/* Login button */}
       <TouchableOpacity
@@ -49,6 +49,14 @@ export default function AuthenticateScreen() {
       >
         <Text style={ButtonStyle.Text}>Sign up</Text>
       </TouchableOpacity>
+    {/* Back button */}
+    <TouchableOpacity
+        style={[{marginTop: 20}, ButtonStyle.Button]}
+        onPress={() => {
+            navigation.goBack();
+        }}>
+        <Text style={ButtonStyle.Text}>Back</Text>
+    </TouchableOpacity>
     </View>
   );
 }

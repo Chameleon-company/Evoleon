@@ -12,7 +12,9 @@ import AuthenticateScreen from '../screens/AuthenticateScreen';
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
-import {getLoginSignOutButtonText, LoginSignOutButtonPressed} from '../web/firebase' 
+import UpdateUserDetailsScreen from "../screens/UpdateUserDetails"
+import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
+import {getUserAuthStatus, LoginSignOutButtonPressed} from '../web/firebase' 
 
 import {
   DrawerParamList,
@@ -25,7 +27,9 @@ import {
   AuthenticateParamList, 
   SignupParamList,
   AboutParamList,
-  PasswordResetParamList
+  UpdateUserDetailsParamList,
+  PrivacyParamList,
+  PasswordResetParamList,
 } from "../types";
 import { color } from "react-native-reanimated";
 import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
@@ -45,43 +49,47 @@ export default function DrawerNavigator() {
             routeNames: props.state.routeNames.filter(
               // The different screens can be excluded from the hamburger menu, by routing them here. 
               (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen';
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
               }
             ),
             routes: props.state.routes.filter(
               (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen'
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
             ),
           },
         };
 
   
       return (
+        
         <DrawerContentScrollView {...filteredTopLeftMenuItems}>
         <DrawerItemList {...filteredTopLeftMenuItems} />
-          
-          <DrawerItem label={getLoginSignOutButtonText()} onPress={() => {
-            LoginSignOutButtonPressed();
-            props.navigation.navigate("Authenticate");
+          {/* <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
+
+            props.navigation.navigate("Account");
           }
-        }/>
+        }/> */}
         </DrawerContentScrollView>
       )
     }}>
 
       {/* These represent the menus in the hamburger menu. */}
-      <Drawer.Screen name="About" component={AboutNavigator}/>
-      <Drawer.Screen name="File System" component={FileSystemNavigator} />
-      <Drawer.Screen name="Clients" component={ClientsNavigator} />
-      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
-      
 
-      {/* These menus are not displayed in the hamburger menu as they are routed and filteredout of the menu.*/}
+      {/* NOTE: THIS IS IN FACT INVISIBLE. THE ABOVE DRAWER ITEM REDIRECTS TO THIS. THIS IS THE USERNAME IS DISPLAYED . */}
+      <Drawer.Screen name={getUserAuthStatus().Text} component={ClientsNavigator} />     
+
+      <Drawer.Screen name="Database" component={DatabaseNavigator}/>
+      <Drawer.Screen name="File System" component={FileSystemNavigator} />
+      <Drawer.Screen name="About" component={AboutNavigator}/>
+
+      {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
+      <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator}/>
       <Drawer.Screen name="Login" component={LoginNavigator} />
-      <Drawer.Screen name="Signup" component={SignupNavigator}/>  
+      <Drawer.Screen name="Signup" component={SignupNavigator} />  
+      <Drawer.Screen name="PrivacyPolicy" component={PrivacyNavigator}/>  
       
 
 
@@ -139,10 +147,10 @@ function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
       <ClientsStack.Screen
-        name='ClientsScreen'
+        name='Account'
         component={ClientsScreen}
         options={{
-          headerTitle:'Profile',
+          headerTitle:'Account',
           headerStyle: {
             backgroundColor: '#294E4B',
           },
@@ -277,5 +285,47 @@ function AboutNavigator() {
           } 
         }}/>
     </AboutStack.Navigator>
+  );
+}
+
+const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
+
+function UpdateUserDetailsNavigator() {
+	return (
+		<UpdateUserDetailsStack.Navigator>
+			<UpdateUserDetailsStack.Screen
+				name="UpdateUserDetailsScreen"
+				component={UpdateUserDetailsScreen}
+				options={{
+					headerTitle: "Update Details",
+					headerStyle: {
+						backgroundColor: "#294E4B",
+					},
+					headerTitleStyle: {
+						color: "white",
+					},
+				}}/>
+		</UpdateUserDetailsStack.Navigator>
+	);
+}
+const PrivacyStack = createStackNavigator<PrivacyParamList>();
+
+function PrivacyNavigator() {
+  return (
+    <PrivacyStack.Navigator>
+      <PrivacyStack.Screen 
+        name="PrivacyPolicy" 
+        component={PrivacyPolicyScreen} 
+        options={{
+          headerTitle:'Privacy Policy',
+
+          headerStyle: {
+            backgroundColor: '#294E4B',
+          },
+          headerTitleStyle: {
+            color: 'white'
+          },
+        }}/>
+    </PrivacyStack.Navigator>
   );
 }

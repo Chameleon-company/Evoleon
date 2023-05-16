@@ -1,118 +1,142 @@
-//import necessary libraries and components
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { Image, TouchableOpacity } from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {StackHeaderLeftButtonProps} from "@react-navigation/stack";
+import {Image, TouchableOpacity, ScrollView, Alert} from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
-import { Text, View } from "../components/Themed";
+import {Text, View} from "../components/Themed";
 import MenuIcon from "../components/MenuIcon";
-import { useEffect, useState } from "react";
-import main from "../styles/main";
+import {useEffect, useState} from "react";
 import {
-  getLoginSignOutButtonText,
-  getuserIsAuthenticated,
-  getUserNameTextForProfilePage,
-  LoginSignOutButtonPressed,
+    getUserAuthStatus,
+    getuserIsAuthenticated,
+    getUserNameTextForProfilePage,
+    LoginSignOutButtonPressed,
+    userDeleteAccount,
+    logoutUser
 } from "../web/firebase";
-import { ClientStyle } from "../styles/clientStyle";
+import {ClientStyle} from "../styles/clientStyle";
+
+const ListButton = ({action, text, iconName}) => {
+    const defaultImage = require("../assets/Arrow.png");
+
+    return (
+        <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={action}>
+            <Text style={ClientStyle.profileActionsText}>{text}</Text>
+            <Entypo name={iconName} size={24} color="#294E4B" style={ClientStyle.buttonIcon} />
+            {/* <Image source={image || defaultImage} style={ClientStyle.buttonIcon} /> */}
+        </TouchableOpacity>
+    );
+};
 
 export default function ClientsScreen() {
-  //Define navigation using the useNavigation hook
-  const navigation = useNavigation();
+    // Define navigation using the useNavigation hook.
+    const navigation = useNavigation();
 
-  // Define state variables to hold profile and sign in/out text
-  const [profileText, setProfileText] = useState(
-    "Please log into your account"
-  );
-  const [LoginSignOutText, setLoginSignOutText] = useState("Sign in");
+    const UnauthProfileText = "Please login to view account.";
 
-  // Set the headerLeft icon to the menu icon
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
+    // Define state variables to hold profile and login sign out text.
+    const [profileText, setProfileText] = useState(UnauthProfileText);
+
+    const [LoginSignOutText, setLoginSignOutText] = useState("Login");
+
+
+    // Set the headerLeft icon to the menu icon.
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
+        });
+        // Set profile and login or sign out text when screen is focused.
+        navigation.addListener("focus", () => {
+            setProfileText(getUserNameTextForProfilePage());
+            setLoginSignOutText(getUserAuthStatus().Text);
+        });
     });
-    // Set profile and sign in/out text when screen is focused
-    navigation.addListener("focus", () => {
-      setProfileText(getUserNameTextForProfilePage());
-      setLoginSignOutText(getLoginSignOutButtonText());
-    });
-  });
 
-  // Define function for sign in/out button pressed
-  const authActions = () => {
-    if (getuserIsAuthenticated()) {
-      LoginSignOutButtonPressed();
-      setProfileText("Please login to view account");
-      setLoginSignOutText("Sign in");
-    } else {
-      navigation.navigate("Login");
-    }
-  };
-
-  return (
-    // Render the main content of the screen using a View component
-    <View style={ClientStyle.content}>
-      <View style={ClientStyle.topPageContent}>
-        {/* Display Evoleon logo image */}
-        <Image
-          style={ClientStyle.profileImage}
-          source={require("../assets/EvoleonFinal.png")}
-        />
-        {/* Display the profile text using a Text component */}
-        <Text style={ClientStyle.headingText}>{profileText}</Text>
-      </View>
-
-      {/* Render the profile actions using TouchableOpacity and Image components */}
-      <View style={ClientStyle.profileActionsView}>
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Edit Information</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Dark Mode Enabled</Text>
-          <Image
-            source={require("../assets/LightMode.png")}
-            style={ClientStyle.lightModeIcon}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}
-        onPress={() => {
-          navigation.navigate("About");
-        }}>
-          <Text style={ClientStyle.profileActionsText}>About</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={ClientStyle.profileActionsCell}>
-          <Text style={ClientStyle.profileActionsText}>Help and Support</Text>
-          <Image
-            source={require("../assets/Arrow.png")}
-            style={ClientStyle.arrow}
-          />
-        </TouchableOpacity>
-
-        {/* Display the sign in/out button with its text and icon */}
-        <TouchableOpacity
-          style={ClientStyle.profileActionsCell}
-          onPress={() => {
-            authActions();
-          }}
-        >
-          <Text style={ClientStyle.profileActionsText}>{LoginSignOutText}</Text>
-          <Image
-            source={require("../assets/LogOut.png")}
-            style={ClientStyle.logOutIcon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    return (
+        <View style={ClientStyle.content}>
+            {/* Display Evoleon logo image or profile image */}
+            <View style={ClientStyle.profileContainer}>
+                <Image style={ClientStyle.profileImage} source={require("../assets/EvoleonProfileTemp.png")} />
+                <Text style={ClientStyle.headingText}>{profileText}</Text>
+            </View>
+            <ScrollView style={ClientStyle.scrollView}>
+            <ListButton
+                    action={() => {
+                        navigation.navigate("Authenticate");
+                    }}
+                    text="Sign in"
+                    iconName="login"
+                />
+                <ListButton
+                    action={() => {
+                        navigation.navigate("Update Details");
+                    }}
+                    text="Update Account"
+                    iconName="edit"
+                />
+                <ListButton
+                    action={() => {
+                        logoutUser();
+                        navigation.navigate("Authenticate");
+                    }}
+                    text="LogOut"
+                    iconName="log-out"
+                />
+                <ListButton
+                    action={() => {
+                        navigation.navigate("Authenticate");
+                    }}
+                    text="Delete Account"
+                    action={() => {
+                        Alert.alert(
+                            "Deletion request.",
+                            "Are you sure you want to delete your account?",
+                            [
+                                {
+                                    text: "Cancel",
+                                    onPress: () => {}, // Empty onPress function to close the alert
+                                    style: "cancel",
+                                },
+                                {
+                                    text: "Agree",
+                                    onPress: async () => {
+                                        Alert.alert(
+                                            "This action cannot be undone.",
+                                            "All user data will be removed from the application after this request.",
+                                            [
+                                                {
+                                                    text: "Cancel",
+                                                    onPress: () => {}, // Empty onPress function to close the alert
+                                                    style: "cancel",
+                                                },
+                                                {
+                                                    text: "Understood",
+                                                    onPress: async () => {
+                                                        await userDeleteAccount();
+                                                        setLoginSignOutText(getUserAuthStatus().Text);
+                                                        setProfileText(UnauthProfileText);
+                                                    },
+                                                },
+                                            ],
+                                            {cancelable: false}
+                                        );
+                                    },
+                                },
+                            ],
+                            {cancelable: false}
+                        );
+                    }}
+                    iconName="remove-user"
+                />
+                <ListButton
+                    action={() => {
+                        navigation.navigate("About");
+                    }}
+                    text="About"
+                    iconName='info'
+                />
+            </ScrollView>
+        </View>
+    );
 }
