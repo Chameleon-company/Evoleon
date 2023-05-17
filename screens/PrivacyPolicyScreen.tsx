@@ -97,6 +97,19 @@ function PrivacyPolicyScreen() {
                         types of disclosure covered by this Policy. Where we disclose your personal information to third parties,
                         we will request that the third party follow this Policy regarding handling your personal information.
                     </Text>
+                    <Text style={styles.sectionHeading}>6. Security of your personal information</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) Chameleon is committed to ensuring that the information you provide to us is secure. In order to prevent
+                        unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures
+                        to safeguard and secure information and protect it from misuse, interference, loss and unauthorised access,
+                        modification and disclosure.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (b) The transmission and exchange of information is carried out at your own risk. We cannot guarantee the
+                        security of any information that you transmit to us, or receive from us. Although we take measures to safeguard
+                        against unauthorised disclosures of information, we cannot assure you that personal information that we collect
+                        will not be disclosed in a manner that is inconsistent with this Privacy Policy.
+                    </Text>
                 </View>
             </ScrollView>
             <TouchableOpacity
