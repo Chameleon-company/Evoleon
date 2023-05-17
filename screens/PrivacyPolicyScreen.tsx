@@ -65,6 +65,38 @@ function PrivacyPolicyScreen() {
                         respect your privacy. Chameleon may contact you by a variety of measures including, but not
                         limited to telephone, email, sms or mail.
                     </Text>
+                    <Text style={styles.sectionHeading}>5. Disclosure of your personal information</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) We may disclose your personal information to any of our employees, officers, insurers,
+                        professional advisers, agents, suppliers or subcontractors insofar as reasonably necessary for the
+                        purposes set out in this Policy. Personal information is only supplied to a third party when it is
+                        required for the delivery of our services.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (b) We may from time to time need to disclose personal information to comply with a legal requirement,
+                        such as a law, regulation, court order, subpoena, warrant, in the course of a legal proceeding or in
+                        response to a law enforcement agency request.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (c) We may also use your personal information to protect the copyright, trademarks, legal rights,
+                        property or safety of Chameleon, its application, website and customers or third parties.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (d) Information that we collect may from time to time be stored, processed in or transferred between
+                        parties located in countries outside of Australia
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (e) If there is a change of control in our business or a sale or transfer of business assets, we
+                        reserve the right to transfer to the extent permissible at law our user databases, together with
+                        any personal information and non-personal information contained in those databases. This information
+                        may be disclosed to a potential purchaser under an agreement to maintain confidentiality. We would seek
+                        to only disclose information in good faith and where required by any of the above circumstances.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (f) By providing us with personal information, you consent to the terms of this Privacy Policy and the
+                        types of disclosure covered by this Policy. Where we disclose your personal information to third parties,
+                        we will request that the third party follow this Policy regarding handling your personal information.
+                    </Text>
                 </View>
             </ScrollView>
             <TouchableOpacity
