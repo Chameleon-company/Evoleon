@@ -110,6 +110,72 @@ function PrivacyPolicyScreen() {
                         against unauthorised disclosures of information, we cannot assure you that personal information that we collect
                         will not be disclosed in a manner that is inconsistent with this Privacy Policy.
                     </Text>
+                    <Text style={styles.sectionHeading}>7. Access to your personal information</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) You may request details of personal information that we hold about you in accordance with the provisions
+                        of the Privacy Act 1988(Cth). A small administrative fee may be payable for the provision of information.
+                        If you would like a copy of the information which we hold about you or believe that any information we hold
+                        on you is inaccurate, out of date, incomplete, irrelevant or misleading, please email us at chameleon@deakin.edu.au.
+                    </Text>
+                    <Text style={styles.textParagraph}>
+                        (b) We reserve the right to refuse to provide you with information that we hold about you, in certain
+                        circumstances set out in the Privacy Act.
+                    </Text>
+                    <Text style={styles.sectionHeading}>8. Complaints about privacy</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) If you have any complaints about our privacy practices, please feel free to send in details of your
+                        complaints to 75 Pigdons Road, Waurn Ponds, Victoria, 3216. We take complaints very seriously and will respond
+                        shortly after receiving written notice of your complaint.
+                    </Text>
+                    <Text style={styles.sectionHeading}>9. Opt out right</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) You can stop all collection of information by the Application easily by uninstalling the Application.
+                        You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile
+                        application marketplace or network. You can also request to opt-out via email, at chameleon@deakin.edu.au.
+                    </Text>
+                    <Text style={styles.sectionHeading}>10. Changes to Privacy Policy</Text>
+                    <Text style={styles.textParagraph}>
+                        (a) Please be aware that we may change this Privacy Policy in the future. We may modify this Policy at any time,
+                        in our sole discretion and all modifications will be effective immediately upon our posting of the modifications
+                        on our website or notice board. Please check back from time to time to review our Privacy Policy.
+                    </Text>
+                    <Text style={styles.sectionHeading}>11. Software Application</Text>
+                    <Text style={styles.subSectionHeading}>(a) When you use our Application</Text>
+                    <Text style={styles.textParagraph}>
+                        When you come to our application we may collect certain information such as mobile unique device ID, the IP
+                        address of your mobile device, mobile operating system, the type of mobile internet browsers you use, and
+                        information about the way you use the Application. This information is used in an aggregated manner to
+                        analyse how people use our site, such that we can improve our service.
+                    </Text>
+                    <Text style={styles.subSectionHeading}>(b) Cookies</Text>
+                    <Text style={styles.textParagraph}>
+                        We may from time to time use cookies on our software application. Cookies are very small files which a website uses
+                        to identify you when you come back to the application and to store details about your use of the application.
+                        Cookies are not malicious programs that access or damage your computer, tablet or smartphone. Most devices
+                        automatically accept cookies but you can choose to reject cookies by changing your devise settings. However, this
+                        may prevent you from taking full advantage of our application.
+                    </Text>
+                    <Text style={styles.subSectionHeading}>(c) Automatic collection</Text>
+                    <Text style={styles.textParagraph}>
+                        The software Application may collect certain information automatically, including, but not limited to, the type of
+                        mobile device you use, your mobile devices unique device ID, the IP address of your mobile device, your mobile
+                        operating system, the type of mobile Internet browsers you use, and information about the way you use the Application.
+                    </Text>
+                    <Text style={styles.subSectionHeading}>(d) Third parties</Text>
+                    <Text style={styles.textParagraph}>
+                        Our software application may from time to time have links to other applications or websites not owned or controlled by us.
+                        These links are meant for your convenience only. Links to third party applications and websites do not constitute
+                        sponsorship or endorsement or approval of these third parties. Please be aware that Chameleon is not responsible for
+                        the privacy practices of other such applications or websites. We encourage our users to be aware, when they leave our
+                        application or website, to read the privacy statements of each and every application or website that collects personal
+                        identifiable information.
+                    </Text>
+                    <Text style={styles.subSectionHeading}>(e) Geo-location</Text>
+                    <Text style={styles.textParagraph}>
+                        When you visit the mobile application, we may use GPS technology (or other similar technology) to determine your
+                        current location in order to determine the city you are located within and display a location map with relevant
+                        advertisements. We will not share your current location with other users or partners.
+                    </Text>
                 </View>
             </ScrollView>
             <TouchableOpacity
@@ -152,10 +218,20 @@ const styles = StyleSheet.create({
         textAlign: "left",
         fontWeight: "bold",
     },
+    subSectionHeading: {
+        backgroundColor: '#E9ECE6',
+        position: "relative",
+        marginBottom: 1,
+        marginTop: 4,
+        textAlign: "left",
+        fontWeight: "bold",
+        fontSize: 11,
+    },
     textParagraph: {
         backgroundColor: '#E9ECE6',
         padding: 5,
         marginTop: 0,
+        fontSize: 10,
         textAlign: "justify",
     },
 });
