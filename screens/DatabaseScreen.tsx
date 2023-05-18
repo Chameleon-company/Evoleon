@@ -6,16 +6,17 @@ import DatabaseMap from "./DatabaseMap";
 import MenuIcon from "../components/MenuIcon";
 import testingCoords from "../locations.json";
 
+// DatabaseScreen component
 const DatabaseScreen = (props) => {
+  // States
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRegion, setVisibleRegion] = useState(null);
-  const [visibleMarkers, setVisibleMarkers] = useState([]);
 
+  // Check if a location is within the visible region of the map
   const isLocationVisible = (location) => {
     if (!visibleRegion) return false;
 
-    const { latitude, longitude, latitudeDelta, longitudeDelta } =
-      visibleRegion;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = visibleRegion;
     const latMin = latitude - latitudeDelta / 2;
     const latMax = latitude + latitudeDelta / 2;
     const lonMin = longitude - longitudeDelta / 2;
@@ -29,21 +30,27 @@ const DatabaseScreen = (props) => {
     );
   };
 
+  // Filter visible markers based on visible region
+  const visibleMarkers = testingCoords.filter(isLocationVisible);
+  
+  // Handle marker press events
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
   };
 
+  // Set navigation options on component load
   useEffect(() => {
-    // To display the hamburger top left
+    // Display the hamburger icon at the top left
     props.navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
   }, []);
 
+  // Render
   return (
     <View style={MapStyle.ViewStyle}>
       <DatabaseMap
-        markers={testingCoords.filter(isLocationVisible)}
+        markers={visibleMarkers}
         marker={selectedMarker}
         onMarkerPress={handleMarkerPress}
         onRegionChange={setVisibleRegion}
