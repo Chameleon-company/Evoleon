@@ -1,14 +1,8 @@
-import * as React from "react";
+// Importing necessary libraries and components
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import {
-  Alert,
-  Pressable,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import { useEffect } from "react";
+import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import MenuIcon from "../components/MenuIcon";
@@ -19,41 +13,53 @@ import { SignUpScreenStyle } from "../styles/signUpStyle";
 import Checkbox from "expo-checkbox";
 import { userSignUp } from "../web/firebase";
 
-{
-  /* User sign up screen */
-}
-export default function SignupScreen() {
+// SignupScreen Component
+const SignupScreen = () => {
+  // Initialize navigation
   const navigation = useNavigation();
+  
+  // Initialize state variables
   const [firstName, onChangeTextFirstName] = React.useState("");
   const [lastName, onChangeTextLastName] = React.useState("");
   const [homeCountry, onChangeTextCountry] = React.useState("");
   const [homePostcode, onChangeTextPostcode] = React.useState("");
   const [email, onChangeTextEmail] = React.useState("");
   const [password, onChangeTextPassword] = React.useState("");
-  const [isChecked, setChecked] = React.useState(false);
+  const [isChecked, setChecked] = useState(false);
 
+  // Set header left button as MenuIcon
   useEffect(() => {
     navigation.setOptions({
       headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
     });
-  });
+  }, [navigation]);
 
+  // Function to handle sign up
+  const handleSignUp = () => {
+    userSignUp(email, password, firstName, lastName, homeCountry).then(
+      (result) => {
+        if (result) {
+          navigation.navigate("Database");
+        } else {
+          Alert.alert("Error when creating account");
+        }
+      }
+    );
+  };
+
+  // Render SignupScreen Component
   return (
     <View style={AuthScreenStyle.Centered}>
       <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
         Already have an account?
       </Text>
 
-      {/* Link to go to Login page*/}
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-      >
+      {/* Link to navigate to Login page */}
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={ButtonStyle.LoginLink}>Login</Text>
       </TouchableOpacity>
 
-      {/* Collect user information */}
+      {/* Form for user to input their information */}
       <SafeAreaView style={SignUpScreenStyle.InputArea}>
         <TextInput
           style={SignUpScreenStyle.Text}
@@ -98,52 +104,34 @@ export default function SignupScreen() {
           placeholderTextColor="grey"
           placeholder="Password"
         />
+
+        {/* Agree to terms and conditions checkbox */}
+        <View style={SignUpScreenStyle.CheckBox}>
+          <Checkbox
+            value={isChecked}
+            onValueChange={setChecked}
+            color={isChecked ? "#294E4B" : undefined}
+          />
+          <Text style={SignUpScreenStyle.CheckBoxText}>
+            I agree to
+            <TouchableOpacity
+              onPress={() => navigation.navigate("TermsAndConditionsScreen")}
+            >
+              <Text style={SignUpScreenStyle.SignupLink}>
+                Terms and Conditions
+              </Text>
+            </TouchableOpacity>
+            and the Privacy Policy
+          </Text>
+        </View>
+
+        {/* Submit button to trigger sign up */}
+        <Pressable style={ButtonStyle.Button} onPress={handleSignUp}>
+          <Text style={ButtonStyle.Text}>Submit</Text>
+        </Pressable>
       </SafeAreaView>
-
-      <View style={SignUpScreenStyle.CheckBox}>
-        <Checkbox
-          value={isChecked}
-          onValueChange={setChecked}
-          color={isChecked ? "#294E4B" : undefined}
-        />
-
-        <TouchableOpacity
-        ///style={SignUpScreenStyle.termsConditionsButton}
-        /// onPress={() => {
-        /// navigation.navigate('TermsAndConditionsScreen');
-        ///  }}
-        />
-        <Text style={SignUpScreenStyle.CheckBoxText}>
-          I agree to
-          <TouchableOpacity
-            onPress={() => navigation.navigate("TermsAndConditionsScreen")}
-          >
-            <Text style={SignUpScreenStyle.SignupLink}>
-              Terms and Conditions
-            </Text>
-          </TouchableOpacity>
-          and the Privacy Policy
-        </Text>
-      </View>
-
-      {/* Submit button */}
-      <Pressable
-        style={ButtonStyle.Button}
-        onPress={() => {
-          userSignUp(email, password, firstName, lastName, homeCountry).then(
-            (result) => {
-              console.log(result);
-              if (result == true) {
-                navigation.navigate("Database");
-              } else {
-                Alert.alert("Error when creating account");
-              }
-            }
-          );
-        }}
-      >
-        <Text style={ButtonStyle.Text}>Submit</Text>
-      </Pressable>
     </View>
   );
 }
+
+export default SignupScreen;
