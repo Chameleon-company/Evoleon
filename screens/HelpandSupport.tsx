@@ -1,16 +1,17 @@
+// Importing necessary libraries and components
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-
 import { HelpAndSupportPageStyle } from "../styles/helpAndSupportStyle";
 
-//Defining FAQ interface
+// Defining the FAQ interface
 interface Faq {
   question: string;
-  answer: string | string[];
+  answer: string[];
 }
 
-const HelpAndSupport = () => {
-  //Defining FAQ questions and answers
+// HelpAndSupport component
+const HelpAndSupport: React.FC = () => {
+  // Initialize FAQs
   const [faqs, setFaqs] = useState<Faq[]>([
     {
       question: "How far can an EV travel without recharging?",
@@ -53,70 +54,54 @@ const HelpAndSupport = () => {
     },
   ]);
 
-  //Defining currently selected FAQ as state and setting initial value to null
+  // State to hold the currently selected FAQ
   const [selectedFaq, setSelectedFaq] = useState<Faq | null>(null);
 
-  //Function to toggle the FAQ answers
-  const toggleFaq = (faq: Faq) => {
-    if (selectedFaq === faq) {
-      setSelectedFaq(null);
-    } else {
-      setSelectedFaq(faq);
-    }
+  // Function to handle FAQ selection
+  const handleFaqSelection = (faq: Faq) => {
+    setSelectedFaq(selectedFaq === faq ? null : faq);
   };
 
- 
-  //Function to render a FAQ
+  // Function to render an FAQ item
   const renderFaq = (faq: Faq) => {
     const isSelected = faq === selectedFaq;
     const chevronIcon = isSelected
       ? require("../assets/chevron-icon-up.png")
       : require("../assets/chevron-icon-down.png");
 
-    //Render the whole screen and scroll through if content exceeds screen space 
     return (
-        <View key={faq.question} style={HelpAndSupportPageStyle.faqContainer}>
-         <TouchableOpacity onPress={() => toggleFaq(faq)}>
-           <View style={HelpAndSupportPageStyle.questionContainer}>
-            <Text style={HelpAndSupportPageStyle.questionText}>
-              {faq.question}
-            </Text>
+      <View key={faq.question} style={HelpAndSupportPageStyle.faqContainer}>
+        <TouchableOpacity onPress={() => handleFaqSelection(faq)}>
+          <View style={HelpAndSupportPageStyle.questionContainer}>
+            <Text style={HelpAndSupportPageStyle.questionText}>{faq.question}</Text>
             <Image style={HelpAndSupportPageStyle.icon} source={chevronIcon} />
-           </View>
-           {isSelected && (
+          </View>
+          {isSelected && (
             <View style={HelpAndSupportPageStyle.answerContainer}>
-              {Array.isArray(faq.answer) ? (
-                faq.answer.map((answer, index) => (
-                  <Text
-                    key={`${faq.question}-answer-${index}`}
-                    style={HelpAndSupportPageStyle.answerText}
-                  >
-                    {answer}
-                  </Text>
-                ))
-              ) : (
-                <Text style={HelpAndSupportPageStyle.answerText}>
-                  {faq.answer}
+              {faq.answer.map((answer, index) => (
+                <Text
+                  key={`${faq.question}-answer-${index}`}
+                  style={HelpAndSupportPageStyle.answerText}
+                >
+                  {answer}
                 </Text>
-              )}
+              ))}
             </View>
-           )}
-         </TouchableOpacity>
-        </View>
+          )}
+        </TouchableOpacity>
+      </View>
     );
   };
 
+  // Render the HelpAndSupport component
   return (
     <View style={HelpAndSupportPageStyle.container}>
       <Text style={HelpAndSupportPageStyle.title}>Frequently Asked Questions</Text>
-      <ScrollView>
-        <View style={HelpAndSupportPageStyle.faqsContainer}>
-          {faqs.map((faq) => renderFaq(faq))}
-        </View>
+      <ScrollView style={HelpAndSupportPageStyle.faqsContainer}>
+        {faqs.map(renderFaq)}
       </ScrollView>
     </View>
   );
-}
+};
 
 export default HelpAndSupport;
-
