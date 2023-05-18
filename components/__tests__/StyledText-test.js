@@ -1,10 +1,17 @@
-import * as React from 'react';
+// Importing necessary libraries
+import React from 'react';
 import renderer from 'react-test-renderer';
 
+// Importing components
 import { MonoText } from '../StyledText';
 
-it(`renders correctly`, () => {
-  const tree = renderer.create(<MonoText>Snapshot test!</MonoText>).toJSON();
+// Unit test for MonoText component
+describe('MonoText component', () => {
+  it('renders correctly', () => {
+    // Render the MonoText component
+    const tree = renderer.create(<MonoText>Snapshot test!</MonoText>).toJSON();
 
-  expect(tree).toMatchSnapshot();
+    // Compare the snapshot of the rendered tree
+    expect(tree).toMatchSnapshot();
+  });
 });

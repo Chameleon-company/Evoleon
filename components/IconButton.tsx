@@ -1,24 +1,25 @@
+// Importing necessary libraries
 import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-// This just exports a touchable button with the width and height defined so it's cleaner within code.
-// Use like this:
+// This IconButton component provides a touchable button with a customizable icon. 
+// Use as follows:
 // <IconButton
 //  icon="heart"
-//  onPress={() => {
-//    someFunction()
-//  }}
+//  onPress={() => someFunction()}
 // />
 
-const IconButton = ({
-  icon,
-  onPress,
-  style,
-  iconSize = 28,
-  touchable = true,
-  ...props
-}) => {
+const IconButton = ({ icon, onPress, style, iconSize = 28, touchable = true, ...props }) => {
+
+  // Icon view structure which is common for both touchable and non-touchable icons
+  const IconView = (
+    <View style={styles.iconCircle}>
+      <Entypo name={icon} size={iconSize} color="white" />
+    </View>
+  );
+
+  // Check if icon is touchable
   if (touchable) {
     return (
       <TouchableOpacity
@@ -26,20 +27,16 @@ const IconButton = ({
         onPress={onPress}
         {...props}
       >
-        <View style={styles.iconCircle}>
-          <Entypo name={icon} size={iconSize} color="white" />
-        </View>
+        {IconView}
       </TouchableOpacity>
     );
-  } else {
-    return (
-      <View style={styles.iconCircle}>
-        <Entypo name={icon} size={iconSize} color="white" />
-      </View>
-    );
   }
+
+  // If icon is not touchable, return only IconView
+  return IconView;
 };
 
+// Stylesheet for the icon
 const styles = StyleSheet.create({
   favButton: {},
   iconCircle: {
