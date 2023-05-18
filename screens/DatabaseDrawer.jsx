@@ -15,31 +15,32 @@ import StarRating from "../components/StarRating";
 import { FlatList } from "react-native-gesture-handler";
 import { Image } from "expo-image";
 
+//Get the screen height
 const { height } = Dimensions.get("window");
 
-const DatabaseDrawer = (props) => {
+//Main Component
+const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
+  //Default properties
   const defaultProps = {
     draggableRange: { top: height + 180 - 90, bottom: 180 },
   };
 
+  //State variables
   const [draggedValue] = useState(new Animated.Value(180));
+  const [markerData, setMarkerData] = useState(null);
   const panelRef = useRef(null);
 
-  // usestate for the marker data
-  [markerData, setMarkerData] = useState(null);
+  const { top, bottom } = draggableRange || defaultProps.draggableRange;
 
-  const marker = props.marker;
-
-  const { top, bottom } = props.draggableRange || defaultProps.draggableRange;
-
-  //on marker change
+  //Effects
+  // Fetch the Plugshare location data when the marker prop changes
   useEffect(() => {
-    console.log("marker change");
     fetchPlugshareLocation(marker.id).then((data) => {
       setMarkerData(data);
     });
-  }, [props.marker]);
+  }, [marker]);
 
+  //Animation variables
   const backgoundOpacity = draggedValue.interpolate({
     inputRange: [height - 48, height],
     outputRange: [1, 0],
@@ -70,7 +71,7 @@ const DatabaseDrawer = (props) => {
     extrapolate: "clamp",
   });
 
-  // dont sue me plugshare, i'm just a student
+  //Function to fetch data from Plugshare API
   async function fetchPlugshareLocation(locationId) {
     const url = `https://api.plugshare.com/v3/locations/${locationId}`;
     const headers = new Headers({
@@ -102,6 +103,7 @@ const DatabaseDrawer = (props) => {
     }
   }
 
+  //Render
   return (
     <>
       <SlidingUpPanel
@@ -229,11 +231,12 @@ const DatabaseDrawer = (props) => {
       </SlidingUpPanel>
     </>
   );
-};
+}
 
+//Export default
 export default DatabaseDrawer;
 
-// Can move this out once the component is outa dev but easier to work with this here
+//Styles
 const styles = {
   container: {
     flex: 1,
