@@ -1,8 +1,13 @@
 import { ColorSchemeName, useColorScheme as _useColorScheme } from 'react-native';
 
-// The useColorScheme value is always either light or dark, but the built-in
-// type suggests that it can be null. This will not happen in practice, so this
-// makes it a bit easier to work with.
+/**
+ * useColorScheme wrapper that always returns a non-nullable ColorSchemeName value.
+ * Although the built-in useColorScheme type suggests it can return null, it always
+ * returns either 'light' or 'dark' in practice. By asserting the type as 
+ * NonNullable<ColorSchemeName>, we can simplify working with the returned value.
+ *
+ * @returns {NonNullable<ColorSchemeName>} - 'light' or 'dark'
+ */
 export default function useColorScheme(): NonNullable<ColorSchemeName> {
   return _useColorScheme() as NonNullable<ColorSchemeName>;
 }
