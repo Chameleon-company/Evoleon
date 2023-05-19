@@ -1,8 +1,9 @@
+// React Navigation imports
 import { createStackNavigator } from "@react-navigation/stack";
-import { Button } from "react-native";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import * as React from "react";
 
+// Screen imports
 import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ClientsScreen from "../screens/ClientsScreen";
@@ -14,8 +15,11 @@ import SignupScreen from '../screens/SignupScreen';
 import AboutScreen from "../screens/AboutScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetails"
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
-import {getUserAuthStatus, LoginSignOutButtonPressed} from '../web/firebase' 
 
+// Utility functions
+import { getUserAuthStatus } from '../web/firebase' 
+
+// Type imports
 import {
   DrawerParamList,
   DatabaseParamList,
@@ -29,60 +33,60 @@ import {
   AboutParamList,
   UpdateUserDetailsParamList,
   PrivacyParamList,
-  PasswordResetParamList,
 } from "../types";
-import { color } from "react-native-reanimated";
-import { white } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
+// Stack navigators
+const DatabaseStack = createStackNavigator<DatabaseParamList>();
+const FileSystemStack = createStackNavigator<FileSystemParamList>();
+const ClientsStack = createStackNavigator<ClientsParamList>();
+const ForgotPasswordStack = createStackNavigator<ForgotPasswordParamList>();
+const LoginStack = createStackNavigator<LoginParamList>();
+const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
+const TermsAndConditionsStack = createStackNavigator<TermsAndConditionsParamList>();
+const SignupStack = createStackNavigator<SignupParamList>();
+const AboutStack = createStackNavigator<AboutParamList>();
+const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
+const PrivacyStack = createStackNavigator<PrivacyParamList>();
 
+// Drawer navigator
 const Drawer = createDrawerNavigator<DrawerParamList>();
+
+// Function to filter menu items
+const filterMenuItems = (props) => {
+  return {
+    ...props,
+    state: {
+      ...props.state,
+      routeNames: props.state.routeNames.filter(
+        (routeName) => routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
+      ),
+      routes: props.state.routes.filter(
+        (route) =>
+          route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
+      ),
+    },
+  };
+}
 
 export default function DrawerNavigator() {
   return (
-
     <Drawer.Navigator initialRouteName="Database" drawerContent={props => {
+        const filteredProps = filterMenuItems(props);
 
-        const filteredTopLeftMenuItems = {
-          ...props,
-          state: {
-            ...props.state,
-            routeNames: props.state.routeNames.filter(
-              // The different screens can be excluded from the hamburger menu, by routing them here. 
-              (routeName) => {
-                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
-              }
-            ),
-            routes: props.state.routes.filter(
-              (route) =>
-                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
-            ),
-          },
-        };
-
-  
-      return (
-        
-        <DrawerContentScrollView {...filteredTopLeftMenuItems}>
-        <DrawerItemList {...filteredTopLeftMenuItems} />
-          {/* <DrawerItem label={getUserAuthStatus().Text} onPress={() => {
-
-            props.navigation.navigate("Account");
-          }
-        }/> */}
-        </DrawerContentScrollView>
-      )
-    }}>
-
-      {/* These represent the menus in the hamburger menu. */}
-
-      {/* NOTE: THIS IS IN FACT INVISIBLE. THE ABOVE DRAWER ITEM REDIRECTS TO THIS. THIS IS THE USERNAME IS DISPLAYED . */}
+        return (
+          <DrawerContentScrollView {...filteredProps}>
+            <DrawerItemList {...filteredProps} />
+          </DrawerContentScrollView>
+        );
+      }}>
+      
+      // Main menu items
       <Drawer.Screen name={getUserAuthStatus().Text} component={ClientsNavigator} />     
-
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="About" component={AboutNavigator}/>
 
-      {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
+      // Hidden menu items
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
       <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
@@ -90,17 +94,11 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator} />  
       <Drawer.Screen name="PrivacyPolicy" component={PrivacyNavigator}/>  
-      
-
-
-
-
     </Drawer.Navigator>
   );
 }
 
-const DatabaseStack = createStackNavigator<DatabaseParamList>();
-
+// Navigator for each menu item
 function DatabaseNavigator() {
   return (
     <DatabaseStack.Navigator>
@@ -119,8 +117,6 @@ function DatabaseNavigator() {
     </DatabaseStack.Navigator>
   );
 }
-
-const FileSystemStack = createStackNavigator<FileSystemParamList>();
 
 function FileSystemNavigator() {
   return (
@@ -141,8 +137,6 @@ function FileSystemNavigator() {
   );
 }
 
-const ClientsStack = createStackNavigator<ClientsParamList>();
-
 function ClientsNavigator() {
   return (
     <ClientsStack.Navigator>
@@ -161,8 +155,6 @@ function ClientsNavigator() {
     </ClientsStack.Navigator>
   );
 }
-
-const ForgotPasswordStack = createStackNavigator<ForgotPasswordParamList>();
 
 function ForgotPasswordNavigator() {
   return (
@@ -183,8 +175,6 @@ function ForgotPasswordNavigator() {
   );
 }
 
-const LoginStack = createStackNavigator<LoginParamList>();
-
 function LoginNavigator() {
   return (
     <LoginStack.Navigator>
@@ -203,8 +193,6 @@ function LoginNavigator() {
     </LoginStack.Navigator>
   );
 }
-
-const AuthenticateStack = createStackNavigator<AuthenticateParamList>();
 
 function AuthenticateNavigator() {
   return (
@@ -225,8 +213,6 @@ function AuthenticateNavigator() {
   )
 }
 
-const TermsAndConditionsStack = createStackNavigator<TermsAndConditionsParamList>();
-
 function TermsAndConditionsNavigator() {
   return (
     <TermsAndConditionsStack.Navigator>
@@ -245,8 +231,6 @@ function TermsAndConditionsNavigator() {
     </TermsAndConditionsStack.Navigator>
   )
 }
-
-const SignupStack = createStackNavigator<SignupParamList>();
 
 function SignupNavigator() {
   return (
@@ -267,8 +251,6 @@ function SignupNavigator() {
   )
 }
 
-const AboutStack = createStackNavigator<AboutParamList>();
-
 function AboutNavigator() {
   return (
     <AboutStack.Navigator>
@@ -288,8 +270,6 @@ function AboutNavigator() {
   );
 }
 
-const UpdateUserDetailsStack = createStackNavigator<UpdateUserDetailsParamList>();
-
 function UpdateUserDetailsNavigator() {
 	return (
 		<UpdateUserDetailsStack.Navigator>
@@ -308,7 +288,6 @@ function UpdateUserDetailsNavigator() {
 		</UpdateUserDetailsStack.Navigator>
 	);
 }
-const PrivacyStack = createStackNavigator<PrivacyParamList>();
 
 function PrivacyNavigator() {
   return (
