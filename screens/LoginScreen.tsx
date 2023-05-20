@@ -57,26 +57,32 @@ export default function LoginScreen() {
             placeholder="Password"
           />
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={LoginScreenStyle.forgotPassButton}
-            onPress={ () => {
-              navigation.navigate("ForgotPassword"); 
+            onPress={() => {
+              navigation.navigate("ForgotPassword");
             }}
           >
-            <Text style={LoginScreenStyle.SignupLink}> Forgot your password?</Text>
+            <Text style={LoginScreenStyle.SignupLink}>
+              Forgot your password?
+            </Text>
           </TouchableOpacity>
 
           {/* Login button */}
           <TouchableOpacity
             style={LoginScreenStyle.button}
             onPress={async () => {
-              await userLogin(email, password).then((result) => {
-                if (result == true) {
-                  navigation.navigate("Database");
-                } else {
-                  Alert.alert("Incorrect email or password");
-                }
-              });
+              const { success, error } = await userLogin(email, password);
+              if (success) {
+                navigation.navigate("Database");
+              } else {
+                Alert.alert(
+                  "Login Error",
+                  error.code === "auth/wrong-password"
+                    ? "Incorrect password"
+                    : error.message
+                );
+              }
             }}
           >
             <Text style={ButtonStyle.Text}>Login</Text>
@@ -85,7 +91,7 @@ export default function LoginScreen() {
           <TouchableOpacity
             style={LoginScreenStyle.cancelButton}
             onPress={() => {
-              navigation.navigate("Database");
+              navigation.navigate("Authenticate");
             }}
           >
             <Text style={LoginScreenStyle.cancelText}>Cancel</Text>

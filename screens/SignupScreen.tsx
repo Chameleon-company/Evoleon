@@ -106,32 +106,44 @@ export default function SignupScreen() {
           onValueChange={setChecked}
           color={isChecked ? "#294E4B" : undefined}
         />
+
+        <TouchableOpacity
+        ///style={SignUpScreenStyle.termsConditionsButton}
+        /// onPress={() => {
+        /// navigation.navigate('TermsAndConditionsScreen');
+        ///  }}
+        />
         <Text style={SignUpScreenStyle.CheckBoxText}>
-          I agree to Terms and Conditions and the Privacy Policy
+          I agree to
+          <TouchableOpacity
+            onPress={() => navigation.navigate("TermsAndConditionsScreen")}
+          >
+            <Text style={SignUpScreenStyle.SignupLink}>
+              Terms and Conditions
+            </Text>
+          </TouchableOpacity>
+          and the Privacy Policy
         </Text>
       </View>
 
       {/* Submit button */}
-      <TouchableOpacity
+      <Pressable
         style={ButtonStyle.Button}
-        onPress={async () => {
-          await userSignUp(
-            email,
-            password,
-            firstName,
-            lastName,
-            homeCountry
-          ).then((result) => {
-            if (result == true) {
-              navigation.navigate("Database");
-            } else {
-              Alert.alert("Error when creating account");
+        onPress={() => {
+          userSignUp(email, password, firstName, lastName, homeCountry).then(
+            (result) => {
+              console.log(result);
+              if (result == true) {
+                navigation.navigate("Database");
+              } else {
+                Alert.alert("Error when creating account");
+              }
             }
-          });
+          );
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

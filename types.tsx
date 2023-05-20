@@ -52,6 +52,10 @@ export type AuthenticateParamList = {
   AuthenticateScreen: undefined;
 };
 
+export type TermsAndConditionsParamList = {
+  TermsAndConditionsScreen: undefined;
+};
+
 export type SignupParamList = {
   SignupScreen: undefined;
 };
@@ -60,4 +64,7 @@ export type AboutParamList = {
   AboutScreen: undefined;
 };
 
+export type UpdateUserDetailsParamList = {
+  UpdateUserDetailsScreen: undefined;
+};
 export type onPressFunc = (event: GestureResponderEvent) => void;
