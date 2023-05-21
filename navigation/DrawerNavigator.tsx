@@ -80,13 +80,13 @@ export default function DrawerNavigator() {
         );
       }}>
       
-      // Main menu items
+      {/* Main menu items */}
       <Drawer.Screen name={getUserAuthStatus().Text} component={ClientsNavigator} />     
       <Drawer.Screen name="Database" component={DatabaseNavigator}/>
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="About" component={AboutNavigator}/>
 
-      // Hidden menu items
+      {/* Hidden menu items */}
       <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator} />
       <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
       <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator} />
