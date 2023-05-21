@@ -97,7 +97,7 @@ const DatabaseMap = (props) => {
   };
 
   // // Code for hiding the bottom pannel if the user presses the map.
-  // const onMapPress = (e) => {
+  const onMapPress = (e) => {
   //   // clearTimeout(debounceTimeout.current);
   //   // const timeout = setTimeout(() => {
   //   //   console.log(markerPressed);
@@ -107,7 +107,7 @@ const DatabaseMap = (props) => {
   //   //   }
   //   // }, 50);
   //   // debounceTimeout.current = timeout;
-  // };
+  };
 
   // Favourite a marker
   const favouriteMarker = async (marker) => {
