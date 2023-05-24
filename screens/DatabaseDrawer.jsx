@@ -108,7 +108,7 @@ const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
     <>
       <SlidingUpPanel
         ref={panelRef}
-        draggableRange={props.draggableRange || defaultProps.draggableRange}
+        draggableRange={draggableRange || defaultProps.draggableRange}
         animatedValue={draggedValue}
         snappingPoints={[480, height]}
         height={height + 180}
