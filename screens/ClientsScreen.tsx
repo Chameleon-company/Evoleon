@@ -107,7 +107,7 @@ const ClientsScreen = () => {
                                             onPress: async () => {
                                                 await userDeleteAccount();
                                                 setLoginSignOutText(getUserAuthStatus().Text);
-                                                setProfileText(UnauthProfileText);
+                                                setProfileText('Please login to view account.');
                                             },
                                         },
                                     ],
