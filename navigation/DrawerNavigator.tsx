@@ -52,31 +52,50 @@ const PrivacyStack = createStackNavigator<PrivacyParamList>();
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 // Function to filter menu items
-const filterMenuItems = (props) => {
-  return {
-    ...props,
-    state: {
-      ...props.state,
-      routeNames: props.state.routeNames.filter(
-        (routeName) => routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
-      ),
-      routes: props.state.routes.filter(
-        (route) =>
-          route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
-      ),
-    },
-  };
-}
+// const filterMenuItems = (props) => {
+//   return {
+//     ...props,
+//     state: {
+//       ...props.state,
+//       routeNames: props.state.routeNames.filter(
+//         (routeName) => routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
+//       ),
+//       routes: props.state.routes.filter(
+//         (route) =>
+//           route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
+//       ),
+//     },
+//   };
+// }
 
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator initialRouteName="Database" drawerContent={props => {
-        const filteredProps = filterMenuItems(props);
+        // const filteredProps = filterMenuItems(props);
+        const filteredTopLeftMenuItems = {
+          ...props,
+          state: {
+            ...props.state,
+            routeNames: props.state.routeNames.filter(
+              // The different screens can be excluded from the hamburger menu, by routing them here. 
+              (routeName) => {
+                routeName !== 'Login' && routeName !== 'Signup' && routeName !== 'Authenticate' && routeName !== 'ForgotPassword' && routeName !== 'TermsAndConditionsScreen' && routeName !==  `PrivacyPolicy`  && routeName !==  'Update Details'
+              }
+            ),
+            routes: props.state.routes.filter(
+              (route) =>
+                route.name !== 'Login' && route.name !== 'Signup' && route.name !== 'Authenticate' && route.name !== 'ForgotPassword'  && route.name !== 'TermsAndConditionsScreen' && route.name !== `PrivacyPolicy`  && route.name !==  'Update Details'
+            ),
+          },
+        };
 
         return (
-          <DrawerContentScrollView {...filteredProps}>
-            <DrawerItemList {...filteredProps} />
-          </DrawerContentScrollView>
+          // <DrawerContentScrollView {...filteredProps}>
+          //   <DrawerItemList {...filteredProps} />
+          // </DrawerContentScrollView>
+          <DrawerContentScrollView {...filteredTopLeftMenuItems}>
+          <DrawerItemList {...filteredTopLeftMenuItems} />
+        </DrawerContentScrollView>
         );
       }}>
       
