@@ -1,30 +1,102 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-
-import {
-  SafeAreaView,
+// Imports from React and React Native
+import React from 'react';
+import { 
+  Dimensions, 
+  SafeAreaView, 
+  ScrollView, 
+  StatusBar, 
   StyleSheet, 
-  TouchableOpacity, 
-  ScrollView, StatusBar, 
-  Dimensions,
-} from "react-native";
+  TouchableOpacity 
+} from 'react-native';
 
-import { Text, View } from "../components/Themed";
-import { ButtonStyle } from "../styles/buttonStyle";
+// Imports from navigation
+import { useNavigation } from '@react-navigation/native';
 
-const windowHeight = Dimensions.get("window").height;
+// Imports from local files
+import { ButtonStyle } from '../styles/buttonStyle';
+import { Text, View } from '../components/Themed';
 
-    function TermsAndConditionsScreen() {
-    const navigation = useNavigation();
-    const backButton = "Back";
+// Constants
+const windowHeight = Dimensions.get('window').height;
+const backButton = 'Back';
 
- return (
-  <SafeAreaView style={styles.container}>
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#E9ECE6',
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    height: windowHeight - 100,
+    backgroundColor: '#E9ECE6'
+  },
+  inputView: {
+    backgroundColor: '#E9ECE6',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  pageTitle: {
+    backgroundColor: '#E9ECE6',
+    margin: 20,
+    fontSize: 16,
+    textAlign: "center",
+  },
+  sectionHeading: {
+    backgroundColor: '#E9ECE6',
+    position: "relative",
+    marginBottom: 1,
+    marginTop: 4,
+    textAlign: "left",
+    fontWeight: "bold",
+  },
+  subSectionHeading: {
+    backgroundColor: '#E9ECE6',
+    position: "relative",
+    marginBottom: 1,
+    marginTop: 4,
+    textAlign: "left",
+    fontWeight: "bold",
+    fontSize: 11,
+  },
+  textParagraph: {
+    backgroundColor: '#E9ECE6',
+    padding: 5,
+    marginTop: 0,
+    fontSize: 10,
+    textAlign: "justify",
+  },
+  textSubparagraph: {
+    backgroundColor: '#E9ECE6',
+    padding: 10,
+    paddingHorizontal: 13,
+    marginTop: 0,
+    fontSize: 9,
+    textAlign: "justify",
+  },
+  textIndent: {
+    backgroundColor: '#E9ECE6',
+    padding: 8,
+    paddingHorizontal: 23,
+    marginTop: 0,
+    fontSize: 9,
+    textAlign: "justify",
+  },
+  boldText: {
+    fontWeight: 'bold'
+  },
+});
+
+// Component Definition
+const TermsAndConditionsScreen = () => {
+  const navigation = useNavigation();
+
+  return (
+    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-          <View style={styles.inputView}>
-              <Text style={styles.pageTitle}>MOBILE APP TERMS AND CONDITIONS OF USE</Text>
-
-              <Text style={styles.sectionHeading}>1. About the Application</Text>
+        <View style={styles.inputView}>
+          <Text style={styles.pageTitle}>MOBILE APP TERMS AND CONDITIONS OF USE</Text>
+          <Text style={styles.sectionHeading}>1. About the Application</Text>
               <Text style={styles.textParagraph}>
                   (a) Welcome to the Evoleon Electric Vehicle Charger Locating <Text style={styles.boldText}>(Application)</Text>. The Application provides information about existing EV Charging locations, 
                       their related facilities, and helps navigate you to the charging locations you select <Text style={styles.boldText}>(Services)</Text>.
@@ -148,7 +220,6 @@ const windowHeight = Dimensions.get("window").height;
               <Text style={styles.textParagraph}>
                 (a) Chameleon takes your privacy seriously and any information provided through your use of the Application and/or Services are subject to Chameleon’s Privacy Policy, which is available on the Application.
               </Text>
-
               <Text style={styles.sectionHeading}>7. General Disclaimer</Text>
               <Text style={styles.textParagraph}>
                 (a) Nothing in the Terms limits or excludes any guarantees, warranties, representations, or conditions implied or imposed by law, including the Australian Consumer Law (or any liability under them) which by law may not be limited or excluded.
@@ -220,7 +291,6 @@ const windowHeight = Dimensions.get("window").height;
               <Text style={styles.textParagraph}>
                 (d) Subject to local applicable laws, Chameleon reserves the right to discontinue or cancel your membership at any time and may suspend or deny, in its sole discretion, your access to all or any portion of the Application or the Services without notice if you breach any provision of the Terms or any applicable law or if your conduct impacts Chameleon’s name or reputation or violates the rights of those of another party.
               </Text>
-
               <Text style={styles.sectionHeading}>11. Indemnity</Text>
               <Text style={styles.textParagraph}>
                 (a) You agree to indemnify Chameleon, its affiliates, employees, agents, contributors, third party content providers, and licensors from and against:
@@ -296,84 +366,18 @@ const windowHeight = Dimensions.get("window").height;
               <Text style={styles.textParagraph}>
                 (a) If any part of these Terms is found to be void or unenforceable by a Court of competent jurisdiction, that part shall be severed, and the rest of the Terms shall remain in force.
               </Text>
-          </View>
+        </View>
       </ScrollView>
       <TouchableOpacity
-          style={[{marginTop: 20}, ButtonStyle.Button]}
-          onPress={() => {
-              navigation.goBack();
-          }}>
-          <Text style={ButtonStyle.Text}>{backButton}</Text>
+        style={[{ marginTop: 20 }, ButtonStyle.Button]}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <Text style={ButtonStyle.Text}>{backButton}</Text>
       </TouchableOpacity>
-  </SafeAreaView>
-);
-}
+    </SafeAreaView>
+  );
+};
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#E9ECE6',
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-  },
-  scrollView: {
-    height: windowHeight - 100,
-    backgroundColor: '#E9ECE6'
-  },
-  inputView: {
-    backgroundColor: '#E9ECE6',
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-  pageTitle: {
-    backgroundColor: '#E9ECE6',
-    margin: 20,
-    fontSize: 16,
-    textAlign: "center",
-  },
-  sectionHeading: {
-    backgroundColor: '#E9ECE6',
-    position: "relative",
-    marginBottom: 1,
-    marginTop: 4,
-    textAlign: "left",
-    fontWeight: "bold",
-  },
-  subSectionHeading: {
-    backgroundColor: '#E9ECE6',
-    position: "relative",
-    marginBottom: 1,
-    marginTop: 4,
-    textAlign: "left",
-    fontWeight: "bold",
-    fontSize: 11,
-  },
-  textParagraph: {
-    backgroundColor: '#E9ECE6',
-    padding: 5,
-    marginTop: 0,
-    fontSize: 10,
-    textAlign: "justify",
-  },
-  textSubparagraph: {
-    backgroundColor: '#E9ECE6',
-    padding: 10,
-    paddingHorizontal: 13,
-    marginTop: 0,
-    fontSize: 9,
-    textAlign: "justify",
-  },
-  textIndent: {
-    backgroundColor: '#E9ECE6',
-    padding: 8,
-    paddingHorizontal: 23,
-    marginTop: 0,
-    fontSize: 9,
-    textAlign: "justify",
-  },
-  boldText: {
-    fontWeight: 'bold'
-  },
-  });
-  
-  export default TermsAndConditionsScreen;
-  
+export default TermsAndConditionsScreen;
