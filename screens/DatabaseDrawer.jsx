@@ -15,32 +15,31 @@ import StarRating from "../components/StarRating";
 import { FlatList } from "react-native-gesture-handler";
 import { Image } from "expo-image";
 
-//Get the screen height
 const { height } = Dimensions.get("window");
 
-//Main Component
-const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
-  //Default properties
+const DatabaseDrawer = (props) => {
   const defaultProps = {
     draggableRange: { top: height + 180 - 90, bottom: 180 },
   };
 
-  //State variables
   const [draggedValue] = useState(new Animated.Value(180));
-  const [markerData, setMarkerData] = useState(null);
   const panelRef = useRef(null);
 
-  const { top, bottom } = draggableRange || defaultProps.draggableRange;
+  // usestate for the marker data
+  [markerData, setMarkerData] = useState(null);
 
-  //Effects
-  // Fetch the Plugshare location data when the marker prop changes
+  const marker = props.marker;
+
+  const { top, bottom } = props.draggableRange || defaultProps.draggableRange;
+
+  //on marker change
   useEffect(() => {
+    console.log("marker change");
     fetchPlugshareLocation(marker.id).then((data) => {
       setMarkerData(data);
     });
-  }, [marker]);
+  }, [props.marker]);
 
-  //Animation variables
   const backgoundOpacity = draggedValue.interpolate({
     inputRange: [height - 48, height],
     outputRange: [1, 0],
@@ -71,7 +70,7 @@ const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
     extrapolate: "clamp",
   });
 
-  //Function to fetch data from Plugshare API
+  // dont sue me plugshare, i'm just a student
   async function fetchPlugshareLocation(locationId) {
     const url = `https://api.plugshare.com/v3/locations/${locationId}`;
     const headers = new Headers({
@@ -103,12 +102,11 @@ const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
     }
   }
 
-  //Render
   return (
     <>
       <SlidingUpPanel
         ref={panelRef}
-        draggableRange={draggableRange || defaultProps.draggableRange}
+        draggableRange={props.draggableRange || defaultProps.draggableRange}
         animatedValue={draggedValue}
         snappingPoints={[480, height]}
         height={height + 180}
@@ -231,12 +229,11 @@ const DatabaseDrawer = ({ marker, draggableRange, favourite }) => {
       </SlidingUpPanel>
     </>
   );
-}
+};
 
-//Export default
 export default DatabaseDrawer;
 
-//Styles
+// Can move this out once the component is outa dev but easier to work with this here
 const styles = {
   container: {
     flex: 1,
