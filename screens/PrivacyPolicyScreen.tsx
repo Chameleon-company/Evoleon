@@ -1,25 +1,16 @@
-// Importing necessary libraries and components
-import React from "react";
+import * as React from "react";
 import {StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar, Dimensions} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
 import {Text, View} from "../components/Themed";
 import {ButtonStyle} from "../styles/buttonStyle";
 
-// Get device window height
 const windowHeight = Dimensions.get("window").height;
 
-// PrivacyPolicyScreen Component
-const PrivacyPolicyScreen = () => {
+function PrivacyPolicyScreen() {
     const navigation = useNavigation();
     const backButton = "Back";
 
-    // Function to navigate back
-    const navigateBack = () => {
-        navigation.goBack();
-    }
-
-    // Render PrivacyPolicyScreen Component
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
@@ -185,61 +176,63 @@ const PrivacyPolicyScreen = () => {
                         current location in order to determine the city you are located within and display a location map with relevant
                         advertisements. We will not share your current location with other users or partners.
                     </Text>
-                    
-                    <TouchableOpacity
-                        style={[{marginTop: 20}, ButtonStyle.Button]}
-                        onPress={navigateBack}>
-                        <Text style={ButtonStyle.Text}>{backButton}</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
+            <TouchableOpacity
+                style={[{marginTop: 20}, ButtonStyle.Button]}
+                onPress={() => {
+                    navigation.goBack();
+                }}>
+                <Text style={ButtonStyle.Text}>{backButton}</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
 
-// Styles for PrivacyPolicyScreen Component
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#E9ECE6',
         flex: 1,
         paddingTop: StatusBar.currentHeight,
-        backgroundColor: '#E9ECE6',
     },
     scrollView: {
         height: windowHeight - 100,
         backgroundColor: '#E9ECE6'
     },
     inputView: {
+        backgroundColor: '#E9ECE6',
         paddingHorizontal: 10,
         paddingBottom: 10,
-        backgroundColor: '#E9ECE6',
     },
     pageTitle: {
+        backgroundColor: '#E9ECE6',
+        margin: 20,
         fontSize: 16,
         textAlign: "center",
-        margin: 20,
-        backgroundColor: '#E9ECE6',
     },
     sectionHeading: {
-        fontWeight: "bold",
-        textAlign: "left",
-        marginTop: 4,
-        marginBottom: 1,
         backgroundColor: '#E9ECE6',
+        position: "relative",
+        marginBottom: 1,
+        marginTop: 4,
+        textAlign: "left",
+        fontWeight: "bold",
     },
     subSectionHeading: {
-        fontSize: 11,
-        fontWeight: "bold",
-        textAlign: "left",
-        marginTop: 4,
-        marginBottom: 1,
         backgroundColor: '#E9ECE6',
+        position: "relative",
+        marginBottom: 1,
+        marginTop: 4,
+        textAlign: "left",
+        fontWeight: "bold",
+        fontSize: 11,
     },
     textParagraph: {
+        backgroundColor: '#E9ECE6',
+        padding: 5,
+        marginTop: 0,
         fontSize: 10,
         textAlign: "justify",
-        marginTop: 0,
-        padding: 5,
-        backgroundColor: '#E9ECE6',
     },
 });
 
