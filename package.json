@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
+    "@expo/config-plugins": "~6.0.0",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-firebase/app": "^17.4.3",
@@ -14,7 +15,7 @@
     "expo-constants": "~14.2.1",
     "expo-font": "~11.1.1",
     "expo-haptics": "~12.2.1",
-    "expo-image": "~1.0.0",
+    "expo-image": "~1.0.1",
     "expo-image-picker": "^14.1.1",
     "expo-linking": "~4.0.1",
     "expo-location": "^15.1.1",
@@ -23,7 +24,7 @@
     "firebase": "9.6.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-boring-avatars": "^1.0.1",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-map-clustering": "^3.4.2",
