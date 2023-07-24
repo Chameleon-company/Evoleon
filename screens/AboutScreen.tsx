@@ -1,19 +1,33 @@
-import * as React from 'react';
-import { StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-//import DeviceInfo from 'react-native-device-info';
-
-import { Text, View } from "../components/Themed";
-import MenuIcon from "../components/MenuIcon";
+// React imports.
 import { useEffect } from "react";
-import main from "../styles/main";
-import { ButtonStyle } from '../styles/buttonStyle';
+
+// React Native imports.
+import { 
+  TouchableOpacity, 
+  Alert 
+} from "react-native";
+
+// Navigation imports.
+import {
+  useNavigation,
+  StackHeaderLeftButtonProps,
+} from "@react-navigation/native";
+
+// Themed component imports.
+import { Text, View } from "../components/Themed";
+
+// Custom component imports.
+import MenuIcon from "../components/MenuIcon";
+
+// Style imports.
+import { AboutStyle } from "../styles/aboutStyle";
+import { ButtonStyle } from "../styles/buttonStyle";
+
 
 function AboutScreen() {
     const navigation = useNavigation();
     const EvoleonAppDeets = require('../app.json');
-    const deviceAppVersion = 'Pickles' // DeviceInfo.getVersion();
+    const deviceAppVersion = 'Pickles';
     const upDateButton = '     Update     ';
     const termsButton = ' Ts & Cs ';
     const privacyButton = 'Privacy Policy';
@@ -38,17 +52,17 @@ function AboutScreen() {
       });
 
     return (
-    <View style={main.centered}>
-        <Text style={styles.currentVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
+    <View style={AboutStyle.centered}>
+        <Text style={AboutStyle.currentVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
         App Version: {deviceAppVersion} </Text>
-        <Text style={styles.updateVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
+        <Text style={AboutStyle.updateVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
         Version Available: {EvoleonAppDeets.expo.version} </Text>
-        <View style={styles.updateButton}>
+        <View style={AboutStyle.updateButton}>
           <TouchableOpacity style={ButtonStyle.Button}>
             <Text style={ButtonStyle.Text}>{upDateButton}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.termsButton}>
+        <View style={AboutStyle.termsButton}>
           <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
                         navigation.navigate("PrivacyPolicy");
                     }}>
@@ -76,26 +90,5 @@ function AboutScreen() {
 
 }
 
-export const styles = StyleSheet.create({
-  currentVersion: {
-    position: 'absolute',
-    top: 100,
-  },
-  termsButton: {
-    backgroundColor: '#E9ECE6',
-    position: 'absolute',
-    top: 300,
-  },
-  updateButton: {
-    backgroundColor: '#E9ECE6',
-    position: 'absolute',
-    top: 160,
-  },
-  updateVersion: {
-    backgroundColor: '#E9ECE6',
-    position: 'absolute',
-    top: 120,
-  },
-})
 
 export default AboutScreen;
