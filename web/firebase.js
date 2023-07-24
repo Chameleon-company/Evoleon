@@ -1,17 +1,18 @@
+// Firebase auth imports.
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   deleteUser,
-  Auth,
-  sendEmailVerification,
   getAuth,
   signOut,
   updateProfile,
 } from "firebase/auth";
 
+// Firebase app imports.
 import { initializeApp } from "firebase/app";
 
+// Firestore imports.
 import {
   getFirestore,
   doc,
@@ -19,11 +20,8 @@ import {
   setDoc,
   collection,
   deleteDoc,
-  where,
-  writeBatch,
   query,
   getDocs,
-  get,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -34,9 +32,6 @@ import {
   ref, 
   set 
 } from "firebase/database";
-
-//Boolean - true if user is signed in
-var userIsAuthenticated = false;
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -56,8 +51,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
-//Boolean - true if user is signed in
-var userIsAuthenticated = false; //we don't have to use this anymore, phase this out
+// Boolean - true if user is signed in
+let userIsAuthenticated = false; // we don't have to use this anymore, phase this out
 
 export const getuserIsAuthenticated = () => {
   return auth.currentUser ? true : false;
