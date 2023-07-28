@@ -1,13 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import {
-  Alert,
-  Pressable,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { useEffect } from "react";
 
 import { Text, View } from "../components/Themed";
@@ -32,12 +26,6 @@ export default function SignupScreen() {
   const [password, onChangeTextPassword] = React.useState("");
   const [isChecked, setChecked] = React.useState(false);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <View style={AuthScreenStyle.Centered}>
       <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
@@ -48,8 +36,7 @@ export default function SignupScreen() {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Login");
-        }}
-      >
+        }}>
         <Text style={ButtonStyle.LoginLink}>Login</Text>
       </TouchableOpacity>
 
@@ -101,11 +88,7 @@ export default function SignupScreen() {
       </SafeAreaView>
 
       <View style={SignUpScreenStyle.CheckBox}>
-        <Checkbox
-          value={isChecked}
-          onValueChange={setChecked}
-          color={isChecked ? "#294E4B" : undefined}
-        />
+        <Checkbox value={isChecked} onValueChange={setChecked} color={isChecked ? "#294E4B" : undefined} />
 
         <TouchableOpacity
         ///style={SignUpScreenStyle.termsConditionsButton}
@@ -115,12 +98,8 @@ export default function SignupScreen() {
         />
         <Text style={SignUpScreenStyle.CheckBoxText}>
           I agree to
-          <TouchableOpacity
-            onPress={() => navigation.navigate("TermsAndConditionsScreen")}
-          >
-            <Text style={SignUpScreenStyle.SignupLink}>
-              Terms and Conditions
-            </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("TermsAndConditionsScreen")}>
+            <Text style={SignUpScreenStyle.SignupLink}>Terms and Conditions</Text>
           </TouchableOpacity>
           and the Privacy Policy
         </Text>
@@ -130,18 +109,15 @@ export default function SignupScreen() {
       <Pressable
         style={ButtonStyle.Button}
         onPress={() => {
-          userSignUp(email, password, firstName, lastName, homeCountry).then(
-            (result) => {
-              console.log(result);
-              if (result == true) {
-                navigation.navigate("Database");
-              } else {
-                Alert.alert("Error when creating account");
-              }
+          userSignUp(email, password, firstName, lastName, homeCountry).then((result) => {
+            console.log(result);
+            if (result == true) {
+              navigation.navigate("Database");
+            } else {
+              Alert.alert("Error when creating account");
             }
-          );
-        }}
-      >
+          });
+        }}>
         <Text style={ButtonStyle.Text}>Submit</Text>
       </Pressable>
     </View>

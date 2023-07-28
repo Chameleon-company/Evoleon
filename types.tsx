@@ -2,6 +2,7 @@ import { GestureResponderEvent } from "react-native";
 
 export type RootStackParamList = {
   Root: undefined;
+  BottomTab: undefined; // Add this line
   NotFound: undefined;
 };
 
@@ -20,7 +21,7 @@ export type DrawerParamList = {
   Clients: undefined;
   Initial: undefined;
   Login: undefined;
-  Authenticate: undefined;  
+  Authenticate: undefined;
   Signup: undefined;
 };
 

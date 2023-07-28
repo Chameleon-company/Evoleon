@@ -10,12 +10,6 @@ import main from "../styles/main";
 export default function FileSystemScreen() {
   const navigation = useNavigation();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <View style={main.centered}>
       <Text lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
