@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
+import Color from '../constants/Colors';
+
 
 export default StyleSheet.create({
   centered: {
-    backgroundColor: '#E9ECE6',
+    backgroundColor: Color.light.BACKGROUND,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {View, Text, TextInput, TouchableOpacity} from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useFocusEffect} from "@react-navigation/native";
 import MenuIcon from "../components/MenuIcon";
 import {StackHeaderLeftButtonProps} from "@react-navigation/stack";
 import {UserDetailsPageStyle} from "../styles/updateUserDetails";
 import {ButtonStyle} from "../styles/buttonStyle";
 import {updateUserData, fetchUserDetails, getuserIsAuthenticated} from "../web/firebase";
 import Avatar from "react-native-boring-avatars";
-import {useFocusEffect} from "@react-navigation/native";
 
 interface UserDetails {
     name: string;

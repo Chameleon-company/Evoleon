@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Color from '../constants/Colors'
 
 export const ButtonStyle = StyleSheet.create({
   Button: {
@@ -6,7 +7,7 @@ export const ButtonStyle = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     borderRadius: 50,
-    backgroundColor: "#294E4B",
+    backgroundColor: Color.light.BUTTONCOLOR,
     width: "auto",
     minWidth: 300,
     marginBottom: 10,
@@ -17,7 +18,7 @@ export const ButtonStyle = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     borderRadius: 50,
-    backgroundColor: "#294E4B",
+    backgroundColor:  Color.light.BUTTONCOLOR,
     width: "auto",
     minWidth: 300,
     marginBottom: 10,
@@ -32,7 +33,7 @@ export const ButtonStyle = StyleSheet.create({
     color: "white",
   },
   LoginLink: {
-    color: "#294E4B",
+    color:  Color.light.BUTTONCOLOR,
     fontWeight: "bold",
   },
 });

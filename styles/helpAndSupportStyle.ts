@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import Color from '../constants/Colors';
 
 export const HelpAndSupportPageStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Color.light.BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -20,7 +21,7 @@ export const HelpAndSupportPageStyle = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#E5E5E5",
+    backgroundColor: Color.light.BACKGROUND,
     padding: 10,
     borderRadius: 5,
   },
@@ -30,7 +31,7 @@ export const HelpAndSupportPageStyle = StyleSheet.create({
     flex: 1,
   },
   answerContainer: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: Color.light.BACKGROUND,
     padding: 10,
     marginTop: 10,
     borderRadius: 5,

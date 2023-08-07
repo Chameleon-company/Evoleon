@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import { FlipInEasyX } from "react-native-reanimated";
+import Color from '../constants/Colors';
 
 export const LoginScreenStyle = StyleSheet.create({
   content: {
@@ -8,7 +7,7 @@ export const LoginScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgb(233,236,230)",
+    backgroundColor: Color.light.BACKGROUND,
   },
   upperContent: {
     position: "absolute",
@@ -17,8 +16,7 @@ export const LoginScreenStyle = StyleSheet.create({
     top: 5,
     left: 10,
     right: 10,
-
-    backgroundColor: "rgb(233,236,230)",
+    backgroundColor: Color.light.BACKGROUND,
   },
   inputView: {
     backgroundColor: "rgba(0,0,0,0)",
@@ -34,7 +32,7 @@ export const LoginScreenStyle = StyleSheet.create({
     justifyContent: "flex-start",
   },
   SignupLink: {
-    color: "#294E4B",
+    color: Color.light.BUTTONCOLOR,
     fontWeight: "bold",
   },
   forgotPassButton: {
@@ -50,7 +48,7 @@ export const LoginScreenStyle = StyleSheet.create({
     paddingHorizontal: 120,
     borderRadius: 50,
     top: 1,
-    backgroundColor: "rgb(41,78,75)",
+    backgroundColor: Color.light.BUTTONCOLOR,
   },
   cancelButton: {
     marginBottom: 20,

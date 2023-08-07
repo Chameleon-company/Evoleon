@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import Color from '../constants/Colors';
 
 export const MapStyle = StyleSheet.create({
   ViewStyle: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: Color.light.BACKGROUND,
   },
 
   MarkerPopupStyle: {
@@ -43,17 +44,9 @@ export const MapStyle = StyleSheet.create({
     marginBottom: 10,
   },
 
-  // switchContainer: {
-  //   marginTop: 0,
-  //   backgroundColor: '#294E4B',
-  //   opacity: 0.8,
-  //   flexDirection: 'row',
-  //   padding: 10
-  // },
-
   topContainer: {
     marginTop: 0,
-    backgroundColor: "#294E4B",
+    backgroundColor: Color.light.HEADERCOLOR,
     opacity: 0.8,
     flexDirection: "row",
     padding: 10,

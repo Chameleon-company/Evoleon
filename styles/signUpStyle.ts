@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import { FlipInEasyX } from "react-native-reanimated";
+import Color from '../constants/Colors';
 
 export const SignUpScreenStyle = StyleSheet.create({
   content: {
@@ -8,7 +7,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     flexDirection: "column",
-    backgroundColor: "rgb(233,236,230)",
+    backgroundColor: Color.light.BACKGROUND,
   },
   upperContent: {
     position: "absolute",
@@ -17,8 +16,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     top: 5,
     left: 10,
     right: 10,
-
-    backgroundColor: "rgb(233,236,230)",
+    backgroundColor: Color.light.BACKGROUND,
   },
   inputView: {
     backgroundColor: "rgba(0,0,0,0)",
@@ -41,7 +39,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0)",
   },
   SignupLink: {
-    color: "#294E4B",
+    color: Color.light.HEADERCOLOR,
     fontWeight: "bold",
   },
   forgotPassButton: {
@@ -63,7 +61,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     borderRadius: 50,
     width: 360,
     top: 1,
-    backgroundColor: "rgb(41,78,75)",
+    backgroundColor: Color.light.BUTTONCOLOR,
   },
   cancelButton: {
     marginBottom: 20,
@@ -89,7 +87,7 @@ export const SignUpScreenStyle = StyleSheet.create({
 
   CheckBox: {
     flexDirection: "row",
-    backgroundColor: "#E9ECE6",
+    backgroundColor: Color.light.BACKGROUND,
     marginBottom: 15,
   },
 

@@ -1,19 +1,18 @@
 import { StyleSheet } from "react-native";
-import { color } from "react-native-reanimated";
+import Color from '../constants/Colors';
+
 
 export const ClientStyle = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "column",
-    // backgroundColor: "#F2F3F5", // Light grey for a cleaner look
-    backgroundColor: "#E9ECE6",
+    backgroundColor: Color.light.BACKGROUND,
   },
   profileContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    // backgroundColor: "#F2F3F5",
-    backgroundColor: "#E9ECE6",
+    backgroundColor: Color.light.BACKGROUND,
   },
   profileImage: {
     height: 100,
@@ -24,8 +23,7 @@ export const ClientStyle = StyleSheet.create({
   },
   topPageContent: {
     alignItems: "center",
-    // backgroundColor: "#F2F3F5",
-    backgroundColor: "#E9ECE6",
+    backgroundColor: Color.light.BACKGROUND,
   },
   headingText: {
     fontSize: 22, // Larger font size
@@ -34,7 +32,7 @@ export const ClientStyle = StyleSheet.create({
     fontWeight: "bold", // Bold text for headers
   },
   profileActionsView: {
-    backgroundColor: "#fff", // White color for a clean look
+    backgroundColor: Color.light.BACKGROUND,
     paddingTop: 5,
     marginTop: 60,
     borderRadius: 10, // Rounded corners
@@ -48,7 +46,7 @@ export const ClientStyle = StyleSheet.create({
     elevation: 5, // Shadow for a 'floating' effect
   },
   profileActionsCell: {
-    backgroundColor: "#F6F7F5",
+    backgroundColor: Color.light.BACKGROUND,
     borderBottomColor: "#D1D1D1", // Light grey color for separators
     borderBottomWidth: 1,
     flexDirection: "row",

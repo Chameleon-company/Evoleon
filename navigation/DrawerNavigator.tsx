@@ -14,13 +14,13 @@ import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import LoginScreen from "../screens/LoginScreen";
+import SignupScreen from "..//screens/SignupScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetailsScreen";
 
 
 import {
-
   getUserAuthStatus,
 } from "../web/firebase";
 
@@ -35,10 +35,13 @@ import {
   ForgotPasswordParamList,
   LoginParamList,
   PrivacyParamList,
-  SignupScreen,
+  SignupParamList,
   TermsAndConditionsParamList,
   UpdateUserDetailsParamList,
 } from "../types";
+
+// Colour imports
+import Color from '../constants/Colors';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -123,7 +126,7 @@ function DatabaseNavigator() {
         options={{
           headerTitle: "EV Database Map",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -145,7 +148,7 @@ function FileSystemNavigator() {
         options={{
           headerTitle: "File System",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -167,7 +170,7 @@ function ClientsNavigator() {
         options={{
           headerTitle: "Account",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -189,7 +192,7 @@ function ForgotPasswordNavigator() {
         options={{
           headerTitle: "Forgot Password",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -211,7 +214,7 @@ function LoginNavigator() {
         options={{
           headerTitle: "Login",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -233,7 +236,7 @@ function AuthenticateNavigator() {
         options={{
           headerTitle: "EVOLEON",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -256,7 +259,7 @@ function TermsAndConditionsNavigator() {
         options={{
           headerTitle: "Terms and Conditions",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -278,7 +281,7 @@ function SignupNavigator() {
         options={{
           headerTitle: "Sign up",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -300,7 +303,7 @@ function AboutNavigator() {
         options={{
           headerTitle: "About",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -323,7 +326,7 @@ function UpdateUserDetailsNavigator() {
         options={{
           headerTitle: "Update Details",
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",
@@ -345,7 +348,7 @@ function PrivacyNavigator() {
           headerTitle: "Privacy Policy",
 
           headerStyle: {
-            backgroundColor: "#294E4B",
+            backgroundColor: Color.light.HEADERCOLOR,
           },
           headerTitleStyle: {
             color: "white",

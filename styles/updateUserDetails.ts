@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import Color from '../constants/Colors';
 
 export const UserDetailsPageStyle = StyleSheet.create({
     container: {
         flex: 1,
-    backgroundColor: '#E9ECE6'
+        backgroundColor: Color.light.BACKGROUND,
     },
     profileContainer: {
         justifyContent: "center",
@@ -33,7 +34,7 @@ export const UserDetailsPageStyle = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        backgroundColor: "#4CAF50",
+        backgroundColor: Color.light.BUTTONCOLOR,
         padding: 10,
         marginHorizontal: 20,
         marginBottom: 20,
