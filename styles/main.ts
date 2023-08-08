@@ -4,7 +4,7 @@ import Color from '../constants/Colors';
 
 export default StyleSheet.create({
   centered: {
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

@@ -4,7 +4,7 @@ import Color from '../constants/Colors';
 export const MapStyle = StyleSheet.create({
   ViewStyle: {
     flex: 1,
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
 
   MarkerPopupStyle: {
@@ -46,7 +46,7 @@ export const MapStyle = StyleSheet.create({
 
   topContainer: {
     marginTop: 0,
-    backgroundColor: Color.light.HEADERCOLOR,
+    backgroundColor: Color.APPHEADER,
     opacity: 0.8,
     flexDirection: "row",
     padding: 10,

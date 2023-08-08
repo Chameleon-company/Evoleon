@@ -6,24 +6,14 @@ export const AboutStyle = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   currentVersion: {
     position: "absolute",
     top: 100,
   },
-  termsButton: {
-    backgroundColor: Color.light.BACKGROUND,
-    position: "absolute",
-    top: 300,
-  },
-  updateButton: {
-    backgroundColor: Color.light.BACKGROUND,
-    position: "absolute",
-    top: 160,
-  },
   updateVersion: {
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     position: "absolute",
     top: 120,
   },

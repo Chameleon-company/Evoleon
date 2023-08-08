@@ -106,19 +106,14 @@ export default function SignupScreen() {
           onValueChange={setChecked}
           color={isChecked ? "#294E4B" : undefined}
         />
-
         <TouchableOpacity
-        ///style={SignUpScreenStyle.termsConditionsButton}
-        /// onPress={() => {
-        /// navigation.navigate('TermsAndConditionsScreen');
-        ///  }}
         />
         <Text style={SignUpScreenStyle.CheckBoxText}>
           I agree to
           <TouchableOpacity
             onPress={() => navigation.navigate("TermsAndConditionsScreen")}
           >
-            <Text style={SignUpScreenStyle.SignupLink}>
+            <Text style={ButtonStyle.SignupLink}>
               Terms and Conditions
             </Text>
           </TouchableOpacity>

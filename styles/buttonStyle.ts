@@ -7,24 +7,22 @@ export const ButtonStyle = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 12,
     borderRadius: 50,
-    backgroundColor: Color.light.BUTTONCOLOR,
+    backgroundColor: Color.BUTTONCOLOR,
     width: "auto",
     minWidth: 300,
     marginBottom: 10,
   },
-
   BackButton: {
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     borderRadius: 50,
-    backgroundColor:  Color.light.BUTTONCOLOR,
+    backgroundColor:  Color.BUTTONCOLOR,
     width: "auto",
     minWidth: 300,
     marginBottom: 10,
     marginTop: 30,
   },
-
   Text: {
     fontSize: 16,
     lineHeight: 21,
@@ -33,7 +31,46 @@ export const ButtonStyle = StyleSheet.create({
     color: "white",
   },
   LoginLink: {
-    color:  Color.light.BUTTONCOLOR,
+    color:  Color.BUTTONCOLOR,
     fontWeight: "bold",
+  },
+  SignupLink: {
+    color: Color.BUTTONCOLOR,
+    fontWeight: "bold",
+  },
+  forgotPassButton: {
+    marginBottom: 20,
+    marginTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 120,
+    borderRadius: 50,
+    top: 1,
+    backgroundColor: Color.BUTTONCOLOR,
+  },
+  cancelButton: {
+    marginBottom: 20,
+    marginTop: 65,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cancelText: {
+    color: "#294E4B",
+    fontWeight: "bold",
+  },
+  termsButton: {
+    backgroundColor: Color.BACKGROUND,
+    position: "absolute",
+    top: 300,
+  },
+  updateButton: {
+    backgroundColor: Color.BACKGROUND,
+    position: "absolute",
+    top: 160,
   },
 });

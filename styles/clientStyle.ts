@@ -6,13 +6,13 @@ export const ClientStyle = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   profileContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   profileImage: {
     height: 100,
@@ -23,7 +23,7 @@ export const ClientStyle = StyleSheet.create({
   },
   topPageContent: {
     alignItems: "center",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   headingText: {
     fontSize: 22, // Larger font size
@@ -32,7 +32,7 @@ export const ClientStyle = StyleSheet.create({
     fontWeight: "bold", // Bold text for headers
   },
   profileActionsView: {
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     paddingTop: 5,
     marginTop: 60,
     borderRadius: 10, // Rounded corners
@@ -46,7 +46,7 @@ export const ClientStyle = StyleSheet.create({
     elevation: 5, // Shadow for a 'floating' effect
   },
   profileActionsCell: {
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     borderBottomColor: "#D1D1D1", // Light grey color for separators
     borderBottomWidth: 1,
     flexDirection: "row",

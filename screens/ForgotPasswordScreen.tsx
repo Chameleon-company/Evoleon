@@ -68,12 +68,12 @@ export default function ForgotPasswordScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={LoginScreenStyle.cancelButton}
+          style={ButtonStyle.cancelButton}
           onPress={() => {
             navigation.navigate("Database");
           }}
         >
-          <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+          <Text style={ButtonStyle.cancelText}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

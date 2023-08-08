@@ -36,7 +36,7 @@ export default function LoginScreen() {
             navigation.navigate("Signup");
           }}
         >
-          <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
+          <Text style={ButtonStyle.SignupLink}>Sign Up</Text>
         </TouchableOpacity>
 
         <View style={LoginScreenStyle.inputView}>
@@ -58,19 +58,19 @@ export default function LoginScreen() {
           />
 
           <TouchableOpacity
-            style={LoginScreenStyle.forgotPassButton}
+            style={ButtonStyle.forgotPassButton}
             onPress={() => {
               navigation.navigate("ForgotPassword");
             }}
           >
-            <Text style={LoginScreenStyle.SignupLink}>
+            <Text style={ButtonStyle.SignupLink}>
               Forgot your password?
             </Text>
           </TouchableOpacity>
 
           {/* Login button */}
           <TouchableOpacity
-            style={LoginScreenStyle.button}
+            style={ButtonStyle.button}
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {
@@ -89,12 +89,12 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={LoginScreenStyle.cancelButton}
+            style={ButtonStyle.cancelButton}
             onPress={() => {
               navigation.navigate("Authenticate");
             }}
           >
-            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+            <Text style={ButtonStyle.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

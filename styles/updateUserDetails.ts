@@ -4,7 +4,7 @@ import Color from '../constants/Colors';
 export const UserDetailsPageStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Color.light.BACKGROUND,
+        backgroundColor: Color.BACKGROUND,
     },
     profileContainer: {
         justifyContent: "center",
@@ -34,7 +34,7 @@ export const UserDetailsPageStyle = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        backgroundColor: Color.light.BUTTONCOLOR,
+        backgroundColor: Color.BUTTONCOLOR,
         padding: 10,
         marginHorizontal: 20,
         marginBottom: 20,

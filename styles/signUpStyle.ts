@@ -7,7 +7,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     flexDirection: "column",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   upperContent: {
     position: "absolute",
@@ -16,7 +16,7 @@ export const SignUpScreenStyle = StyleSheet.create({
     top: 5,
     left: 10,
     right: 10,
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   inputView: {
     backgroundColor: "rgba(0,0,0,0)",
@@ -38,39 +38,6 @@ export const SignUpScreenStyle = StyleSheet.create({
     borderColor: "rgba(0,0,0,0)",
     backgroundColor: "rgba(0,0,0,0)",
   },
-  SignupLink: {
-    color: Color.light.HEADERCOLOR,
-    fontWeight: "bold",
-  },
-  forgotPassButton: {
-    marginBottom: 20,
-    marginTop: 50,
-  },
-
-  termsConditionsButton: {
-    marginBottom: 20,
-    marginTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 85,
-    borderRadius: 50,
-    width: 360,
-    top: 1,
-    backgroundColor: Color.light.BUTTONCOLOR,
-  },
-  cancelButton: {
-    marginBottom: 20,
-    marginTop: 100,
-  },
-  cancelText: {
-    color: "#294E4B",
-    fontWeight: "bold",
-  },
   Text: {
     borderBottomColor: "#000",
     borderBottomWidth: 1.5,
@@ -87,7 +54,7 @@ export const SignUpScreenStyle = StyleSheet.create({
 
   CheckBox: {
     flexDirection: "row",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     marginBottom: 15,
   },
 

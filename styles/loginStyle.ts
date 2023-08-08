@@ -7,7 +7,7 @@ export const LoginScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   upperContent: {
     position: "absolute",
@@ -16,7 +16,7 @@ export const LoginScreenStyle = StyleSheet.create({
     top: 5,
     left: 10,
     right: 10,
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
   },
   inputView: {
     backgroundColor: "rgba(0,0,0,0)",
@@ -30,34 +30,5 @@ export const LoginScreenStyle = StyleSheet.create({
     marginBottom: 25,
     // paddingHorizontal: 50,
     justifyContent: "flex-start",
-  },
-  SignupLink: {
-    color: Color.light.BUTTONCOLOR,
-    fontWeight: "bold",
-  },
-  forgotPassButton: {
-    marginBottom: 20,
-    marginTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 120,
-    borderRadius: 50,
-    top: 1,
-    backgroundColor: Color.light.BUTTONCOLOR,
-  },
-  cancelButton: {
-    marginBottom: 20,
-    marginTop: 65,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cancelText: {
-    color: "#294E4B",
-    fontWeight: "bold",
   },
 });

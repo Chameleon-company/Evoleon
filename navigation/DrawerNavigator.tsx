@@ -19,7 +19,6 @@ import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetailsScreen";
 
-
 import {
   getUserAuthStatus,
 } from "../web/firebase";
@@ -75,7 +74,7 @@ export default function DrawerNavigator() {
           },
         };
 
-        return ( 
+        return (
           <DrawerContentScrollView {...filteredTopLeftMenuItems}>
             <DrawerItemList {...filteredTopLeftMenuItems} />
           </DrawerContentScrollView>
@@ -95,18 +94,9 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="About" component={AboutNavigator} />
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
-      <Drawer.Screen
-        name="ForgotPassword"
-        component={ForgotPasswordNavigator}
-      />
-      <Drawer.Screen
-        name="Update Details"
-        component={UpdateUserDetailsNavigator}
-      />
-      <Drawer.Screen
-        name="TermsAndConditionsScreen"
-        component={TermsAndConditionsNavigator}
-      />
+      <Drawer.Screen name="ForgotPassword" component={ForgotPasswordNavigator}/>
+      <Drawer.Screen name="Update Details" component={UpdateUserDetailsNavigator}/>
+      <Drawer.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsNavigator}/>
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator} />
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator} />
@@ -126,7 +116,7 @@ function DatabaseNavigator() {
         options={{
           headerTitle: "EV Database Map",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -148,7 +138,7 @@ function FileSystemNavigator() {
         options={{
           headerTitle: "File System",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -170,7 +160,7 @@ function ClientsNavigator() {
         options={{
           headerTitle: "Account",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -192,7 +182,7 @@ function ForgotPasswordNavigator() {
         options={{
           headerTitle: "Forgot Password",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -214,7 +204,7 @@ function LoginNavigator() {
         options={{
           headerTitle: "Login",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -236,7 +226,7 @@ function AuthenticateNavigator() {
         options={{
           headerTitle: "EVOLEON",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -259,7 +249,7 @@ function TermsAndConditionsNavigator() {
         options={{
           headerTitle: "Terms and Conditions",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -281,7 +271,7 @@ function SignupNavigator() {
         options={{
           headerTitle: "Sign up",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -303,7 +293,7 @@ function AboutNavigator() {
         options={{
           headerTitle: "About",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -326,7 +316,7 @@ function UpdateUserDetailsNavigator() {
         options={{
           headerTitle: "Update Details",
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",
@@ -348,7 +338,7 @@ function PrivacyNavigator() {
           headerTitle: "Privacy Policy",
 
           headerStyle: {
-            backgroundColor: Color.light.HEADERCOLOR,
+            backgroundColor: Color.APPHEADER,
           },
           headerTitleStyle: {
             color: "white",

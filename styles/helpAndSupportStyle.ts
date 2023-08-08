@@ -4,7 +4,7 @@ import Color from '../constants/Colors';
 export const HelpAndSupportPageStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -21,7 +21,7 @@ export const HelpAndSupportPageStyle = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     padding: 10,
     borderRadius: 5,
   },
@@ -31,7 +31,7 @@ export const HelpAndSupportPageStyle = StyleSheet.create({
     flex: 1,
   },
   answerContainer: {
-    backgroundColor: Color.light.BACKGROUND,
+    backgroundColor: Color.BACKGROUND,
     padding: 10,
     marginTop: 10,
     borderRadius: 5,
