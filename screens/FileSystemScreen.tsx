@@ -5,7 +5,7 @@ import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import { Text, View } from "../components/Themed";
 import MenuIcon from "../components/MenuIcon";
 import { useEffect } from "react";
-import main from "../styles/main";
+import {AuthScreenStyle} from "../styles/authenticateStyle";
 
 export default function FileSystemScreen() {
   const navigation = useNavigation();
@@ -17,8 +17,8 @@ export default function FileSystemScreen() {
   });
 
   return (
-    <View style={main.centered}>
-      <Text lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
+    <View style={AuthScreenStyle.Centered}>
+      <Text lightColor= 'rgba(0,0,0,0.8)' darkColor='rgba(255,255,255,0.8)'>
         This is FileSystem Screen
       </Text>
     </View>

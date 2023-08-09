@@ -6,6 +6,11 @@ export const AuthScreenStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Color.BACKGROUND
-  }
+    backgroundColor: Color.BACKGROUND,
+  },
+  frontPageLogo: {
+    width: 200,
+    height: 200,
+    marginBottom: 125
+}
 });

@@ -43,6 +43,8 @@ export const ButtonStyle = StyleSheet.create({
     marginTop: 50,
     justifyContent: "center",
     alignItems: "center",
+    color: Color.DEFAULTTEXT,
+    fontWeight: "bold",
   },
   button: {
     alignItems: "center",
@@ -60,7 +62,7 @@ export const ButtonStyle = StyleSheet.create({
     alignItems: "center",
   },
   cancelText: {
-    color: "#294E4B",
+    color: Color.DEFAULTTEXT,
     fontWeight: "bold",
   },
   termsButton: {

@@ -9,7 +9,6 @@ import MenuIcon from "../components/MenuIcon";
 
 import { AuthScreenStyle } from "../styles/authenticateStyle";
 import { ButtonStyle } from "../styles/buttonStyle";
-import logoStyles from "../styles/logoStyle";
 
 
  /* Initial screen for authentication proccess.
@@ -28,7 +27,7 @@ export default function AuthenticateScreen() {
   return (
     <View style={AuthScreenStyle.Centered}>
       {/* Logo - to be updated with current logo */}
-      <Image style={logoStyles.frontPageLogo} source={require("./EvoleonFinal.png")} />
+      <Image style={AuthScreenStyle.frontPageLogo} source={require("./EvoleonFinal.png")} />
 
       {/* Login button */}
       <TouchableOpacity

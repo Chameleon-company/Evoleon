@@ -4,6 +4,8 @@ const tintColorDark = '#fff';
 export default {
   APPHEADER: '#00A688',
   BUTTONCOLOR: '#4cB166',
+  DEFAULTTEXT: 'rgba(0,0,0,0.8)',
+  
   light: {
     text: 'rgba(0,0,0,0.8)',
     background: '#E9ECE6',

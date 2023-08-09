@@ -63,7 +63,7 @@ export default function LoginScreen() {
               navigation.navigate("ForgotPassword");
             }}
           >
-            <Text style={ButtonStyle.SignupLink}>
+            <Text style={ButtonStyle.forgotPassButton}>
               Forgot your password?
             </Text>
           </TouchableOpacity>
