@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { HelpAndSupportPageStyle } from "../styles/helpAndSupportStyle";
+import { ButtonStyle} from "../styles/buttonStyle"
 
 //Defining FAQ interface
 interface Faq {
@@ -10,6 +12,8 @@ interface Faq {
 }
 
 const HelpAndSupport = () => {
+  const navigation = useNavigation();
+
   //Defining FAQ questions and answers
   const [faqs, setFaqs] = useState<Faq[]>([
     {
@@ -31,7 +35,7 @@ const HelpAndSupport = () => {
       ],
     },
     {
-      question: "What are EV benefits?",
+      question: "What are some benefits EVs?",
       answer: [
         "Australian drivers travel on average around 33km a day. Given that charging stations are becoming more available, EVs are an increasingly viable and convenient solution in cities, towns and major holiday destinations. There are a range of benefits to driving electric, including:",
         "- Reduced fuel costs and higher efficiency",
@@ -114,9 +118,17 @@ const HelpAndSupport = () => {
           {faqs.map((faq) => renderFaq(faq))}
         </View>
       </ScrollView>
+      <TouchableOpacity
+        style={[{ marginTop: 20 }, ButtonStyle.Button]}
+        onPress={() => {
+          navigation.goBack(); // Navigating back to the previous screen
+        }}
+      >
+        <Text style={ButtonStyle.Text}>Back</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 export default HelpAndSupport;
 

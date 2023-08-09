@@ -17,6 +17,7 @@ import LoginScreen from "../screens/LoginScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetailsScreen";
+import HelpAndSupportScreen from "../screens/HelpAndSupportScreen";
 
 
 import {
@@ -38,7 +39,9 @@ import {
   SignupScreen,
   TermsAndConditionsParamList,
   UpdateUserDetailsParamList,
+  HelpAndSupportParamList,
 } from "../types";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -90,6 +93,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Database" component={DatabaseNavigator} />
       <Drawer.Screen name="File System" component={FileSystemNavigator} />
       <Drawer.Screen name="About" component={AboutNavigator} />
+      <Drawer.Screen name="HelpAndSupportScreen" component={HelpAndSupportNavigator} />
 
       {/* These menus are not displayed in the hamburger menu as they are routed and filtered out of the menu.*/}
       <Drawer.Screen
@@ -104,6 +108,7 @@ export default function DrawerNavigator() {
         name="TermsAndConditionsScreen"
         component={TermsAndConditionsNavigator}
       />
+      
       <Drawer.Screen name="Authenticate" component={AuthenticateNavigator} />
       <Drawer.Screen name="Login" component={LoginNavigator} />
       <Drawer.Screen name="Signup" component={SignupNavigator} />
@@ -112,6 +117,7 @@ export default function DrawerNavigator() {
   );
 }
 
+// Stack navigators for various screens
 const DatabaseStack = createStackNavigator<DatabaseParamList>();
 
 function DatabaseNavigator() {
@@ -353,5 +359,27 @@ function PrivacyNavigator() {
         }}
       />
     </PrivacyStack.Navigator>
+  );
+}
+
+const HelpAndSupportStack = createStackNavigator<HelpAndSupportParamList>();
+
+function HelpAndSupportNavigator() {
+  return (
+    <HelpAndSupportStack.Navigator>
+      <HelpAndSupportStack.Screen
+        name="HelpAndSupportScreen"
+        component={HelpAndSupportScreen}
+        options={{
+          headerTitle: "Help and Support",
+          headerStyle: {
+            backgroundColor: "#294E4B",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+        }}
+      />
+    </HelpAndSupportStack.Navigator>
   );
 }
