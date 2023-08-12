@@ -93,6 +93,8 @@ export default function SignupScreen() {
           value={confirmPassword}
           placeholderTextColor="grey"
           placeholder="Confirm Password *"
+          placeholder="Password *"
+        />
         />
       </SafeAreaView>
 
@@ -118,23 +120,12 @@ export default function SignupScreen() {
       <Pressable
         style={ButtonStyle.Button}
         onPress={() => {
-<<<<<<< HEAD
           userSignUp(email, password, firstName, lastName, homeCountry).then((result) => {
             console.log(result);
             if (result == true) {
               navigation.navigate("Database");
             } else {
               Alert.alert("Error when creating account");
-=======
-          userSignUp(email, password, firstName, confirmPassword, lastName, homeCountry,).then(
-          (result) => {
-              console.log(result);
-              if (result == true) {
-                navigation.navigate("Database");
-              } else {
-                Alert.alert("Error when creating account");
-              }
->>>>>>> 40256bb (Added the terms and conditions content to the page.)
             }
           });
         }}>
