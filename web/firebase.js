@@ -123,10 +123,14 @@ export const userLogin = async (email, password) => {
 };
 
 //Sign up for a new user
-export const userSignUp = async (email, password, firstName, lastName, country) => {
+export const userSignUp = async (email, password, firstName, lastName, country, confirmPassword) => {
   try {
     console.log("User tried to create a new account.");
-    const res = await createUserWithEmailAndPassword(auth, email, password);
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match.");
+      return false;
+    }
+    const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
     userIsAuthenticated = true;
     const user = res.user;
     await sendEmailVerification(user);
@@ -139,7 +143,7 @@ export const userSignUp = async (email, password, firstName, lastName, country) 
     console.error("An Error has been caught");
     console.error("Error message:", err);
     return false;
-  }
+  } 
 };
 
 // Add users first name to firebase Authentication.

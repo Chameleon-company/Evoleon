@@ -14,6 +14,7 @@ import DatabaseScreen from "../screens/DatabaseScreen";
 import FileSystemScreen from "../screens/FileSystemScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import LoginScreen from "../screens/LoginScreen";
+import SignupScreen from "../screens/SignupScreen";
 import PrivacyPolicyScreen from "../screens/PrivacyPolicyScreen";
 import TermsAndConditionsScreen from "../screens/TermsAndConditionsScreen";
 import UpdateUserDetailsScreen from "../screens/UpdateUserDetailsScreen";
@@ -35,7 +36,7 @@ import {
   ForgotPasswordParamList,
   LoginParamList,
   PrivacyParamList,
-  SignupScreen,
+  SignupParamList,
   TermsAndConditionsParamList,
   UpdateUserDetailsParamList,
 } from "../types";
