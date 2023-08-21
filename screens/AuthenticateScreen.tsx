@@ -12,7 +12,7 @@ import { ButtonStyle } from "../styles/buttonStyle";
 
 
  /* Initial screen for authentication proccess.
-  To do: improve user interface code and update links
+  TODO: improve user interface code and update links
 */
 
 export default function AuthenticateScreen() {

@@ -11,9 +11,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LoginScreenStyle } from "../styles/loginStyle";
 import { userLogin } from "../web/firebase";
 
-{
-  /* Log in Screen */
-}
+// Colour imports
+import {Color} from "../constants/Colors"
+
+{ /* Log in Screen */ }
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, onChangeTextEmail] = React.useState("");
@@ -28,15 +29,17 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
       <View style={LoginScreenStyle.content}>
-        <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
+        <Text lightColor="Color.light.Text" darkColor="Colour.dark.Text">
           Don't have an account?
         </Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Signup");
+            navigation.navigate('Signup');
           }}
         >
-          <Text style={ButtonStyle.SignupLink}>Sign Up</Text>
+          <Text style={ButtonStyle.SignupLink} lightColor="Color.light.Color" darkColor="Color.dark.Color">
+            Sign Up
+          </Text>
         </TouchableOpacity>
 
         <View style={LoginScreenStyle.inputView}>
@@ -57,14 +60,15 @@ export default function LoginScreen() {
             placeholder="Password"
           />
 
+          {/* Forgot password button */}
           <TouchableOpacity
             style={ButtonStyle.forgotPassButton}
             onPress={() => {
-              navigation.navigate("ForgotPassword");
+              navigation.navigate('ForgotPassword');
             }}
           >
-            <Text style={ButtonStyle.forgotPassButton}>
-              Forgot your password?
+            <Text style={ButtonStyle.forgotPassButton} lightColor="Color.light.Color" darkColor="Color.dark.Color">
+              Forgot your password?{' '}
             </Text>
           </TouchableOpacity>
 
@@ -74,27 +78,28 @@ export default function LoginScreen() {
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {
-                navigation.navigate("Database");
+                navigation.navigate('Database');
               } else {
-                Alert.alert(
-                  "Login Error",
-                  error.code === "auth/wrong-password"
-                    ? "Incorrect password"
-                    : error.message
-                );
+                Alert.alert('Login Error', error.code === 'auth/wrong-password' ? 'Incorrect password' : error.message);
               }
             }}
           >
-            <Text style={ButtonStyle.Text}>Login</Text>
+            <Text style={ButtonStyle.Text} lightColor="Color.light.Text" darkColor="Color.dark.Text">
+              Login
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={ButtonStyle.cancelButton}
+            lightColor="Color.light.color"
+            darkColor="Color.dark.color"
             onPress={() => {
-              navigation.navigate("Authenticate");
+              navigation.navigate('Authenticate');
             }}
           >
-            <Text style={ButtonStyle.cancelText}>Cancel</Text>
+            <Text style={ButtonStyle.cancelText} lightColor="Color.light.Text" darkColor="Color.dark.Text">
+              Cancel
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -55,41 +55,49 @@ function AboutScreen() {
       });
 
     return (
-    <View style={AboutStyle.centered}>
-      {/* TODO: Change all colour calls to this format for light and darkmode*/}
-        <Text style={AboutStyle.currentVersion} lightColor= 'Color.light.text' darkColor= 'Color.dark.text' >
-        App Version: {deviceAppVersion} </Text>
-        <Text style={AboutStyle.updateVersion} lightColor= 'Color.light.text' darkColor='Color.dark.text'>
-        Version Available: {EvoleonAppDeets.expo.version} </Text>
+      <View style={AboutStyle.centered}>
+        {/* TODO: Change all colour calls to this format for light and darkmode*/}
+        <Text style={AboutStyle.currentVersion} lightColor="Color.light.Text" darkColor="Color.dark.Text">
+          App Version: {deviceAppVersion}{' '}
+        </Text>
+        <Text style={AboutStyle.updateVersion} lightColor="Color.light.Text" darkColor="Color.dark.Text">
+          Version Available: {EvoleonAppDeets.expo.version}{' '}
+        </Text>
         <View style={ButtonStyle.updateButton}>
           <TouchableOpacity style={ButtonStyle.Button}>
             <Text style={ButtonStyle.Text}>{updateButtonText}</Text>
           </TouchableOpacity>
         </View>
         <View style={ButtonStyle.termsButton}>
-          <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
-                        navigation.navigate("PrivacyPolicy");
-                    }}>
+          <TouchableOpacity
+            style={ButtonStyle.Button}
+            onPress={() => {
+              navigation.navigate('PrivacyPolicy');
+            }}
+          >
             <Text style={ButtonStyle.Text}>{privacyButtonText}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ButtonStyle.Button} onPress={() => {
-                        navigation.navigate("TermsAndConditionsScreen");
-                    }}>
+          <TouchableOpacity
+            style={ButtonStyle.Button}
+            onPress={() => {
+              navigation.navigate('TermsAndConditionsScreen');
+            }}
+          >
             <Text style={ButtonStyle.Text}>{termsButtonText}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ButtonStyle.Button}
-            onPress={clearCacheAlert}>
+          <TouchableOpacity style={ButtonStyle.Button} onPress={clearCacheAlert}>
             <Text style={ButtonStyle.Text}>{clearCacheButtonText}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[{ marginTop: 20 }, ButtonStyle.Button]}
             onPress={() => {
-                navigation.goBack();
-            }}>
+              navigation.goBack();
+            }}
+          >
             <Text style={ButtonStyle.Text}>Back</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-    </View>
+      </View>
     );
 
 }

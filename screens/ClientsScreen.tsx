@@ -21,11 +21,16 @@ const ListButton = ({action, text, iconName}) => {
     const defaultImage = require("../assets/Arrow.png");
 
     return (
-        <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={action}>
-            <Text style={ClientStyle.profileActionsText}>{text}</Text>
-            <Entypo name={iconName} size={24} color="#294E4B" style={ClientStyle.buttonIcon} />
-            {/* <Image source={image || defaultImage} style={ClientStyle.buttonIcon} /> */}
-        </TouchableOpacity>
+      <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={action}>
+        <Text style={ClientStyle.profileActionsText}>{text}</Text>
+        <Entypo
+          name={iconName}
+          size={24}
+          lightColor="Color.light.element"
+          darkColor="Color.dark.element"
+          style={ClientStyle.buttonIcon}
+        />
+      </TouchableOpacity>
     );
 };
 

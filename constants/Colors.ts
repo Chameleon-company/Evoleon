@@ -4,18 +4,19 @@ const tintColorDark = '#fff';
 export default {
   APPHEADER: '#00A688',
   BUTTONCOLOR: '#4cB166',
-  DEFAULTTEXT: 'rgba(0,0,0,0.8)',
-  
+
   light: {
-    text: 'rgba(0,0,0,0.8)',
+    Text: '#ffffffcc',
     background: '#E9ECE6',
+    Color: '#00A688',
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
   },
   dark: {
-    text: 'rgba(255,255,255,0.8)',
+    Text: '#000000cc',
     background: '#000',
+    Color: '#002d00',
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
