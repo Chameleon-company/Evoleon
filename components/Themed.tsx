@@ -19,6 +19,12 @@ export function useThemeColor(
   }
 }
 
+// Function to return the current colour scheme
+export function CurrentColorScheme(): 'light' | 'dark' {
+  const CurrentScheme = useColorScheme();
+  return CurrentScheme;
+}
+
 type ThemeProps = {
   lightColor?: string;
   darkColor?: string;

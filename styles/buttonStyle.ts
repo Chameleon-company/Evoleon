@@ -7,7 +7,7 @@ export const ButtonStyle = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 12,
     borderRadius: 50,
-    backgroundColor: Color.BUTTONCOLOR,
+    backgroundColor: Color.light.BUTTONCOLOR,
     width: 'auto',
     minWidth: 300,
     marginBottom: 10,

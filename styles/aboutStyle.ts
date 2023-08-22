@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 import Color from '../constants/Colors';
 
+import { CurrentColorScheme } from '../components/Themed';
+
+const test = CurrentColorScheme();
+
 export const AboutStyle = StyleSheet.create({
   centered: {
     flex: 1,
