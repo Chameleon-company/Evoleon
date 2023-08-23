@@ -79,10 +79,10 @@ export default function App() {
                   iconName = focused ? "users" : "users";
                   break;
                 default:
-                  iconName = "air"; 
+                  iconName = "air";
                   break;
               }
-              
+
               return <Entypo name={iconName} size={size} color={color} />;
             },
             headerShown: true,
@@ -95,13 +95,15 @@ export default function App() {
               borderTopWidth: 0,
             },
           })}>
-          {/* Dynamic tab bar color */}
+          {/* Entries that are displayed on the bottom bar */}
           <Tab.Screen name="Map" component={DatabaseScreen} />
           <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
           <Tab.Screen name="FileSystemScreen" component={FileSystemScreen} />
           <Tab.Screen name="AboutScreen" component={AboutScreen} />
           <Tab.Screen name="ClientsScreen" component={ClientsScreen} />
           {/* The next tabs are hidden from selection */}
+          {/* Note: If you are implementing a new page you must put the entry here so it's within the possible navigation boundaries.
+           Adding the blank view tag here hides it from the menu but it's required that new pages be added here.  */}
           <Tab.Screen name="Login" component={LoginScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen name="Signup" component={SignupScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen name="About" component={AboutScreen} options={{ tabBarButton: () => <View></View> }} />
