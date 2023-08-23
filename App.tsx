@@ -19,6 +19,9 @@ import UpdateUserDetailsScreen from "./screens/UpdateUserDetailsScreen";
 import SignupScreen from "./screens/SignupScreen";
 import AboutScreen from "./screens/AboutScreen";
 
+// For the icons.
+import { Entypo } from "@expo/vector-icons";
+
 const EvoleonLightTheme = {
   ...DefaultTheme,
   colors: {
@@ -54,6 +57,34 @@ export default function App() {
         <Tab.Navigator
           initialRouteName="Authenticate"
           screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              // The icons are set out like this so that if we want we can change the "focused" icon to be something different
+              // At the moment if the icon is focused it's a darker color  than if it's not focused.
+              switch (route.name) {
+                case "Map":
+                  iconName = focused ? "location-pin" : "location-pin";
+                  break;
+                case "Authenticate":
+                  iconName = focused ? "login" : "login";
+                  break;
+                case "FileSystemScreen":
+                  iconName = focused ? "folder" : "folder";
+                  break;
+                case "AboutScreen":
+                  iconName = focused ? "info" : "info";
+                  break;
+                case "ClientsScreen":
+                  iconName = focused ? "users" : "users";
+                  break;
+                default:
+                  iconName = "air"; 
+                  break;
+              }
+              
+              return <Entypo name={iconName} size={size} color={color} />;
+            },
             headerShown: true,
             tabBarStyle: {
               height: 80,

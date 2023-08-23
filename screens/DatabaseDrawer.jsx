@@ -11,10 +11,10 @@ const { height } = Dimensions.get("window");
 
 const DatabaseDrawer = (props) => {
   const defaultProps = {
-    draggableRange: { top: height + 180 - 90, bottom: 180 },
+    draggableRange: { top: height + 180 - 90, bottom: 240 },
   };
 
-  const [draggedValue] = useState(new Animated.Value(180));
+  const [draggedValue] = useState(new Animated.Value(240));
   const panelRef = useRef(null);
 
   // usestate for the marker data
@@ -22,7 +22,7 @@ const DatabaseDrawer = (props) => {
 
   const marker = props.marker;
 
-  const { top, bottom } = props.draggableRange || defaultProps.draggableRange;
+  const { top, bottom } = defaultProps.draggableRange;
 
   //on marker change
   useEffect(() => {
@@ -46,19 +46,19 @@ const DatabaseDrawer = (props) => {
 
   const textTranslateY = draggedValue.interpolate({
     inputRange: [bottom, top],
-    outputRange: [0, 8],
+    outputRange: [0, 0],
     extrapolate: "clamp",
   });
 
   const textTranslateX = draggedValue.interpolate({
     inputRange: [bottom, top],
-    outputRange: [0, -112],
+    outputRange: [0, 0],
     extrapolate: "clamp",
   });
 
   const textScale = draggedValue.interpolate({
     inputRange: [bottom, top],
-    outputRange: [1, 0.7],
+    outputRange: [1, 1],
     extrapolate: "clamp",
   });
 
@@ -97,7 +97,7 @@ const DatabaseDrawer = (props) => {
     <>
       <SlidingUpPanel
         ref={panelRef}
-        draggableRange={props.draggableRange || defaultProps.draggableRange}
+        draggableRange={{ top: height - 90, bottom: 240 }}
         animatedValue={draggedValue}
         snappingPoints={[480, height]}
         height={height + 180}
