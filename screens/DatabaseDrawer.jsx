@@ -4,7 +4,7 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import IconButton from "../components/IconButton";
 import StarRating from "../components/StarRating";
 
-import { FlatList } from "react-native-gesture-handler";
+// import { FlatList } from "react-native-gesture-handler";
 import { Image } from "expo-image";
 
 const { height } = Dimensions.get("window");
@@ -180,14 +180,14 @@ const DatabaseDrawer = (props) => {
             {markerData?.photos?.length > 0 && (
               <>
                 <Text>Photos:</Text>
-                <FlatList
+                {/* <FlatList
                   data={markerData?.photos}
                   renderItem={({ item }) => (
                     <Image key={item.id} source={{ uri: item.url }} style={{ width: 200, height: 200 }} />
                   )}
                   keyExtractor={(item) => item.id.toString()}
                   horizontal={true}
-                />
+                /> */}
               </>
             )}
           </View>
