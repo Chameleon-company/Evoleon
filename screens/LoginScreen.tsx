@@ -19,12 +19,6 @@ export default function LoginScreen() {
   const [email, onChangeTextEmail] = React.useState("");
   const [password, onChangeTextPassword] = React.useState("");
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
       <View style={LoginScreenStyle.content}>
@@ -34,8 +28,7 @@ export default function LoginScreen() {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Signup");
-          }}
-        >
+          }}>
           <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
         </TouchableOpacity>
 
@@ -61,11 +54,8 @@ export default function LoginScreen() {
             style={LoginScreenStyle.forgotPassButton}
             onPress={() => {
               navigation.navigate("ForgotPassword");
-            }}
-          >
-            <Text style={LoginScreenStyle.SignupLink}>
-              Forgot your password?
-            </Text>
+            }}>
+            <Text style={LoginScreenStyle.SignupLink}>Forgot your password?</Text>
           </TouchableOpacity>
 
           {/* Login button */}
@@ -76,15 +66,9 @@ export default function LoginScreen() {
               if (success) {
                 navigation.navigate("Database");
               } else {
-                Alert.alert(
-                  "Login Error",
-                  error.code === "auth/wrong-password"
-                    ? "Incorrect password"
-                    : error.message
-                );
+                Alert.alert("Login Error", error.code === "auth/wrong-password" ? "Incorrect password" : error.message);
               }
-            }}
-          >
+            }}>
             <Text style={ButtonStyle.Text}>Login</Text>
           </TouchableOpacity>
 
@@ -92,8 +76,7 @@ export default function LoginScreen() {
             style={LoginScreenStyle.cancelButton}
             onPress={() => {
               navigation.navigate("Authenticate");
-            }}
-          >
+            }}>
             <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>

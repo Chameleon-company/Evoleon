@@ -14,20 +14,12 @@ import { userPasswordResetAuth } from "../web/firebase";
 
 import { ClientStyle } from "../styles/clientStyle";
 
-import {
-  getuserIsAuthenticated,
-} from "../web/firebase";
+import { getuserIsAuthenticated } from "../web/firebase";
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
   const [email, onChangeTextEmail] = React.useState("");
   const [password, onChangeTextPassword] = React.useState("");
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
 
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
@@ -49,10 +41,7 @@ export default function ForgotPasswordScreen() {
             const { success, error } = await userPasswordResetAuth(email);
             if (!success) {
               // Check the error code and display the appropriate message
-              if (
-                error.code === "auth/invalid-email" ||
-                error.code === "auth/missing-email"
-              ) {
+              if (error.code === "auth/invalid-email" || error.code === "auth/missing-email") {
                 Alert.alert("Error", "Please enter the email");
               } else {
                 // If there's an error, display an alert with the error message
@@ -62,8 +51,7 @@ export default function ForgotPasswordScreen() {
               // If successful, navigate to the Login screen
               navigation.navigate("Authenticate");
             }
-          }}
-        >
+          }}>
           <Text style={ButtonStyle.Text}>Reset Password</Text>
         </TouchableOpacity>
 
@@ -71,8 +59,7 @@ export default function ForgotPasswordScreen() {
           style={LoginScreenStyle.cancelButton}
           onPress={() => {
             navigation.navigate("Database");
-          }}
-        >
+          }}>
           <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
         </TouchableOpacity>
       </View>

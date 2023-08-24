@@ -11,19 +11,12 @@ import { AuthScreenStyle } from "../styles/authenticateStyle";
 import { ButtonStyle } from "../styles/buttonStyle";
 import logoStyles from "../styles/logoStyle";
 
-
- /* Initial screen for authentication proccess.
+/* Initial screen for authentication proccess.
   To do: improve user interface code and update links
 */
 
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
 
   return (
     <View style={AuthScreenStyle.Centered}>
@@ -35,8 +28,7 @@ export default function AuthenticateScreen() {
         style={ButtonStyle.Button}
         onPress={() => {
           navigation.navigate("Login");
-        }}
-      >
+        }}>
         <Text style={ButtonStyle.Text}>Login</Text>
       </TouchableOpacity>
 
@@ -45,18 +37,17 @@ export default function AuthenticateScreen() {
         style={ButtonStyle.Button}
         onPress={() => {
           navigation.navigate("Signup");
-        }}
-      >
+        }}>
         <Text style={ButtonStyle.Text}>Sign up</Text>
       </TouchableOpacity>
-    {/* Back button */}
-    <TouchableOpacity
-        style={[{marginTop: 20}, ButtonStyle.Button]}
+      {/* Back button */}
+      <TouchableOpacity
+        style={[{ marginTop: 20 }, ButtonStyle.Button]}
         onPress={() => {
-            navigation.goBack();
+          navigation.goBack();
         }}>
         <Text style={ButtonStyle.Text}>Back</Text>
-    </TouchableOpacity>
+      </TouchableOpacity>
     </View>
   );
 }
