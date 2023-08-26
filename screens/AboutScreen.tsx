@@ -1,17 +1,11 @@
 // React imports.
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 // React Native imports.
-import { 
-  TouchableOpacity, 
-  Alert 
-} from "react-native";
+import { TouchableOpacity, Alert } from 'react-native';
 
 // Navigation imports.
-import {
-  useNavigation,
-  StackHeaderLeftButtonProps,
-} from "@react-navigation/native";
+import { useNavigation, StackHeaderLeftButtonProps } from '@react-navigation/native';
 
 // Themed component imports.
 import { Text, View } from '../components/Themed';
@@ -23,17 +17,14 @@ import MenuIcon from '../components/MenuIcon';
 import { AboutStyle } from '../styles/aboutStyle';
 import { ButtonStyle } from '../styles/buttonStyle';
 
-// Colour imports
-import Color from '../constants/Colors';
-
 function AboutScreen() {
   const navigation = useNavigation();
   const EvoleonAppDeets = require('../app.json');
   const deviceAppVersion = 'Pickles';
-  const updateButtonText = 'Update';
-  const termsButtonText = 'Ts & Cs';
-  const privacyButtonText = 'Privacy Policy';
-  const clearCacheButtonText = 'Clear Cache';
+  const upDateButton = '     Update     ';
+  const termsButton = ' Ts & Cs ';
+  const privacyButton = 'Privacy Policy';
+  const clearCache = ' Clear Cache ';
 
   // A place holder alert to add the clear cache functionality to.
   const clearCacheAlert = () =>
@@ -46,37 +37,27 @@ function AboutScreen() {
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
 
-  // Header menu, needs to be replaced with << back.
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <View style={AboutStyle.centered}>
-      {/* TODO: Change all colour calls to this format for light and darkmode*/}
-      <Text style={AboutStyle.currentVersion} lightColor={Color.light.Text} darkColor={Color.dark.Text}>
+      <Text style={AboutStyle.currentVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
         App Version: {deviceAppVersion}{' '}
       </Text>
-      <Text style={AboutStyle.updateVersion} lightColor={Color.light.Text} darkColor={Color.dark.Text}>
+      <Text style={AboutStyle.updateVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
         Version Available: {EvoleonAppDeets.expo.version}{' '}
       </Text>
-      <View style={ButtonStyle.updateButton}>
+      <View style={AboutStyle.updateButton}>
         <TouchableOpacity style={ButtonStyle.Button}>
-          <Text style={ButtonStyle.Text}>{updateButtonText}</Text>
+          <Text style={ButtonStyle.Text}>{upDateButton}</Text>
         </TouchableOpacity>
       </View>
-      <View style={ButtonStyle.termsButton} lightColor={Color.light.BUTTONCOLOR} darkColor={Color.dark.BUTTONCOLOR}>
+      <View style={AboutStyle.termsButton}>
         <TouchableOpacity
           style={ButtonStyle.Button}
-          lightColor={Color.light.BUTTONCOLOR}
-          darkColor={Color.dark.BUTTONCOLOR}
           onPress={() => {
             navigation.navigate('PrivacyPolicy');
           }}
         >
-          <Text style={ButtonStyle.Text}>{privacyButtonText}</Text>
+          <Text style={ButtonStyle.Text}>{privacyButton}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={ButtonStyle.Button}
@@ -84,10 +65,10 @@ function AboutScreen() {
             navigation.navigate('TermsAndConditionsScreen');
           }}
         >
-          <Text style={ButtonStyle.Text}>{termsButtonText}</Text>
+          <Text style={ButtonStyle.Text}>{termsButton}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={ButtonStyle.Button} onPress={clearCacheAlert}>
-          <Text style={ButtonStyle.Text}>{clearCacheButtonText}</Text>
+          <Text style={ButtonStyle.Text}>{clearCache}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[{ marginTop: 20 }, ButtonStyle.Button]}
@@ -101,6 +82,5 @@ function AboutScreen() {
     </View>
   );
 }
-
 
 export default AboutScreen;

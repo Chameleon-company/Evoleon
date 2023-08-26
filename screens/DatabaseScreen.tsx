@@ -14,8 +14,7 @@ const DatabaseScreen = (props) => {
   const isLocationVisible = (location) => {
     if (!visibleRegion) return false;
 
-    const { latitude, longitude, latitudeDelta, longitudeDelta } =
-      visibleRegion;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = visibleRegion;
     const latMin = latitude - latitudeDelta / 2;
     const latMax = latitude + latitudeDelta / 2;
     const lonMin = longitude - longitudeDelta / 2;
@@ -32,13 +31,6 @@ const DatabaseScreen = (props) => {
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
   };
-
-  useEffect(() => {
-    // To display the hamburger top left
-    props.navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  }, []);
 
   return (
     <View style={MapStyle.ViewStyle}>

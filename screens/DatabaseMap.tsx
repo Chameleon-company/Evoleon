@@ -172,15 +172,13 @@ const DatabaseMap = (props) => {
             if (userLocation) {
               animateMap(userLocation.current.coords);
             }
-          }}
-        >
+          }}>
           <Text>MyLocation</Text>
         </Button>
         <Button
           onPress={() => {
             animateMap(initialRegion);
-          }}
-        >
+          }}>
           <Text>TestingLocation</Text>
         </Button>
       </View>
@@ -191,13 +189,9 @@ const DatabaseMap = (props) => {
         initialRegion={initialRegion}
         style={MapStyle.ViewStyle}
         onRegionChangeComplete={props.onRegionChange}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
         {props.markers.map((marker, index) => {
-          if (
-            (favouriteSelected && favouriteMarkers.includes(marker.id)) ||
-            !favouriteSelected
-          ) {
+          if ((favouriteSelected && favouriteMarkers.includes(marker.id)) || !favouriteSelected) {
             return (
               <Marker
                 key={index}
@@ -208,8 +202,7 @@ const DatabaseMap = (props) => {
                 title={marker.name}
                 onPress={() => {
                   onMarkerPress(marker, index);
-                }}
-              >
+                }}>
                 <Callout alphaHitTest={true}>
                   <Text>{marker.name}</Text>
                 </Callout>
@@ -221,10 +214,7 @@ const DatabaseMap = (props) => {
 
       {/* This is the bottom card that is conditionally visible */}
       {isVisible && (
-        <DatabaseDrawer
-          favourite={favouriteMarker}
-          marker={props.marker}
-        ></DatabaseDrawer>
+        <DatabaseDrawer style={MapStyle.drawer} favourite={favouriteMarker} marker={props.marker}></DatabaseDrawer>
       )}
     </>
   );

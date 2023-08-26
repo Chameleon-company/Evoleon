@@ -1,30 +1,26 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View } from "../components/Themed";
-import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
-import { ButtonStyle } from "../styles/buttonStyle";
-import MenuIcon from "../components/MenuIcon";
-import { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LoginScreenStyle } from "../styles/loginStyle";
-import { userLogin } from "../web/firebase";
+import { Text, View } from '../components/Themed';
+import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import { ButtonStyle } from '../styles/buttonStyle';
+import MenuIcon from '../components/MenuIcon';
+import { useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LoginScreenStyle } from '../styles/loginStyle';
+import { userLogin } from '../web/firebase';
 
 // Colour imports
-import {Color} from "../constants/Colors"
+import { Color } from '../constants/Colors';
 
-{ /* Log in Screen */ }
+{
+  /* Log in Screen */
+}
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const [email, onChangeTextEmail] = React.useState("");
-  const [password, onChangeTextPassword] = React.useState("");
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
+  const [email, onChangeTextEmail] = React.useState('');
+  const [password, onChangeTextPassword] = React.useState('');
 
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
@@ -37,9 +33,7 @@ export default function LoginScreen() {
             navigation.navigate('Signup');
           }}
         >
-          <Text style={ButtonStyle.SignupLink} lightColor="Color.light.Color" darkColor="Color.dark.Color">
-            Sign Up
-          </Text>
+          <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
         </TouchableOpacity>
 
         <View style={LoginScreenStyle.inputView}>
@@ -67,9 +61,7 @@ export default function LoginScreen() {
               navigation.navigate('ForgotPassword');
             }}
           >
-            <Text style={ButtonStyle.forgotPassButton} lightColor="Color.light.Color" darkColor="Color.dark.Color">
-              Forgot your password?{' '}
-            </Text>
+            <Text style={LoginScreenStyle.SignupLink}>Forgot your password?</Text>
           </TouchableOpacity>
 
           {/* Login button */}
@@ -84,9 +76,7 @@ export default function LoginScreen() {
               }
             }}
           >
-            <Text style={ButtonStyle.Text} lightColor="Color.light.Text" darkColor="Color.dark.Text">
-              Login
-            </Text>
+            <Text style={ButtonStyle.Text}>Login</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -97,9 +87,7 @@ export default function LoginScreen() {
               navigation.navigate('Authenticate');
             }}
           >
-            <Text style={ButtonStyle.cancelText} lightColor="Color.light.Text" darkColor="Color.dark.Text">
-              Cancel
-            </Text>
+            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

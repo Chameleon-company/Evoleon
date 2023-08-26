@@ -11,12 +11,6 @@ import { Color } from '../constants/Colors';
 export default function FileSystemScreen() {
   const navigation = useNavigation();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <View style={AuthScreenStyle.Centered}>
       <Text lightColor="Color.light.text" darkColor="Color.dark.text">

@@ -18,6 +18,10 @@ export const MapStyle = StyleSheet.create({
     justifyContent: "space-between",
   },
 
+  drawer: {
+    marginBottom: 1000,
+  },
+
   MarkerPopupStyleTextTitle: {
     textAlign: "center",
     color: "white",

@@ -21,12 +21,6 @@ export default function ForgotPasswordScreen() {
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
       <View style={LoginScreenStyle.inputView}>
@@ -65,12 +59,10 @@ export default function ForgotPasswordScreen() {
         <TouchableOpacity
           style={ButtonStyle.cancelButton}
           onPress={() => {
-            navigation.navigate('Login');
+            navigation.navigate('Database');
           }}
         >
-          <Text style={ButtonStyle.cancelText} lightColor="Color.light.text" darkColor="Color.dark.text">
-            Cancel
-          </Text>
+          <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
