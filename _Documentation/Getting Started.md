@@ -16,7 +16,7 @@ Currently using node 18 LTS. You can check your own by running 'node --version'
 ```bash
 git clone https://github.com/Chameleon-company/Evoleon/
 cd Evoleon
-npx install
+npm install
 npx run start
 ```
 
@@ -25,8 +25,8 @@ If the above doesn't work due to updates etc. Update your node, yarn and expo:
 
 ```bash
 vm install --lts
-npx install -g yarn
-npx install -g expo-cli
+npm install -g yarn
+npm install -g expo-cli
 ```
 
 Refresh the repo packages:

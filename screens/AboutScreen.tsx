@@ -8,16 +8,21 @@ import { TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, StackHeaderLeftButtonProps } from '@react-navigation/native';
 
 // Themed component imports.
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 
 // Custom component imports.
 import MenuIcon from '../components/MenuIcon';
 
 // Style imports.
-import { AboutStyle } from '../styles/aboutStyle';
-import { ButtonStyle } from '../styles/buttonStyle';
+import { createAboutStyle } from '../styles/aboutStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
 
 function AboutScreen() {
+  const colorScheme = getTheme();
+
+  const AboutStyle = createAboutStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
   const navigation = useNavigation();
   const EvoleonAppDeets = require('../app.json');
   const deviceAppVersion = 'Pickles';

@@ -8,8 +8,10 @@ import { Text, View } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
 import { AuthScreenStyle } from '../styles/authenticateStyle';
-import { ButtonStyle } from '../styles/buttonStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
 import logoStyles from '../styles/logoStyle';
+
+import { getTheme } from '../components/Themed';
 
 /* Initial screen for authentication proccess.
   To do: improve user interface code and update links
@@ -17,6 +19,9 @@ import logoStyles from '../styles/logoStyle';
 
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
+  const colorScheme = getTheme();
+
+  const ButtonStyle = createButtonStyle(colorScheme);
 
   return (
     <View style={AuthScreenStyle.Centered}>

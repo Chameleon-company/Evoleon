@@ -1,59 +1,39 @@
 import React from "react";
-import { Text, View, StatusBar } from "react-native";
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useColorScheme } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text, View, StatusBar, useColorScheme } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-// Screens imports.
-// Screens imports.
-import AuthenticateScreen from "./screens/AuthenticateScreen";
-import ClientsScreen from "./screens/ClientsScreen";
-import DatabaseScreen from "./screens/DatabaseScreen";
-import FileSystemScreen from "./screens/FileSystemScreen";
-import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
-import LoginScreen from "./screens/LoginScreen";
-import PrivacyPolicyScreen from "./screens/PrivacyPolicyScreen";
-import TermsAndConditionsScreen from "./screens/TermsAndConditionsScreen";
-import UpdateUserDetailsScreen from "./screens/UpdateUserDetailsScreen";
-import SignupScreen from "./screens/SignupScreen";
-import AboutScreen from "./screens/AboutScreen";
+// Screen imports.
+import AuthenticateScreen from './screens/AuthenticateScreen';
+import ClientsScreen from './screens/ClientsScreen';
+import DatabaseScreen from './screens/DatabaseScreen';
+import FileSystemScreen from './screens/FileSystemScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import LoginScreen from './screens/LoginScreen';
+import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
+import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen';
+import UpdateUserDetailsScreen from './screens/UpdateUserDetailsScreen';
+import SignupScreen from './screens/SignupScreen';
+import AboutScreen from './screens/AboutScreen';
 
 // For the icons.
-import { Entypo } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons';
 
-const EvoleonLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: "#324d4a",
-    background: "#fff",
-    card: "#fff",
-    text: "#000",
-    border: "#000",
-    notification: "#694fad",
-    tabBar: "#fefefe", // Custom color for tabBar
-  },
-};
-
-const EvoleonDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    tabBar: "#324d4a", // Custom color for tabBar in dark theme
-  },
-};
+// Colour imports
+import { getTheme } from './components/Themed';
+import { EvoleonLightTheme, EvoleonDarkTheme } from './constants/Colors';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const scheme = useColorScheme();
-  const theme = scheme === "dark" ? EvoleonDarkTheme : EvoleonLightTheme;
+  scheme = useColorScheme();
+  theme = getTheme();
 
   return (
-    <NavigationContainer theme={scheme === "dark" ? EvoleonDarkTheme : EvoleonLightTheme}>
+    <NavigationContainer theme={scheme === 'dark' ? EvoleonDarkTheme : EvoleonLightTheme}>
       <SafeAreaProvider>
-        <StatusBar barStyle={scheme === "dark" ? "light-content" : "dark-content"} />
+        <StatusBar barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'} />
         <Tab.Navigator
           initialRouteName="Authenticate"
           screenOptions={({ route }) => ({
@@ -61,25 +41,25 @@ export default function App() {
               let iconName;
 
               // The icons are set out like this so that if we want we can change the "focused" icon to be something different
-              // At the moment if the icon is focused it's a darker color  than if it's not focused.
+              // At the moment if the icon is focused it's a darker color than if it's not focused.
               switch (route.name) {
-                case "Map":
-                  iconName = focused ? "location-pin" : "location-pin";
+                case 'Map':
+                  iconName = focused ? 'location-pin' : 'location-pin';
                   break;
-                case "Authenticate":
-                  iconName = focused ? "login" : "login";
+                case 'Authenticate':
+                  iconName = focused ? 'login' : 'login';
                   break;
-                case "FileSystemScreen":
-                  iconName = focused ? "folder" : "folder";
+                case 'FileSystemScreen':
+                  iconName = focused ? 'folder' : 'folder';
                   break;
-                case "AboutScreen":
-                  iconName = focused ? "info" : "info";
+                case 'AboutScreen':
+                  iconName = focused ? 'info' : 'info';
                   break;
-                case "ClientsScreen":
-                  iconName = focused ? "users" : "users";
+                case 'ClientsScreen':
+                  iconName = focused ? 'users' : 'users';
                   break;
                 default:
-                  iconName = "air";
+                  iconName = 'air';
                   break;
               }
 
@@ -91,10 +71,11 @@ export default function App() {
               paddingHorizontal: 5,
               paddingTop: 0,
               backgroundColor: theme.colors.tabBar,
-              position: "absolute",
+              position: 'absolute',
               borderTopWidth: 0,
             },
-          })}>
+          })}
+        >
           {/* Entries that are displayed on the bottom bar */}
           <Tab.Screen name="Map" component={DatabaseScreen} />
           <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
