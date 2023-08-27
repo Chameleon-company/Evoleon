@@ -4,20 +4,24 @@ import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { useEffect } from 'react';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
-import { AuthScreenStyle } from '../styles/authenticateStyle';
-import { ButtonStyle } from '../styles/buttonStyle';
-import { SignUpScreenStyle } from '../styles/signUpStyle';
 import Checkbox from 'expo-checkbox';
 import { userSignUp } from '../web/firebase';
 
-{
-  /* User sign up screen */
-}
+import { createAuthScreenStyle } from '../styles/authenticateStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
+import { createSignupStyle } from '../styles/signUpStyle';
+
 export default function SignupScreen() {
   const navigation = useNavigation();
+  const colorScheme = getTheme();
+
+  const AuthScreenStyle = createAuthScreenStyle(colorScheme);
+  const SignupStyle = createSignupStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
   const [firstName, onChangeTextFirstName] = React.useState('');
   const [lastName, onChangeTextLastName] = React.useState('');
   const [homeCountry, onChangeTextCountry] = React.useState('');
@@ -28,9 +32,7 @@ export default function SignupScreen() {
 
   return (
     <View style={AuthScreenStyle.Centered}>
-      <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
-        Already have an account?
-      </Text>
+      <Text>Already have an account?</Text>
 
       {/* Link to go to Login page*/}
       <TouchableOpacity
@@ -42,44 +44,44 @@ export default function SignupScreen() {
       </TouchableOpacity>
 
       {/* Collect user information */}
-      <SafeAreaView style={SignUpScreenStyle.InputArea}>
+      <SafeAreaView style={SignupStyle.InputArea}>
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextFirstName}
           value={firstName}
           placeholderTextColor="grey"
           placeholder="First name"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextLastName}
           value={lastName}
           placeholderTextColor="grey"
           placeholder="Last name"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextCountry}
           value={homeCountry}
           placeholderTextColor="grey"
           placeholder="Home Country"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextPostcode}
           value={homePostcode}
           placeholderTextColor="grey"
           placeholder="Home Postcode"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextEmail}
           value={email}
           placeholderTextColor="grey"
           placeholder="Email"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           secureTextEntry={true}
           onChangeText={onChangeTextPassword}
           value={password}
@@ -88,14 +90,14 @@ export default function SignupScreen() {
         />
       </SafeAreaView>
 
-      <View style={SignUpScreenStyle.CheckBox}>
+      <View style={SignupStyle.CheckBox}>
         <Checkbox value={isChecked} onValueChange={setChecked} color={isChecked ? '#294E4B' : undefined} />
 
         <TouchableOpacity />
-        <Text style={SignUpScreenStyle.CheckBoxText}>
+        <Text style={SignupStyle.CheckBoxText}>
           I agree to
           <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
-            <Text style={SignUpScreenStyle.SignupLink}>Terms and Conditions</Text>
+            <Text style={SignupStyle.SignupLink}>Terms and Conditions</Text>
           </TouchableOpacity>
           and the Privacy Policy
         </Text>

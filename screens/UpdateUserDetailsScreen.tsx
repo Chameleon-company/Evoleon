@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from '../components/MenuIcon';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import { UserDetailsPageStyle } from '../styles/updateUserDetails';
-import { ButtonStyle } from '../styles/buttonStyle';
+
+import { Text, View, getTheme } from '../components/Themed';
+
 import { updateUserData, fetchUserDetails, getuserIsAuthenticated } from '../web/firebase';
 import Avatar from 'react-native-boring-avatars';
 import { useFocusEffect } from '@react-navigation/native';
+
+import { createUserDetailsPageStyle } from '../styles/updateUserDetails';
+import { createButtonStyle } from '../styles/buttonStyle';
 
 interface UserDetails {
   name: string;
@@ -21,6 +25,10 @@ interface UserDetails {
 
 export default function UpdateUserDetailsScreen() {
   const navigation = useNavigation();
+  const colorScheme = getTheme();
+
+  const UserDetailsPageStyle = createUserDetailsPageStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
 
   useFocusEffect(
     React.useCallback(() => {

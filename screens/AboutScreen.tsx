@@ -18,6 +18,7 @@ import { createAboutStyle } from '../styles/aboutStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
 
 function AboutScreen() {
+  // Retreving the current colour scheme from the Themed component.
   const colorScheme = getTheme();
 
   const AboutStyle = createAboutStyle(colorScheme);
@@ -44,12 +45,8 @@ function AboutScreen() {
 
   return (
     <View style={AboutStyle.centered}>
-      <Text style={AboutStyle.currentVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
-        App Version: {deviceAppVersion}{' '}
-      </Text>
-      <Text style={AboutStyle.updateVersion} lightColor="rgba(0,0,0,0.8)" darkColor="rgba(255,255,255,0.8)">
-        Version Available: {EvoleonAppDeets.expo.version}{' '}
-      </Text>
+      <Text style={AboutStyle.currentVersion}>App Version: {deviceAppVersion} </Text>
+      <Text style={AboutStyle.updateVersion}>Version Available: {EvoleonAppDeets.expo.version} </Text>
       <View style={AboutStyle.updateButton}>
         <TouchableOpacity style={ButtonStyle.Button}>
           <Text style={ButtonStyle.Text}>{upDateButton}</Text>

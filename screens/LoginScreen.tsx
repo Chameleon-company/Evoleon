@@ -2,32 +2,35 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
-import { ButtonStyle } from '../styles/buttonStyle';
+
 import MenuIcon from '../components/MenuIcon';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LoginScreenStyle } from '../styles/loginStyle';
+
 import { userLogin } from '../web/firebase';
 
 // Colour imports
 import { Color } from '../constants/Colors';
 
-{
-  /* Log in Screen */
-}
+import { createLoginScreenStyle } from '../styles/loginStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
+
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const colorScheme = getTheme();
+
+  const LoginScreenStyle = createLoginScreenStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
 
   return (
     <SafeAreaView style={LoginScreenStyle.content}>
       <View style={LoginScreenStyle.content}>
-        <Text lightColor="Color.light.Text" darkColor="Colour.dark.Text">
-          Don't have an account?
-        </Text>
+        <Text>Don't have an account?</Text>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Signup');
@@ -54,17 +57,15 @@ export default function LoginScreen() {
             placeholder="Password"
           />
 
-          {/* Forgot password button */}
           <TouchableOpacity
             style={ButtonStyle.forgotPassButton}
             onPress={() => {
-              navigation.navigate('ForgotPassword');
+              navigation.navigate('ForgotPasswordScreen');
             }}
           >
             <Text style={LoginScreenStyle.SignupLink}>Forgot your password?</Text>
           </TouchableOpacity>
 
-          {/* Login button */}
           <TouchableOpacity
             style={ButtonStyle.button}
             onPress={async () => {
@@ -81,8 +82,6 @@ export default function LoginScreen() {
 
           <TouchableOpacity
             style={ButtonStyle.cancelButton}
-            lightColor="Color.light.color"
-            darkColor="Color.dark.color"
             onPress={() => {
               navigation.navigate('Authenticate');
             }}

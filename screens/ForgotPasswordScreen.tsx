@@ -2,22 +2,29 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect, useState } from 'react';
 import main from '../styles/main';
 import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
-import { ButtonStyle } from '../styles/buttonStyle';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LoginScreenStyle } from '../styles/loginStyle';
+
 import { userPasswordResetAuth } from '../web/firebase';
-
-import { ClientStyle } from '../styles/clientStyle';
-
 import { getuserIsAuthenticated } from '../web/firebase';
+
+import { createButtonStyle } from '../styles/buttonStyle';
+import { createLoginScreenStyle } from '../styles/loginStyle';
+import { createClientStyle } from '../styles/clientStyle';
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
+  const colorScheme = getTheme();
+
+  const ClientStyle = createClientStyle(colorScheme);
+  const LoginScreenStyle = createLoginScreenStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
 
@@ -59,7 +66,7 @@ export default function ForgotPasswordScreen() {
         <TouchableOpacity
           style={ButtonStyle.cancelButton}
           onPress={() => {
-            navigation.navigate('Database');
+            navigation.navigate('Login');
           }}
         >
           <Text style={LoginScreenStyle.cancelText}>Cancel</Text>

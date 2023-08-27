@@ -2,14 +2,16 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { Text, View } from "../components/Themed";
-import { ButtonStyle } from "../styles/buttonStyle";
+import { Text, View, getTheme } from '../components/Themed';
+import { createButtonStyle } from '../styles/buttonStyle';
 
-const windowHeight = Dimensions.get("window").height;
+const windowHeight = Dimensions.get('window').height;
 
 function PrivacyPolicyScreen() {
   const navigation = useNavigation();
-  const backButton = "Back";
+  const colorScheme = getTheme();
+
+  const ButtonStyle = createButtonStyle(colorScheme);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -183,8 +185,9 @@ function PrivacyPolicyScreen() {
         style={[{ marginTop: 20 }, ButtonStyle.Button]}
         onPress={() => {
           navigation.goBack();
-        }}>
-        <Text style={ButtonStyle.Text}>{backButton}</Text>
+        }}
+      >
+        <Text style={ButtonStyle.Text}>{'Back'}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

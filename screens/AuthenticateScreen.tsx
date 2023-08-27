@@ -4,14 +4,11 @@ import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Image, Pressable, TouchableOpacity } from 'react-native';
 import { useEffect } from 'react';
 
-import { Text, View } from '../components/Themed';
+import { Text, View, getTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
-import { AuthScreenStyle } from '../styles/authenticateStyle';
+import { createAuthScreenStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
-import logoStyles from '../styles/logoStyle';
-
-import { getTheme } from '../components/Themed';
 
 /* Initial screen for authentication proccess.
   To do: improve user interface code and update links
@@ -21,6 +18,7 @@ export default function AuthenticateScreen() {
   const navigation = useNavigation();
   const colorScheme = getTheme();
 
+  const AuthScreenStyle = createAuthScreenStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
   return (

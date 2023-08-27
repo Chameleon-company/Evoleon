@@ -3,14 +3,17 @@ import { useNavigation } from "@react-navigation/native";
 
 import { SafeAreaView, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Dimensions } from "react-native";
 
-import { Text, View } from "../components/Themed";
-import { ButtonStyle } from "../styles/buttonStyle";
+import { Text, View, getTheme } from '../components/Themed';
 
-const windowHeight = Dimensions.get("window").height;
+import { createButtonStyle } from '../styles/buttonStyle';
+
+const windowHeight = Dimensions.get('window').height;
 
 function TermsAndConditionsScreen() {
   const navigation = useNavigation();
-  const backButton = "Back";
+  const colorScheme = getTheme();
+
+  const ButtonStyle = createButtonStyle(colorScheme);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,9 +23,9 @@ function TermsAndConditionsScreen() {
 
           <Text style={styles.sectionHeading}>1. About the Application</Text>
           <Text style={styles.textParagraph}>
-            (a) Welcome to the Evoleon Electric Vehicle Charger Locating{" "}
+            (a) Welcome to the Evoleon Electric Vehicle Charger Locating{' '}
             <Text style={styles.boldText}>(Application)</Text>. The Application provides information about existing EV
-            Charging locations, their related facilities, and helps navigate you to the charging locations you select{" "}
+            Charging locations, their related facilities, and helps navigate you to the charging locations you select{' '}
             <Text style={styles.boldText}>(Services)</Text>.
           </Text>
           <Text style={styles.textParagraph}>
@@ -45,7 +48,7 @@ function TermsAndConditionsScreen() {
           </Text>
           <Text style={styles.sectionHeading}>3. Registration to use the Services</Text>
           <Text style={styles.textParagraph}>
-            (a) In order to access the Services, you must first register for an account through the Application{" "}
+            (a) In order to access the Services, you must first register for an account through the Application{' '}
             <Text style={styles.boldText}>(Account)</Text>.
           </Text>
           <Text style={styles.textParagraph}>
@@ -62,7 +65,7 @@ function TermsAndConditionsScreen() {
             process will always be accurate, correct, and up to date.
           </Text>
           <Text style={styles.textParagraph}>
-            (d) Once you have completed the registration process, you will be a registered member of the Application{" "}
+            (d) Once you have completed the registration process, you will be a registered member of the Application{' '}
             <Text style={styles.boldText}>(Member)</Text> and agree to be bound by the Terms.
           </Text>
           <Text style={styles.textParagraph}>(e) You may not use the Services and may not accept the Terms if:</Text>
@@ -370,8 +373,9 @@ function TermsAndConditionsScreen() {
         style={[{ marginTop: 20 }, ButtonStyle.Button]}
         onPress={() => {
           navigation.goBack();
-        }}>
-        <Text style={ButtonStyle.Text}>{backButton}</Text>
+        }}
+      >
+        <Text style={ButtonStyle.Text}>{'Back'}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
