@@ -123,17 +123,12 @@ export const userLogin = async (email, password) => {
 };
 
 //Sign up for a new user
-export const userSignUp = async (email, password, firstName, lastName, country, confirmPassword) => {
+export const userSignUp = async (email, password, firstName, lastName, country) => {
   try {
-    console.log("User tried to create a new account.");
-    if (password !== confirmPassword) {
-      console.error("Passwords do not match.");
-      return false;
-    }
-    const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
+    const res = await createUserWithEmailAndPassword(auth, email, password);
     userIsAuthenticated = true;
     const user = res.user;
-    await sendEmailVerification(user);
+    await sendVerification(user);
     console.log("Updating profile details");
     await updateProfileDetails(firstName);
     console.log("Updating firestore data");
@@ -430,14 +425,17 @@ export const evChargerLocationIsInFavourites = (val) => {
 };
 
 
-export const sendVerificaiton = (email) => {
-  const user = auth.currentUser;
-  sendEmailVerification(user).then((res) => {
+export const sendVerification = async (email) => {
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    await sendEmailVerification(user);
     return true;
-  }).catch((err) => {
-    throw false;
-  })
-}
+  } catch (error) {
+    console.error("Error sending verification email:", error);
+    return false;
+  }
+};
 
 
 // Get all EV charger locations from Firestore, return as object instead of array

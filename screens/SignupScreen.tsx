@@ -17,6 +17,7 @@ import { AuthScreenStyle } from "../styles/authenticateStyle";
 import { ButtonStyle } from "../styles/buttonStyle";
 import { SignUpScreenStyle } from "../styles/signUpStyle";
 import Checkbox from "expo-checkbox";
+import { getAuth, sendEmailVerification } from 'firebase/auth';
 import { userSignUp } from "../web/firebase";
 
 {
@@ -134,25 +135,55 @@ export default function SignupScreen() {
           and the Privacy Policy
         </Text>
       </View>
-
-      {/* Submit button */}
+  {/* Submit Button */}
       <Pressable
-        style={ButtonStyle.Button}
-        onPress={() => {
-          userSignUp(email, password, firstName, confirmPassword, lastName, homeCountry,).then(
-            (result) => {
-              console.log(result);
-              if (result == true) {
-                navigation.navigate("Database");
-              } else {
-                Alert.alert("Error when creating account");
-              }
-            }
-          );
-        }}
-      >
-        <Text style={ButtonStyle.Text}>Submit</Text>
-      </Pressable>
+  style={ButtonStyle.Button}
+  onPress={async () => {
+    try {
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match.");
+      }
+
+       // Check password length
+       if (password.length < 6) {
+        throw new Error("Password must be 6 characters or more.");
+      }
+      const auth = getAuth();
+
+      const result = await userSignUp(
+        email,
+        password,
+        firstName,
+        lastName,
+        homeCountry,
+        confirmPassword,
+        auth
+      );
+
+      if (result) {
+        console.log('Account created successfully');
+        navigation.navigate('DatabaseScreen');
+      } else {
+        console.log('Error when creating account');
+        Alert.alert('Error when creating account');
+      }
+
+// Send email verification
+      try {
+        await sendEmailVerification(auth.currentUser);
+        console.log("Verification email sent successfully");
+      } catch (error) {
+        console.error("Error sending verification email:", error);
+      }
+    } catch (error: any) {
+      console.error('An error occurred during sign up:', error.message);
+      Alert.alert('Error during sign up', error.message);
+    }
+  }}
+>
+  <Text style={ButtonStyle.Text}>Submit</Text>
+</Pressable>
     </View>
   );
 }
