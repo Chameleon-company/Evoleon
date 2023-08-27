@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import { Image, Pressable, TouchableOpacity } from 'react-native';
-import { useEffect } from 'react';
+import { Image, TouchableOpacity } from 'react-native';
 
-import { Text, View, getTheme } from '../components/Themed';
-import MenuIcon from '../components/MenuIcon';
+import { Text, View, useTheme } from '../components/Themed';
 
 import { createAuthScreenStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
@@ -16,7 +13,7 @@ import { createButtonStyle } from '../styles/buttonStyle';
 
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const AuthScreenStyle = createAuthScreenStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
@@ -44,15 +41,6 @@ export default function AuthenticateScreen() {
         }}
       >
         <Text style={ButtonStyle.Text}>Sign up</Text>
-      </TouchableOpacity>
-      {/* Back button */}
-      <TouchableOpacity
-        style={[{ marginTop: 20 }, ButtonStyle.Button]}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={ButtonStyle.Text}>Back</Text>
       </TouchableOpacity>
     </View>
   );

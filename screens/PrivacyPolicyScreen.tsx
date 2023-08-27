@@ -2,14 +2,14 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 import { createButtonStyle } from '../styles/buttonStyle';
 
 const windowHeight = Dimensions.get('window').height;
 
 function PrivacyPolicyScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const ButtonStyle = createButtonStyle(colorScheme);
 

@@ -18,7 +18,7 @@ export const createClientStyle = (colorScheme) =>
       width: 100,
       borderRadius: 50,
       // Add a border color
-      borderColor: colorScheme.colors.button,
+      borderColor: colorScheme.colors.primary,
       // Add a border width
       borderWidth: 3,
     },
@@ -52,7 +52,7 @@ export const createClientStyle = (colorScheme) =>
     profileActionsCell: {
       backgroundColor: colorScheme.colors.background,
       // Light grey color for separators
-      borderBottomColor: colorScheme.colors.card,
+      borderBottomColor: colorScheme.colors.secondary,
       borderBottomWidth: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -70,6 +70,6 @@ export const createClientStyle = (colorScheme) =>
       height: 27,
       width: 27,
       marginRight: 20,
-      color: colorScheme.colors.button,
+      color: colorScheme.colors.primary,
     },
   });

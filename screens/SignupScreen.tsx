@@ -4,7 +4,7 @@ import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { useEffect } from 'react';
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 
 import Checkbox from 'expo-checkbox';
@@ -16,7 +16,7 @@ import { createSignupStyle } from '../styles/signUpStyle';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const AuthScreenStyle = createAuthScreenStyle(colorScheme);
   const SignupStyle = createSignupStyle(colorScheme);

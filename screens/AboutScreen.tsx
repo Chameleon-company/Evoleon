@@ -8,7 +8,7 @@ import { TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, StackHeaderLeftButtonProps } from '@react-navigation/native';
 
 // Themed component imports.
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 
 // Custom component imports.
 import MenuIcon from '../components/MenuIcon';
@@ -19,7 +19,7 @@ import { createButtonStyle } from '../styles/buttonStyle';
 
 function AboutScreen() {
   // Retreving the current colour scheme from the Themed component.
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const AboutStyle = createAboutStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);

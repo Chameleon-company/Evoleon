@@ -10,7 +10,7 @@ interface Faq {
 }
 
 const HelpAndSupport = () => {
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const HelpAndSupportPageStyle = createHelpAndSupportPageStyle(colorScheme);
 

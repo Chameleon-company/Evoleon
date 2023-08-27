@@ -4,7 +4,7 @@ import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect, useState } from 'react';
 import {
@@ -21,7 +21,7 @@ import { createClientStyle } from '../styles/clientStyle';
 const ListButton = ({ action, text, iconName }) => {
   const defaultImage = require('../assets/Arrow.png');
 
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
   const ClientStyle = createClientStyle(colorScheme);
 
   return (
@@ -36,7 +36,7 @@ export default function ClientsScreen() {
   // Define navigation using the useNavigation hook.
   const navigation = useNavigation();
 
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
   const ClientStyle = createClientStyle(colorScheme);
 
   const UnauthProfileText = 'Please login to view account.';
@@ -67,7 +67,7 @@ export default function ClientsScreen() {
           action={() => {
             navigation.navigate('Authenticate');
           }}
-          text="Sign in"
+          text="Login"
           iconName="login"
         />
         <ListButton
@@ -82,7 +82,7 @@ export default function ClientsScreen() {
             logoutUser();
             navigation.navigate('Authenticate');
           }}
-          text="LogOut"
+          text="Logout"
           iconName="log-out"
         />
         <ListButton

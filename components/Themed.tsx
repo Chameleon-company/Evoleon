@@ -19,7 +19,7 @@ export function useThemeColor(
   }
 }
 
-export function getTheme() {
+export function useTheme() {
   const scheme = useColorScheme();
   return scheme === 'dark' ? EvoleonDarkTheme : EvoleonLightTheme;
 }
@@ -33,7 +33,7 @@ type DefaultIconProps = {
   name: string;
   size: number;
   style: object | [object];
-}
+};
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
@@ -53,9 +53,4 @@ export function View(props: ViewProps) {
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
-export function Feather(props: IconProps) {
-  const { lightColor, darkColor, name, size, style } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-  return <DefaultFeather name={name} size={size} color={color} style={style}/>
-}

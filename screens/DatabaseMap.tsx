@@ -1,22 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Text, View, Dimensions, Animated } from "react-native";
-import { Marker, Callout, CalloutSubview } from "react-native-maps";
-import MapView from "react-native-map-clustering";
-import { Button, Switch } from "react-native-paper";
-import * as Location from "expo-location";
+import { Dimensions, Animated } from 'react-native';
+import { Marker, Callout, CalloutSubview } from 'react-native-maps';
+import MapView from 'react-native-map-clustering';
+import { Button, Switch } from 'react-native-paper';
+import * as Location from 'expo-location';
 
-import { MapStyle } from "../styles/mapStyle";
+import { Text, View, useTheme } from '../components/Themed';
+import { createMapStyle } from '../styles/mapStyle';
 
 import {
   getFavouriteMarkers,
   getuserIsAuthenticated,
   addFavouriteMarker,
   removeFavouriteMarker,
-} from "../web/firebase";
+} from '../web/firebase';
 
-import DatabaseDrawer from "./DatabaseDrawer";
+import DatabaseDrawer from './DatabaseDrawer';
 
 const DatabaseMap = (props) => {
+  const colorScheme = useTheme();
+
+  const MapStyle = createMapStyle(colorScheme);
+
   //Ref for the map
   const mapRef = useRef(null);
   //Vars for the active marker
@@ -44,10 +49,10 @@ const DatabaseMap = (props) => {
 
   // getUserLocation will attempt to get the users location and store it in the userLocation state.
   const getUserLocation = async () => {
-    console.log("getting location");
+    console.log('getting location');
     let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission to access location was denied");
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
       return false;
     }
     let loc = await Location.getCurrentPositionAsync({
@@ -85,7 +90,7 @@ const DatabaseMap = (props) => {
   };
 
   const onMarkerPress = (marker, index) => {
-    console.log("marker pressed!");
+    console.log('marker pressed!');
     clearTimeout(markerPressTimeout.current);
     setActiveMarkerIndex(index);
     markerPressed.current = true;
@@ -113,25 +118,23 @@ const DatabaseMap = (props) => {
   // favourite marker will attempt to add or remove the marker from the users favourites. Also stores a local copy of the array
   const favouriteMarker = async (marker) => {
     if (favouriteMarkers.includes(marker.id)) {
-      console.log("Removing marker from favourites");
+      console.log('Removing marker from favourites');
       let res = await removeFavouriteMarker(marker.id);
       if (!res) {
-        console.log("Failed to remove marker from favourites: " + marker.id);
+        console.log('Failed to remove marker from favourites: ' + marker.id);
         return;
       }
-      await setFavouriteMarkers(
-        favouriteMarkers.filter((id) => id !== marker.id)
-      );
-      console.log("Marker " + marker.id + " removed from favourites");
+      await setFavouriteMarkers(favouriteMarkers.filter((id) => id !== marker.id));
+      console.log('Marker ' + marker.id + ' removed from favourites');
     } else {
-      console.log("Adding marker to favourites");
+      console.log('Adding marker to favourites');
       let res = await addFavouriteMarker(marker.id);
       if (!res) {
-        console.log("Failed to add marker to favourites: " + marker.id);
+        console.log('Failed to add marker to favourites: ' + marker.id);
         return;
       }
       await setFavouriteMarkers([...favouriteMarkers, marker.id]);
-      console.log("Marker " + marker.id + " added to favourites");
+      console.log('Marker ' + marker.id + ' added to favourites');
     }
   };
 
@@ -160,8 +163,8 @@ const DatabaseMap = (props) => {
       <View style={MapStyle.topContainer}>
         <Text style={MapStyle.switchText}>Favourites</Text>
         <Switch
-          trackColor={{ false: "#767577", true: "#E9ECE6" }}
-          thumbColor={favouriteSelected ? "#18A554" : "#f4f3f4"}
+          trackColor={{ false: colorScheme.colors.false, true: colorScheme.colors.true }}
+          thumbColor={favouriteSelected ? colorScheme.colors.primary : colorScheme.colors.true}
           ios_backgroundColor="#777E7D"
           onValueChange={onFavouriteToggle}
           value={favouriteSelected}
@@ -172,13 +175,15 @@ const DatabaseMap = (props) => {
             if (userLocation) {
               animateMap(userLocation.current.coords);
             }
-          }}>
+          }}
+        >
           <Text>MyLocation</Text>
         </Button>
         <Button
           onPress={() => {
             animateMap(initialRegion);
-          }}>
+          }}
+        >
           <Text>TestingLocation</Text>
         </Button>
       </View>
@@ -189,7 +194,8 @@ const DatabaseMap = (props) => {
         initialRegion={initialRegion}
         style={MapStyle.ViewStyle}
         onRegionChangeComplete={props.onRegionChange}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         {props.markers.map((marker, index) => {
           if ((favouriteSelected && favouriteMarkers.includes(marker.id)) || !favouriteSelected) {
             return (
@@ -202,7 +208,8 @@ const DatabaseMap = (props) => {
                 title={marker.name}
                 onPress={() => {
                   onMarkerPress(marker, index);
-                }}>
+                }}
+              >
                 <Callout alphaHitTest={true}>
                   <Text>{marker.name}</Text>
                 </Callout>

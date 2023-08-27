@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { MapStyle } from "../styles/mapStyle";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import DatabaseMap from "./DatabaseMap";
-import MenuIcon from "../components/MenuIcon";
-import testingCoords from "../locations.json";
+import React, { useState, useEffect } from 'react';
+import { createMapStyle } from '../styles/mapStyle';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { Text, View, useTheme } from '../components/Themed';
+import DatabaseMap from './DatabaseMap';
+import MenuIcon from '../components/MenuIcon';
+import testingCoords from '../locations.json';
 
 const DatabaseScreen = (props) => {
+  const colorScheme = useTheme();
+
+  const MapStyle = createMapStyle(colorScheme);
+
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRegion, setVisibleRegion] = useState(null);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
@@ -34,12 +38,12 @@ const DatabaseScreen = (props) => {
 
   return (
     <View style={MapStyle.ViewStyle}>
-      {/* <DatabaseMap
+      <DatabaseMap
         markers={testingCoords.filter(isLocationVisible)}
         marker={selectedMarker}
         onMarkerPress={handleMarkerPress}
         onRegionChange={setVisibleRegion}
-      /> */}
+      />
     </View>
   );
 };

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import MenuIcon from '../components/MenuIcon';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 
 import { updateUserData, fetchUserDetails, getuserIsAuthenticated } from '../web/firebase';
 import Avatar from 'react-native-boring-avatars';
@@ -25,7 +25,7 @@ interface UserDetails {
 
 export default function UpdateUserDetailsScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const UserDetailsPageStyle = createUserDetailsPageStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);

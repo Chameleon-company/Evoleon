@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect, useState } from 'react';
 import main from '../styles/main';
@@ -19,7 +19,7 @@ import { createClientStyle } from '../styles/clientStyle';
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const ClientStyle = createClientStyle(colorScheme);
   const LoginScreenStyle = createLoginScreenStyle(colorScheme);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View, getTheme } from '../components/Themed';
+import { Text, View, useTheme } from '../components/Themed';
 import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
 
 import MenuIcon from '../components/MenuIcon';
@@ -19,7 +19,7 @@ import { createButtonStyle } from '../styles/buttonStyle';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const colorScheme = getTheme();
+  const colorScheme = useTheme();
 
   const LoginScreenStyle = createLoginScreenStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);

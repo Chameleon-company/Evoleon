@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StatusBar, useColorScheme } from 'react-native';
+import { StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -17,21 +17,20 @@ import UpdateUserDetailsScreen from './screens/UpdateUserDetailsScreen';
 import SignupScreen from './screens/SignupScreen';
 import AboutScreen from './screens/AboutScreen';
 
-// For the icons.
+// Nav Icon Imports.
 import { Entypo } from '@expo/vector-icons';
 
 // Colour imports
-import { getTheme } from './components/Themed';
-import { EvoleonLightTheme, EvoleonDarkTheme } from './constants/Colors';
+import { View, useTheme } from './components/Themed';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   scheme = useColorScheme();
-  theme = getTheme();
+  theme = useTheme();
 
   return (
-    <NavigationContainer theme={scheme === 'dark' ? EvoleonDarkTheme : EvoleonLightTheme}>
+    <NavigationContainer theme={theme}>
       <SafeAreaProvider>
         <StatusBar barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'} />
         <Tab.Navigator
@@ -49,14 +48,14 @@ export default function App() {
                 case 'Authenticate':
                   iconName = focused ? 'login' : 'login';
                   break;
-                case 'FileSystemScreen':
+                case 'File System Screen':
                   iconName = focused ? 'folder' : 'folder';
                   break;
-                case 'AboutScreen':
+                case 'About Screen':
                   iconName = focused ? 'info' : 'info';
                   break;
-                case 'ClientsScreen':
-                  iconName = focused ? 'users' : 'users';
+                case 'Clients Screen':
+                  iconName = focused ? 'cog' : 'cog';
                   break;
                 default:
                   iconName = 'air';
@@ -70,7 +69,7 @@ export default function App() {
               height: 80,
               paddingHorizontal: 5,
               paddingTop: 0,
-              backgroundColor: theme.colors.tabBar,
+              backgroundColor: theme.colors.navTabBar,
               position: 'absolute',
               borderTopWidth: 0,
             },
@@ -79,9 +78,9 @@ export default function App() {
           {/* Entries that are displayed on the bottom bar */}
           <Tab.Screen name="Map" component={DatabaseScreen} />
           <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
-          <Tab.Screen name="FileSystemScreen" component={FileSystemScreen} />
-          <Tab.Screen name="AboutScreen" component={AboutScreen} />
-          <Tab.Screen name="ClientsScreen" component={ClientsScreen} />
+          <Tab.Screen name="File System Screen" component={FileSystemScreen} />
+          <Tab.Screen name="About Screen" component={AboutScreen} />
+          <Tab.Screen name="Clients Screen" component={ClientsScreen} />
           {/* The next tabs are hidden from selection */}
           {/* Note: If you are implementing a new page you must put the entry here so it's within the possible navigation boundaries.
            Adding the blank view tag here hides it from the menu but it's required that new pages be added here.  */}

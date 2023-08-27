@@ -1,5 +1,4 @@
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { getTheme } from '../components/Themed';
 
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
@@ -30,14 +29,17 @@ export const EvoleonLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#324d4a',
-    background: '#fff',
+    primary: '#4cB166',
+    secondary: '#2DC842',
+    background: '#F7F7FF',
     button: '#4cB166',
     card: '#fff',
-    text: '#000',
+    text: '#070600',
     border: '#000',
+    false: '#828A9B',
+    true: '#E9ECE6',
     notification: '#694fad',
-    tabBar: '#fefefe', // Custom color for tabBar
+    navTabBar: '#4cB166', // Custom color for tabBar
   },
 };
 
@@ -46,7 +48,7 @@ export const EvoleonDarkTheme = {
   colors: {
     ...DarkTheme.colors,
     tabBar: '#324d4a', // Custom color for tabBar in dark theme
-    button: '#294E4B',
+    button: '#294e4b',
   },
 };
 
