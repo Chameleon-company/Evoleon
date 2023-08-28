@@ -119,12 +119,12 @@ export const userLogin = async (email, password) => {
 };
 
 //Sign up for a new user
-export const userSignUp = async (email, password, firstName, lastName, country) => {
+export const userSignUp = async (email, password, firstName, lastName, country, confirmPassword) => {
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
     userIsAuthenticated = true;
     const user = res.user;
-    await sendVerification(user);
+    // await sendVerification(user);
     console.log('Updating profile details');
     await updateProfileDetails(firstName);
     console.log('Updating firestore data');
@@ -415,20 +415,20 @@ export const evChargerLocationIsInFavourites = (val) => {
   return false;
 };
 
-export const sendVerification = async (email) => {
-  try {
+// export const sendVerification = async (email) => {
+//   try {
     /* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
     This might be reduced by reducing the amount of calls such as update details on signup.
     */
     // const auth = getAuth();
     // const user = auth.currentUser;
-    await sendEmailVerification(auth.currentUser);
-    return true;
-  } catch (error) {
-    console.error("Error sending verification email:", error);
-    return false;
-  }
-};
+//     await sendEmailVerification(auth.currentUser);
+//     return true;
+//   } catch (error) {
+//     console.error("Error sending verification email:", error);
+//     return false;
+//   }
+// };
 
 
 // Get all EV charger locations from Firestore, return as object instead of array

@@ -11,6 +11,7 @@ import { AuthScreenStyle } from "../styles/authenticateStyle";
 import { ButtonStyle } from "../styles/buttonStyle";
 import { SignUpScreenStyle } from "../styles/signUpStyle";
 import Checkbox from "expo-checkbox";
+import DatabaseScreen from "../screens/DatabaseScreen";
 import { getAuth, sendEmailVerification } from 'firebase/auth';
 import { userSignUp } from "../web/firebase";
 
@@ -78,7 +79,6 @@ export default function SignupScreen() {
           value={email}
           placeholderTextColor="grey"
           placeholder="Email  *"
-          placeholder="Email  *"
         />
         <TextInput
           style={SignUpScreenStyle.Text}
@@ -88,7 +88,7 @@ export default function SignupScreen() {
           placeholderTextColor="grey"
           placeholder="Password *"
         />
-          />
+
         <TextInput
           style={SignUpScreenStyle.Text}
           secureTextEntry={true}
@@ -96,7 +96,6 @@ export default function SignupScreen() {
           value={confirmPassword}
           placeholderTextColor="grey"
           placeholder="Confirm Password *"
-          placeholder="Password *"
         />
   
       </SafeAreaView>
@@ -119,54 +118,43 @@ export default function SignupScreen() {
         </Text>
       </View>
   {/* Submit Button */}
-      <Pressable
-        style={ButtonStyle.Button}
-        onPress={async () => {
-          try {
-            // Check if passwords match
-            if (password !== confirmPassword) {
-              throw new Error("Passwords do not match.");
-            }
+  <Pressable
+  style={ButtonStyle.Button}
+  onPress={async () => {
+    try {
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        throw new Error("Passwords do not match.");
+      }
+
+       // Check password length
+       if (password.length < 6) {
+        throw new Error("Password must be 6 characters or more.");
+       }
+      const result = await userSignUp(
+        email,
+        password,
+        firstName,
+        lastName,
+        homeCountry,
+        confirmPassword,
+      );
       
-             // Check password length
-             if (password.length < 6) {
-              throw new Error("Password must be 6 characters or more.");
-            }
-            const auth = getAuth();
-      
-            const result = await userSignUp(
-              email,
-              password,
-              firstName,
-              lastName,
-              homeCountry,
-              confirmPassword,
-              auth
-            );
-      
-            if (result) {
-              console.log('Account created successfully');
-              navigation.navigate('DatabaseScreen');
-            } else {
-              console.log('Error when creating account');
-              Alert.alert('Error when creating account');
-            }
-      
-      // Send email verification
-            try {
-              await sendEmailVerification(auth.currentUser);
-              console.log("Verification email sent successfully");
-            } catch (error) {
-              console.error("Error sending verification email:", error);
-            }
-          } catch (error: any) {
-            console.error('An error occurred during sign up:', error.message);
-            Alert.alert('Error during sign up', error.message);
-          }
-        }}
-      >
-        <Text style={ButtonStyle.Text}>Submit</Text>
-      </Pressable>
-    </View>
-  );
+      if (result) {
+        console.log('Account created successfully');
+        navigation.navigate("Map");
+      } else {
+        console.log('Error when creating account');
+        Alert.alert('Error when creating account');
+      }
+    } catch (error: any) {
+      console.error('An error occurred during sign up:', error.message);
+      Alert.alert('Error during sign up', error.message);
+    }
+  }}
+>
+  <Text style={ButtonStyle.Text}>Submit</Text>
+</Pressable>
+</View>
+);
 }
