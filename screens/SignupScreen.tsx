@@ -7,15 +7,15 @@ import { Text, View, useTheme } from '../components/Themed';
 import Checkbox from 'expo-checkbox';
 import { userSignUp } from '../web/firebase';
 
-import { createAuthScreenStyle } from '../styles/authenticateStyle';
+import { createAuthenticationStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
-import { createSignupStyle } from '../styles/signUpStyle';
+import { createSignupStyle } from '../styles/signupStyle';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const AuthScreenStyle = createAuthScreenStyle(colorScheme);
+  const AuthScreenStyle = createAuthenticationStyle(colorScheme);
   const SignupStyle = createSignupStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
@@ -29,8 +29,8 @@ export default function SignupScreen() {
   const [isChecked, setChecked] = React.useState(false);
 
   return (
-    <View style={AuthScreenStyle.Centered}>
-      <Text>Already have an account?</Text>
+    <View style={SignupStyle.content}>
+      <Text style={SignupStyle.text}>Already have an account? </Text>
 
       {/* Link to go to Login page*/}
       <TouchableOpacity
@@ -88,7 +88,7 @@ export default function SignupScreen() {
         />
 
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           secureTextEntry={true}
           onChangeText={onChangeTextConfirmPassword}
           value={confirmPassword}
@@ -98,14 +98,20 @@ export default function SignupScreen() {
       </SafeAreaView>
 
       <View style={SignupStyle.CheckBox}>
-        <Checkbox value={isChecked} onValueChange={setChecked} color={isChecked ? '#294E4B' : undefined} />
+        <Checkbox
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? colorScheme.colors.primary : undefined}
+        />
 
-        <TouchableOpacity />
         <Text style={SignupStyle.CheckBoxText}>
-          I agree to
-          <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
-            <Text style={SignupStyle.SignupLink}>Terms and Conditions</Text>
-          </TouchableOpacity>
+          I agree to{' '}
+          <Text
+            onPress={() => navigation.navigate('TermsAndConditionsScreen')}
+            style={{ ...ButtonStyle.signupLink, color: colorScheme.colors.primary }}
+          >
+            Terms and Conditions
+          </Text>{' '}
           and the Privacy Policy
         </Text>
       </View>
@@ -139,6 +145,15 @@ export default function SignupScreen() {
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
+      </Pressable>
+
+      <Pressable
+        style={ButtonStyle.cancelButton}
+        onPress={() => {
+          navigation.navigate('Authenticate');
+        }}
+      >
+        <Text style={ButtonStyle.cancelText}>Cancel</Text>
       </Pressable>
     </View>
   );

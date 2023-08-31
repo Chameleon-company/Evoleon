@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Text as DefaultText, View as DefaultView } from 'react-native';
-import { Feather as DefaultFeather } from '@expo/vector-icons';
 
 import { EvoleonLightTheme, EvoleonDarkTheme, Color } from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,6 +20,7 @@ export function useThemeColor(
 
 export function useTheme() {
   const scheme = useColorScheme();
+  // This allows for the system to change the theme based on the device settings.
   return scheme === 'dark' ? EvoleonDarkTheme : EvoleonLightTheme;
 }
 

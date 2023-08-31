@@ -14,25 +14,23 @@ import { userPasswordResetAuth } from '../web/firebase';
 import { getuserIsAuthenticated } from '../web/firebase';
 
 import { createButtonStyle } from '../styles/buttonStyle';
-import { createLoginScreenStyle } from '../styles/loginStyle';
-import { createClientStyle } from '../styles/clientStyle';
+import { createLoginStyle } from '../styles/loginStyle';
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const ClientStyle = createClientStyle(colorScheme);
-  const LoginScreenStyle = createLoginScreenStyle(colorScheme);
+  const LoginStyle = createLoginStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
 
   return (
-    <SafeAreaView style={LoginScreenStyle.content}>
-      <View style={LoginScreenStyle.inputView}>
+    <SafeAreaView style={LoginStyle.content}>
+      <View style={LoginStyle.inputView}>
         <TextInput
-          style={LoginScreenStyle.input}
+          style={LoginStyle.input}
           keyboardType="email-address"
           onChangeText={onChangeTextEmail}
           value={email}
@@ -63,14 +61,14 @@ export default function ForgotPasswordScreen() {
           <Text style={ButtonStyle.Text}>Reset Password</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <Pressable
           style={ButtonStyle.cancelButton}
           onPress={() => {
             navigation.navigate('Login');
           }}
         >
-          <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
-        </TouchableOpacity>
+          <Text style={ButtonStyle.cancelText}>Cancel</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

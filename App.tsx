@@ -54,7 +54,7 @@ export default function App() {
                 case 'About Screen':
                   iconName = focused ? 'info' : 'info';
                   break;
-                case 'Clients Screen':
+                case 'Settings':
                   iconName = focused ? 'cog' : 'cog';
                   break;
                 default:
@@ -80,7 +80,7 @@ export default function App() {
           <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
           <Tab.Screen name="File System Screen" component={FileSystemScreen} />
           <Tab.Screen name="About Screen" component={AboutScreen} />
-          <Tab.Screen name="Clients Screen" component={ClientsScreen} />
+          <Tab.Screen name="Settings" component={ClientsScreen} />
           {/* The next tabs are hidden from selection */}
           {/* Note: If you are implementing a new page you must put the entry here so it's within the possible navigation boundaries.
            Adding the blank view tag here hides it from the menu but it's required that new pages be added here.  */}

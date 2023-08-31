@@ -11,37 +11,34 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { userLogin } from '../web/firebase';
 
-// Colour imports
-import { Color } from '../constants/Colors';
-
-import { createLoginScreenStyle } from '../styles/loginStyle';
+import { createLoginStyle } from '../styles/loginStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const LoginScreenStyle = createLoginScreenStyle(colorScheme);
+  const LoginStyle = createLoginStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
 
   return (
-    <SafeAreaView style={LoginScreenStyle.content}>
-      <View style={LoginScreenStyle.content}>
-        <Text>Don't have an account?</Text>
+    <SafeAreaView style={LoginStyle.content}>
+      <View style={LoginStyle.content}>
+        <Text style={LoginStyle.text}>Don't have an account?</Text>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Signup');
           }}
         >
-          <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
+          <Text style={ButtonStyle.signupLink}>Sign Up</Text>
         </TouchableOpacity>
 
-        <View style={LoginScreenStyle.inputView}>
+        <View style={LoginStyle.inputView}>
           <TextInput
-            style={LoginScreenStyle.input}
+            style={LoginStyle.input}
             keyboardType="email-address"
             onChangeText={onChangeTextEmail}
             value={email}
@@ -49,7 +46,7 @@ export default function LoginScreen() {
             placeholder="Email"
           />
           <TextInput
-            style={LoginScreenStyle.input}
+            style={LoginStyle.input}
             secureTextEntry={true}
             onChangeText={onChangeTextPassword}
             value={password}
@@ -63,7 +60,7 @@ export default function LoginScreen() {
               navigation.navigate('ForgotPasswordScreen');
             }}
           >
-            <Text style={LoginScreenStyle.SignupLink}>Forgot your password?</Text>
+            <Text style={ButtonStyle.signupLink}>Forgot your password?</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -86,7 +83,7 @@ export default function LoginScreen() {
               navigation.navigate('Authenticate');
             }}
           >
-            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+            <Text style={ButtonStyle.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

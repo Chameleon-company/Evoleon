@@ -1,12 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-export const createLoginScreenStyle = (colorScheme) =>
+export const createLoginStyle = (colorScheme) =>
   StyleSheet.create({
     content: {
       display: 'flex',
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    text: {
+      color: colorScheme.colors.text,
     },
     upperContent: {
       position: 'absolute',
@@ -17,11 +20,13 @@ export const createLoginScreenStyle = (colorScheme) =>
       right: 10,
     },
     inputView: {
+      color: colorScheme.colors.text,
       marginTop: 50,
       marginBottom: 50,
       width: 300,
     },
     input: {
+      color: colorScheme.colors.text,
       borderBottomColor: colorScheme.colors.border,
       borderBottomWidth: 1.5,
       marginBottom: 25,

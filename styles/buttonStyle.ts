@@ -24,16 +24,18 @@ export const createButtonStyle = (colorScheme) =>
       marginTop: 30,
     },
     Text: {
+      color: colorScheme.colors.text,
       fontSize: 16,
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,
     },
     LoginLink: {
-      color: colorScheme.colors.button,
+      color: colorScheme.colors.primary,
       fontWeight: 'bold',
     },
-    SignupLink: {
+    signupLink: {
+      color: colorScheme.colors.primary,
       fontWeight: 'bold',
     },
     forgotPassButton: {
@@ -59,6 +61,7 @@ export const createButtonStyle = (colorScheme) =>
       alignItems: 'center',
     },
     cancelText: {
+      color: colorScheme.colors.button,
       fontWeight: 'bold',
     },
     termsButton: {

@@ -6,17 +6,19 @@ import { Text, View, useTheme } from '../components/Themed';
 import MenuIcon from '../components/MenuIcon';
 import { useEffect } from 'react';
 
-import { createAuthScreenStyle } from '../styles/authenticateStyle';
+import { createAuthenticationStyle } from '../styles/authenticateStyle';
 
 export default function FileSystemScreen() {
   const navigation = useNavigation();
 
   const colorScheme = useTheme();
-  const AuthScreenStyle = createAuthScreenStyle(colorScheme);
+  const AuthenticationStyle = createAuthenticationStyle(colorScheme);
 
   return (
-    <View style={AuthScreenStyle.Centered}>
-      <Text>This is FileSystem Screen. This pages purpose needs to be investigated.</Text>
+    <View style={AuthenticationStyle.Centered}>
+      <Text style={AuthenticationStyle.text}>
+        This is FileSystem Screen. This pages purpose needs to be investigated.
+      </Text>
     </View>
   );
 }

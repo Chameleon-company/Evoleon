@@ -20,15 +20,15 @@ export const createMapStyle = (colorScheme) =>
       marginBottom: 1000,
     },
     MarkerPopupStyleTextTitle: {
+      color: colorScheme.colors.text,
       textAlign: 'center',
-      color: 'white',
       marginTop: 15,
       fontSize: 20,
       marginBottom: 0,
     },
     MarkerPopupStyleText: {
       textAlign: 'center',
-      color: 'white',
+      color: colorScheme.colors.text,
       fontSize: 15,
     },
     IconStyle: {
@@ -38,7 +38,7 @@ export const createMapStyle = (colorScheme) =>
     },
     IconPosition: {
       flexDirection: 'row',
-      backgroundColor: 'rgba(52, 52, 52, 0)',
+      backgroundColor: colorScheme.colors.text,
       alignContent: 'center',
       marginBottom: 10,
     },
@@ -50,7 +50,7 @@ export const createMapStyle = (colorScheme) =>
       padding: 10,
     },
     switchText: {
-      color: colorScheme.colors.card,
+      color: colorScheme.colors.text,
       fontSize: 20,
       paddingRight: 12,
     },

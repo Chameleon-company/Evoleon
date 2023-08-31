@@ -59,7 +59,7 @@ export default function ClientsScreen() {
     <View style={ClientStyle.content}>
       {/* Display Evoleon logo image or profile image */}
       <View style={ClientStyle.profileContainer}>
-        <Image style={ClientStyle.profileImage} source={require('../assets/EvoleonProfileTemp.png')} />
+        <Image style={ClientStyle.profileImage} source={require('../assets/EvoleonUserProfileTemp.png')} />
         <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
       <ScrollView style={ClientStyle.scrollView}>

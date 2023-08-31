@@ -4,7 +4,7 @@ import { Image, TouchableOpacity } from 'react-native';
 
 import { Text, View, useTheme } from '../components/Themed';
 
-import { createAuthScreenStyle } from '../styles/authenticateStyle';
+import { createAuthenticationStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
 
 /* Initial screen for authentication proccess.
@@ -15,13 +15,13 @@ export default function AuthenticateScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const AuthScreenStyle = createAuthScreenStyle(colorScheme);
+  const AuthenticationStyle = createAuthenticationStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
   return (
-    <View style={AuthScreenStyle.Centered}>
+    <View style={AuthenticationStyle.Centered}>
       {/* Logo - to be updated with current logo */}
-      <Image style={AuthScreenStyle.frontPageLogo} source={require('./EvoleonFinal.png')} />
+      <Image style={AuthenticationStyle.frontPageLogo} source={require('../assets/EvoleonUserProfileTemp.png')} />
 
       {/* Login button */}
       <TouchableOpacity

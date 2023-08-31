@@ -2,7 +2,7 @@
   "expo": {
     "name": "Evoleon",
     "slug": "evoleon",
-    "version": "0.1.1",
+    "version": "0.2.1\nSplash of Colour Update",
     "orientation": "portrait",
     "icon": "./assets/EvoleonLandingTemp.png",
     "scheme": "myapp",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/EvoleonLandingTemp.png",
       "resizeMode": "contain",
-      "backgroundColor": "#4cB166"
+      "backgroundColor": "#F7F7FF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
