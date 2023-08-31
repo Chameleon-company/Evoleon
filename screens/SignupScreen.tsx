@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
-import { useEffect } from 'react';
 
 import { Text, View, useTheme } from '../components/Themed';
-import MenuIcon from '../components/MenuIcon';
 
 import Checkbox from 'expo-checkbox';
 import { userSignUp } from '../web/firebase';
@@ -28,6 +25,7 @@ export default function SignupScreen() {
   const [homePostcode, onChangeTextPostcode] = React.useState('');
   const [email, onChangeTextEmail] = React.useState('');
   const [password, onChangeTextPassword] = React.useState('');
+  const [confirmPassword, onChangeTextConfirmPassword] = React.useState('');
   const [isChecked, setChecked] = React.useState(false);
 
   return (
@@ -50,35 +48,35 @@ export default function SignupScreen() {
           onChangeText={onChangeTextFirstName}
           value={firstName}
           placeholderTextColor="grey"
-          placeholder="First name"
+          placeholder="First name *"
         />
         <TextInput
           style={SignupStyle.Text}
           onChangeText={onChangeTextLastName}
           value={lastName}
           placeholderTextColor="grey"
-          placeholder="Last name"
+          placeholder="Last name  *"
         />
         <TextInput
           style={SignupStyle.Text}
           onChangeText={onChangeTextCountry}
           value={homeCountry}
           placeholderTextColor="grey"
-          placeholder="Home Country"
+          placeholder="Home Country *"
         />
         <TextInput
           style={SignupStyle.Text}
           onChangeText={onChangeTextPostcode}
           value={homePostcode}
           placeholderTextColor="grey"
-          placeholder="Home Postcode"
+          placeholder="Home Postcode  *"
         />
         <TextInput
           style={SignupStyle.Text}
           onChangeText={onChangeTextEmail}
           value={email}
           placeholderTextColor="grey"
-          placeholder="Email"
+          placeholder="Email  *"
         />
         <TextInput
           style={SignupStyle.Text}
@@ -86,7 +84,16 @@ export default function SignupScreen() {
           onChangeText={onChangeTextPassword}
           value={password}
           placeholderTextColor="grey"
-          placeholder="Password"
+          placeholder="Password *"
+        />
+
+        <TextInput
+          style={SignUpScreenStyle.Text}
+          secureTextEntry={true}
+          onChangeText={onChangeTextConfirmPassword}
+          value={confirmPassword}
+          placeholderTextColor="grey"
+          placeholder="Confirm Password *"
         />
       </SafeAreaView>
 
@@ -102,19 +109,33 @@ export default function SignupScreen() {
           and the Privacy Policy
         </Text>
       </View>
-
-      {/* Submit button */}
+      {/* Submit Button */}
       <Pressable
         style={ButtonStyle.Button}
-        onPress={() => {
-          userSignUp(email, password, firstName, lastName, homeCountry).then((result) => {
-            console.log(result);
-            if (result == true) {
-              navigation.navigate('Database');
+        onPress={async () => {
+          try {
+            // Check if passwords match
+            if (password !== confirmPassword) {
+              throw new Error('Passwords do not match.');
+            }
+
+            // Check password length
+            if (password.length < 6) {
+              throw new Error('Password must be 6 characters or more.');
+            }
+            const result = await userSignUp(email, password, firstName, lastName, homeCountry, confirmPassword);
+
+            if (result) {
+              console.log('Account created successfully');
+              navigation.navigate('Map');
             } else {
+              console.log('Error when creating account');
               Alert.alert('Error when creating account');
             }
-          });
+          } catch (error: any) {
+            console.error('An error occurred during sign up:', error.message);
+            Alert.alert('Error during sign up', error.message);
+          }
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
