@@ -1,29 +1,101 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-export const AboutStyle = StyleSheet.create({
-  centered: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#E9ECE6",
-  },
-  currentVersion: {
-    position: "absolute",
-    top: 100,
-  },
-  termsButton: {
-    backgroundColor: "#E9ECE6",
-    position: "absolute",
-    top: 300,
-  },
-  updateButton: {
-    backgroundColor: "#E9ECE6",
-    position: "absolute",
-    top: 160,
-  },
-  updateVersion: {
-    backgroundColor: "#E9ECE6",
-    position: "absolute",
-    top: 120,
-  },
-});
+export const createAboutStyle = (colorScheme) =>
+  StyleSheet.create({
+    centered: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+    },
+    currentVersion: {
+      position: 'absolute',
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      top: 100,
+    },
+    updateVersion: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      position: 'absolute',
+      top: 120,
+    },
+    container: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      flex: 1,
+      marginBottom: 100,
+    },
+    scrollView: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+    },
+    inputView: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      paddingHorizontal: 10,
+      paddingBottom: 10,
+    },
+    pageTitle: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      margin: 20,
+      fontSize: 16,
+      textAlign: 'center',
+    },
+    sectionHeading: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      position: 'relative',
+      marginBottom: 1,
+      marginTop: 4,
+      textAlign: 'left',
+      fontWeight: 'bold',
+    },
+    subSectionHeading: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      position: 'relative',
+      marginBottom: 1,
+      marginTop: 4,
+      textAlign: 'left',
+      fontWeight: 'bold',
+      fontSize: 11,
+    },
+    textParagraph: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      padding: 5,
+      marginTop: 0,
+      fontSize: 10,
+      textAlign: 'justify',
+    },
+    StatusBar: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+    },
+    textSubparagraph: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      padding: 10,
+      paddingHorizontal: 13,
+      marginTop: 0,
+      fontSize: 9,
+      textAlign: 'justify',
+    },
+    textIndent: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      padding: 8,
+      paddingHorizontal: 23,
+      marginTop: 0,
+      fontSize: 9,
+      textAlign: 'justify',
+    },
+    boldText: {
+      backgroundColor: colorScheme.colors.background,
+      color: colorScheme.colors.text,
+      fontWeight: 'bold',
+    },
+  });

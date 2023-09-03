@@ -1,12 +1,12 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { Image, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 
-import { Text, View } from "../components/Themed";
-import MenuIcon from "../components/MenuIcon";
-import { useEffect, useState } from "react";
+import { Text, View, useTheme } from '../components/Themed';
+import MenuIcon from '../components/MenuIcon';
+import { useEffect, useState } from 'react';
 import {
   getUserAuthStatus,
   getuserIsAuthenticated,
@@ -14,17 +14,20 @@ import {
   LoginSignOutButtonPressed,
   userDeleteAccount,
   logoutUser,
-} from "../web/firebase";
-import { ClientStyle } from "../styles/clientStyle";
+} from '../web/firebase';
+
+import { createClientStyle } from '../styles/clientStyle';
 
 const ListButton = ({ action, text, iconName }) => {
-  const defaultImage = require("../assets/Arrow.png");
+  const defaultImage = require('../assets/Arrow.png');
+
+  const colorScheme = useTheme();
+  const ClientStyle = createClientStyle(colorScheme);
 
   return (
     <TouchableOpacity style={ClientStyle.profileActionsCell} onPress={action}>
       <Text style={ClientStyle.profileActionsText}>{text}</Text>
-      <Entypo name={iconName} size={24} color="#294E4B" style={ClientStyle.buttonIcon} />
-      {/* <Image source={image || defaultImage} style={ClientStyle.buttonIcon} /> */}
+      <Entypo name={iconName} size={24} style={ClientStyle.buttonIcon} />
     </TouchableOpacity>
   );
 };
@@ -33,17 +36,20 @@ export default function ClientsScreen() {
   // Define navigation using the useNavigation hook.
   const navigation = useNavigation();
 
-  const UnauthProfileText = "Please login to view account.";
+  const colorScheme = useTheme();
+  const ClientStyle = createClientStyle(colorScheme);
+
+  const UnauthProfileText = 'Please login to view account.';
 
   // Define state variables to hold profile and login sign out text.
   const [profileText, setProfileText] = useState(UnauthProfileText);
 
-  const [LoginSignOutText, setLoginSignOutText] = useState("Login");
+  const [LoginSignOutText, setLoginSignOutText] = useState('Login');
 
   // Set the headerLeft icon to the menu icon.
   useEffect(() => {
     // Set profile and login or sign out text when screen is focused.
-    navigation.addListener("focus", () => {
+    navigation.addListener('focus', () => {
       setProfileText(getUserNameTextForProfilePage());
       setLoginSignOutText(getUserAuthStatus().Text);
     });
@@ -53,20 +59,20 @@ export default function ClientsScreen() {
     <View style={ClientStyle.content}>
       {/* Display Evoleon logo image or profile image */}
       <View style={ClientStyle.profileContainer}>
-        <Image style={ClientStyle.profileImage} source={require("../assets/EvoleonProfileTemp.png")} />
+        <Image style={ClientStyle.profileImage} source={require('../assets/EvoleonUserProfileTemp.png')} />
         <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
       <ScrollView style={ClientStyle.scrollView}>
         <ListButton
           action={() => {
-            navigation.navigate("Authenticate");
+            navigation.navigate('Authenticate');
           }}
-          text="Sign in"
+          text="Login"
           iconName="login"
         />
         <ListButton
           action={() => {
-            navigation.navigate("Update Details");
+            navigation.navigate('Update Details');
           }}
           text="Update Account"
           iconName="edit"
@@ -74,40 +80,40 @@ export default function ClientsScreen() {
         <ListButton
           action={() => {
             logoutUser();
-            navigation.navigate("Authenticate");
+            navigation.navigate('Authenticate');
           }}
-          text="LogOut"
+          text="Logout"
           iconName="log-out"
         />
         <ListButton
           action={() => {
-            navigation.navigate("Authenticate");
+            navigation.navigate('Authenticate');
           }}
           text="Delete Account"
           action={() => {
             Alert.alert(
-              "Deletion request.",
-              "Are you sure you want to delete your account?",
+              'Deletion request.',
+              'Are you sure you want to delete your account?',
               [
                 {
-                  text: "Cancel",
+                  text: 'Cancel',
                   onPress: () => {}, // Empty onPress function to close the alert
-                  style: "cancel",
+                  style: 'cancel',
                 },
                 {
-                  text: "Agree",
+                  text: 'Agree',
                   onPress: async () => {
                     Alert.alert(
-                      "This action cannot be undone.",
-                      "All user data will be removed from the application after this request.",
+                      'This action cannot be undone.',
+                      'All user data will be removed from the application after this request.',
                       [
                         {
-                          text: "Cancel",
+                          text: 'Cancel',
                           onPress: () => {}, // Empty onPress function to close the alert
-                          style: "cancel",
+                          style: 'cancel',
                         },
                         {
-                          text: "Understood",
+                          text: 'Understood',
                           onPress: async () => {
                             await userDeleteAccount();
                             setLoginSignOutText(getUserAuthStatus().Text);
@@ -127,7 +133,7 @@ export default function ClientsScreen() {
         />
         <ListButton
           action={() => {
-            navigation.navigate("About");
+            navigation.navigate('About');
           }}
           text="About"
           iconName="info"

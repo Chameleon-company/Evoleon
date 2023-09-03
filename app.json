@@ -1,23 +1,21 @@
 {
   "expo": {
-    "name": "evoleon",
+    "name": "Evoleon",
     "slug": "evoleon",
-    "version": "1.0.0",
+    "version": "0.2.1\nSplash of Colour Update",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/EvoleonLandingTemp.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/EvoleonLandingTemp.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F7F7FF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
