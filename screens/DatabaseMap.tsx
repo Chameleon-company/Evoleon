@@ -14,10 +14,6 @@ import {
 import DatabaseDrawer from './DatabaseDrawer';
 
 const DatabaseMap = (props) => {
-  const colorScheme = useTheme();
-
-  const MapStyle = createMapStyle(colorScheme);
-
   //Ref for the map
   const mapRef = useRef(null);
   //Vars for the active marker

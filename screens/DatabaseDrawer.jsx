@@ -104,7 +104,7 @@ const DatabaseDrawer = (props) => {
         height={height + 180}
         friction={0.7}
       >
-        <View style={MapStyle.panel}>
+        <View style={styles.panel}>
           <IconButton
             icon={chevronType}
             style={{
@@ -124,9 +124,9 @@ const DatabaseDrawer = (props) => {
             }}
           />
           <IconButton
-            icon={"circle-with-cross"}
+            icon={'circle-with-cross'}
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: -24,
               right: 18,
               width: 48,
@@ -145,7 +145,7 @@ const DatabaseDrawer = (props) => {
             >
               <View>
                 <View style={{ bottom: 20 }}>
-                  <Text style={MapStyle.textHeader}>{marker.name}</Text>
+                  <Text style={styles.textHeader}>{marker.name}</Text>
                   {/* If there is no rating / score we will make one up with the id as the seed for a float between 1 and 10 */}
                   <StarRating score={marker.rating == undefined ? marker.id : marker.rating}></StarRating>
                 </View>
@@ -174,7 +174,7 @@ const DatabaseDrawer = (props) => {
                 {markerData !== undefined && (
                   <>
                     {/* Gotta make it fit the page */}
-                    <Text style={{ maxWidth: 500, color: colorScheme.colors.text }}>
+                    <Text style={{ maxWidth: 500, color: '#ffffff' }}>
                       {markerData?.cost_description !== undefined && markerData?.cost_description !== ''
                         ? markerData?.cost_description.length > 50
                           ? markerData?.cost_description.substring(0, 50) + '...'
@@ -191,27 +191,30 @@ const DatabaseDrawer = (props) => {
             resizeMode="contain"
             onTouchStart={() => setAllowDragging(false)}
             onTouchEnd={() => setAllowDragging(true)}
-            onTouchCancel={() => setAllowDragging(true)}>
+            onTouchCancel={() => setAllowDragging(true)}
+          >
             <Text
               style={{
                 fontSize: 24,
-                fontWeight: "bold",
-                textAlign: "center",
+                fontWeight: 'bold',
+                textAlign: 'center',
                 marginTop: 10,
                 marginBottom: 10,
-              }}>
+              }}
+            >
               Description
             </Text>
             <Text
               style={{
                 fontSize: 16,
-                textAlign: "center",
+                textAlign: 'center',
                 marginBottom: 10,
-              }}>
-              {markerData?.description !== undefined ? markerData?.description : "No description available"}
+              }}
+            >
+              {markerData?.description !== undefined ? markerData?.description : 'No description available'}
             </Text>
             {markerData?.photos !== undefined && (
-              <View style={{ alignItems: "center" }}>
+              <View style={{ alignItems: 'center' }}>
                 {markerData?.photos.map((photo, index) => (
                   <Image
                     key={index}
