@@ -15,8 +15,8 @@ function PrivacyPolicyScreen() {
 
   return (
     <SafeAreaView style={AboutStyle.container}>
-      <ScrollView style={AboutStyle.scrollView}>
-        <View style={AboutStyle.inputView}>
+      <ScrollView>
+        <View>
           <Text style={AboutStyle.pageTitle}>Evoleon App Privacy Policy</Text>
 
           <Text style={AboutStyle.sectionHeading}>1. We respect your privacy</Text>
@@ -182,7 +182,7 @@ function PrivacyPolicyScreen() {
         </View>
       </ScrollView>
       <TouchableOpacity
-        style={[{ marginTop: 20 }, ButtonStyle.Button]}
+        style={[{ marginTop: 20 }, ButtonStyle.BackButton]}
         onPress={() => {
           navigation.goBack();
         }}

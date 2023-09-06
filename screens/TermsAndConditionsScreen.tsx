@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 
@@ -17,8 +17,8 @@ function TermsAndConditionsScreen() {
 
   return (
     <SafeAreaView style={AboutStyle.container}>
-      <ScrollView style={AboutStyle.scrollView}>
-        <View style={AboutStyle.inputView}>
+      <ScrollView>
+        <View>
           <Text style={AboutStyle.pageTitle}>MOBILE APP TERMS AND CONDITIONS OF USE</Text>
 
           <Text style={AboutStyle.sectionHeading}>1. About the Application</Text>
@@ -372,7 +372,7 @@ function TermsAndConditionsScreen() {
         </View>
       </ScrollView>
       <TouchableOpacity
-        style={[{ marginTop: 20 }, ButtonStyle.Button]}
+        style={[{ marginTop: 20 }, ButtonStyle.BackButton]}
         onPress={() => {
           navigation.goBack();
         }}

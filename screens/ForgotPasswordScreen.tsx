@@ -1,30 +1,28 @@
-import * as React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
-
-import { Text, View, useTheme } from '../components/Themed';
-import MenuIcon from '../components/MenuIcon';
-import { useEffect, useState } from 'react';
-import main from '../styles/main';
+// React Native imports.
+import React, { useState } from 'react';
 import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+// Firebase imports.
 import { userPasswordResetAuth } from '../web/firebase';
-import { getuserIsAuthenticated } from '../web/firebase';
 
+// Style imports.
 import { createButtonStyle } from '../styles/buttonStyle';
 import { createLoginStyle } from '../styles/loginStyle';
+
+// Themed component imports.
+import { Text, View, useTheme } from '../components/Themed';
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
+  // Create style imports and pass through ColorScheme hook.
   const LoginStyle = createLoginStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
   const [email, onChangeTextEmail] = React.useState('');
-  const [password, onChangeTextPassword] = React.useState('');
 
   return (
     <SafeAreaView style={LoginStyle.content}>

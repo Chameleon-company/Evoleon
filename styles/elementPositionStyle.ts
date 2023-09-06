@@ -1,21 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-export const createAuthenticationStyle = (colorScheme) =>
+export const createElementPostionStyle = (colorScheme) =>
   StyleSheet.create({
-    Centered: {
+    centered: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       color: colorScheme.colors.background,
     },
-    text: {
-      color: colorScheme.colors.text,
-    },
-    frontPageLogo: {
+    landingPageLogo: {
       borderRadius: 50,
-      // Add a border color
       borderColor: colorScheme.colors.primary,
-      // Add a border width
       borderWidth: 3,
       width: 200,
       height: 200,

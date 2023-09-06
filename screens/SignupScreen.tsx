@@ -7,7 +7,6 @@ import { Text, View, useTheme } from '../components/Themed';
 import Checkbox from 'expo-checkbox';
 import { userSignUp } from '../web/firebase';
 
-import { createAuthenticationStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
 import { createSignupStyle } from '../styles/signupStyle';
 
@@ -15,7 +14,6 @@ export default function SignupScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const AuthScreenStyle = createAuthenticationStyle(colorScheme);
   const SignupStyle = createSignupStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
@@ -150,7 +148,7 @@ export default function SignupScreen() {
       <Pressable
         style={ButtonStyle.cancelButton}
         onPress={() => {
-          navigation.navigate('Authenticate');
+          navigation.goBack();
         }}
       >
         <Text style={ButtonStyle.cancelText}>Cancel</Text>

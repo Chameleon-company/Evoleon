@@ -1,21 +1,16 @@
-// React imports.
-import { useEffect } from 'react';
-
 // React Native imports.
 import { TouchableOpacity, Alert } from 'react-native';
 
 // Navigation imports.
-import { useNavigation, StackHeaderLeftButtonProps } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Themed component imports.
 import { Text, View, useTheme } from '../components/Themed';
 
-// Custom component imports.
-import MenuIcon from '../components/MenuIcon';
-
 // Style imports.
 import { createAboutStyle } from '../styles/aboutStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
+import { createElementPostionStyle } from '../styles/elementPositionStyle';
 
 function AboutScreen() {
   // Retreving the current colour scheme from the Themed component.
@@ -23,14 +18,10 @@ function AboutScreen() {
 
   const AboutStyle = createAboutStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
+  const ElementPostionStyle = createElementPostionStyle(colorScheme);
 
   const navigation = useNavigation();
-  const EvoleonAppDeets = require('../app.json');
-  const deviceAppVersion = 'Pickles';
-  const upDateButton = '     Update     ';
-  const termsButton = ' Ts & Cs ';
-  const privacyButton = 'Privacy Policy';
-  const clearCache = ' Clear Cache ';
+  const EvoleonApp = require('../app.json');
 
   // A place holder alert to add the clear cache functionality to.
   const clearCacheAlert = () =>
@@ -44,22 +35,22 @@ function AboutScreen() {
     ]);
 
   return (
-    <View style={AboutStyle.centered}>
-      <Text style={AboutStyle.currentVersion}>App Version: {deviceAppVersion} </Text>
-      <Text style={AboutStyle.updateVersion}>Version Available: {EvoleonAppDeets.expo.version} </Text>
-      <View style={AboutStyle.updateButton}>
+    <View style={ElementPostionStyle.centered}>
+      <Text style={AboutStyle.currentVersion}>App Version: {'Pickles'} </Text>
+      <Text style={AboutStyle.updateVersion}>Version Available: {EvoleonApp.expo.version} </Text>
+      <View>
         <TouchableOpacity style={ButtonStyle.Button}>
-          <Text style={ButtonStyle.Text}>{upDateButton}</Text>
+          <Text style={ButtonStyle.Text}>{'Update'}</Text>
         </TouchableOpacity>
       </View>
-      <View style={AboutStyle.termsButton}>
+      <View>
         <TouchableOpacity
           style={ButtonStyle.Button}
           onPress={() => {
             navigation.navigate('PrivacyPolicy');
           }}
         >
-          <Text style={ButtonStyle.Text}>{privacyButton}</Text>
+          <Text style={ButtonStyle.Text}>{'Privacy Policy'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={ButtonStyle.Button}
@@ -67,13 +58,13 @@ function AboutScreen() {
             navigation.navigate('TermsAndConditionsScreen');
           }}
         >
-          <Text style={ButtonStyle.Text}>{termsButton}</Text>
+          <Text style={ButtonStyle.Text}>{'Ts & Cs'}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={ButtonStyle.Button} onPress={clearCacheAlert}>
-          <Text style={ButtonStyle.Text}>{clearCache}</Text>
+          <Text style={ButtonStyle.Text}>{'Clear Cache'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[{ marginTop: 20 }, ButtonStyle.Button]}
+          style={[{ marginTop: 20 }, ButtonStyle.BackButton]}
           onPress={() => {
             navigation.goBack();
           }}

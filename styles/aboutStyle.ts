@@ -2,13 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export const createAboutStyle = (colorScheme) =>
   StyleSheet.create({
-    centered: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: colorScheme.colors.background,
-      color: colorScheme.colors.text,
-    },
     currentVersion: {
       position: 'absolute',
       backgroundColor: colorScheme.colors.background,
@@ -26,16 +19,6 @@ export const createAboutStyle = (colorScheme) =>
       color: colorScheme.colors.text,
       flex: 1,
       marginBottom: 100,
-    },
-    scrollView: {
-      backgroundColor: colorScheme.colors.background,
-      color: colorScheme.colors.text,
-    },
-    inputView: {
-      backgroundColor: colorScheme.colors.background,
-      color: colorScheme.colors.text,
-      paddingHorizontal: 10,
-      paddingBottom: 10,
     },
     pageTitle: {
       backgroundColor: colorScheme.colors.background,
@@ -70,10 +53,6 @@ export const createAboutStyle = (colorScheme) =>
       marginTop: 0,
       fontSize: 10,
       textAlign: 'justify',
-    },
-    StatusBar: {
-      backgroundColor: colorScheme.colors.background,
-      color: colorScheme.colors.text,
     },
     textSubparagraph: {
       backgroundColor: colorScheme.colors.background,

@@ -4,6 +4,10 @@ import { Text as DefaultText, View as DefaultView } from 'react-native';
 import { EvoleonLightTheme, EvoleonDarkTheme, Color } from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
+/*FIXME: This method of assigning the theme is not required anymore. 
+However it is still used throughout the app for View and Text components system wide.
+Please alter the useThemeColor and adjust the theme to be used from the useTheme() hook.
+*/
 export function useThemeColor(
   props: { light?: string; dark?: string },
   colorName: keyof typeof EvoleonLightTheme & keyof typeof EvoleonDarkTheme
@@ -37,7 +41,6 @@ type DefaultIconProps = {
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export type ViewProps = ThemeProps & DefaultView['props'];
-export type IconProps = ThemeProps & DefaultIconProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;

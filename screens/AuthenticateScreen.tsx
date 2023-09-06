@@ -1,27 +1,26 @@
+// React Native imports.
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, TouchableOpacity } from 'react-native';
 
+// Themed component imports.
 import { Text, View, useTheme } from '../components/Themed';
 
-import { createAuthenticationStyle } from '../styles/authenticateStyle';
+// Style imports.
 import { createButtonStyle } from '../styles/buttonStyle';
-
-/* Initial screen for authentication proccess.
-  To do: improve user interface code and update links
-*/
+import { createElementPostionStyle } from '../styles/elementPositionStyle';
 
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
 
-  const AuthenticationStyle = createAuthenticationStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
+  const ElementPostionStyle = createElementPostionStyle(colorScheme);
 
   return (
-    <View style={AuthenticationStyle.Centered}>
+    <View style={ElementPostionStyle.centered}>
       {/* Logo - to be updated with current logo */}
-      <Image style={AuthenticationStyle.frontPageLogo} source={require('../assets/EvoleonUserProfileTemp.png')} />
+      <Image style={ElementPostionStyle.landingPageLogo} source={require('../assets/EvoleonUserProfileTemp.png')} />
 
       {/* Login button */}
       <TouchableOpacity

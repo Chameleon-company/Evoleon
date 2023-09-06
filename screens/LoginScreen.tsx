@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
 import { Text, View, useTheme } from '../components/Themed';
-import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, TextInput, TouchableOpacity } from 'react-native';
 
-import MenuIcon from '../components/MenuIcon';
-import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { userLogin } from '../web/firebase';
@@ -55,7 +52,7 @@ export default function LoginScreen() {
           />
 
           <TouchableOpacity
-            style={ButtonStyle.forgotPassButton}
+            style={ButtonStyle.ForgotPasswordLink}
             onPress={() => {
               navigation.navigate('ForgotPasswordScreen');
             }}
@@ -64,7 +61,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={ButtonStyle.button}
+            style={ButtonStyle.Button}
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {
@@ -80,7 +77,7 @@ export default function LoginScreen() {
           <TouchableOpacity
             style={ButtonStyle.cancelButton}
             onPress={() => {
-              navigation.navigate('Authenticate');
+              navigation.goBack();
             }}
           >
             <Text style={ButtonStyle.cancelText}>Cancel</Text>

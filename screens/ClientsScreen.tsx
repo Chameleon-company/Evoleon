@@ -1,26 +1,21 @@
-import * as React from 'react';
+// React Native imports.
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
+
+// Vector icon imports.
 import { Entypo } from '@expo/vector-icons';
 
+// Themed component imports.
 import { Text, View, useTheme } from '../components/Themed';
-import MenuIcon from '../components/MenuIcon';
-import { useEffect, useState } from 'react';
-import {
-  getUserAuthStatus,
-  getuserIsAuthenticated,
-  getUserNameTextForProfilePage,
-  LoginSignOutButtonPressed,
-  userDeleteAccount,
-  logoutUser,
-} from '../web/firebase';
 
+// Firebase imports.
+import { getUserAuthStatus, getUserNameTextForProfilePage, userDeleteAccount, logoutUser } from '../web/firebase';
+
+// Style imports.
 import { createClientStyle } from '../styles/clientStyle';
 
 const ListButton = ({ action, text, iconName }) => {
-  const defaultImage = require('../assets/Arrow.png');
-
   const colorScheme = useTheme();
   const ClientStyle = createClientStyle(colorScheme);
 
