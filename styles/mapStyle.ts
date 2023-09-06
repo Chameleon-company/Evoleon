@@ -1,21 +1,22 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
+import Color from '../constants/Colors';
 
 export const MapStyle = StyleSheet.create({
   ViewStyle: {
     flex: 1,
-    backgroundColor: "#ffffff",
-    position: "relative",
+    backgroundColor: '#ffffff',
+    position: 'relative',
   },
 
   MarkerPopupStyle: {
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
     height: 150,
     width: 250,
     borderRadius: 25,
 
     //Position the 4 button icons to bottom edge of popup view
-    flexDirection: "column",
-    justifyContent: "space-between",
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 
   drawer: {
@@ -23,15 +24,15 @@ export const MapStyle = StyleSheet.create({
   },
 
   MarkerPopupStyleTextTitle: {
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
     marginTop: 15,
     fontSize: 20,
     marginBottom: 0,
   },
   MarkerPopupStyleText: {
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
     fontSize: 15,
   },
 
@@ -42,9 +43,9 @@ export const MapStyle = StyleSheet.create({
   },
 
   IconPosition: {
-    flexDirection: "row",
-    backgroundColor: "rgba(52, 52, 52, 0)",
-    alignContent: "center",
+    flexDirection: 'row',
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+    alignContent: 'center',
     marginBottom: 10,
   },
 
@@ -59,16 +60,16 @@ export const MapStyle = StyleSheet.create({
   sideContainer: {
     marginTop: 10,
     zIndex: 1, // on top of map
-    position: "absolute",
+    position: 'absolute',
     right: 10,
-    justifyContent: "center",
-    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
     borderRadius: 25,
     padding: 8,
   },
 
   switchText: {
-    color: "#ffffff",
+    color: '#ffffff',
     fontSize: 20,
     paddingRight: 12,
   },

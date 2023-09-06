@@ -7,10 +7,11 @@ import {
   getAuth,
   signOut,
   updateProfile,
-} from "firebase/auth";
+  sendEmailVerification,
+} from 'firebase/auth';
 
 // Firebase app imports.
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 
 // Firestore imports.
 import {
@@ -25,25 +26,20 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
-import { 
-  getDatabase, 
-  ref, 
-  set 
-} from "firebase/database";
+import { getDatabase, ref, set } from 'firebase/database';
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
-  apiKey: "AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg",
-  authDomain: "evoleonapp.firebaseapp.com",
-  projectId: "evoleonapp",
-  storageBucket: "evoleonapp.appspot.com",
-  messagingSenderId: "425564389277",
-  appId: "1:425564389277:web:c86772f8abb19ffca47974",
-  measurementId: "G-GL6LC3D645",
-  databaseURL:
-    "https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+  apiKey: 'AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg',
+  authDomain: 'evoleonapp.firebaseapp.com',
+  projectId: 'evoleonapp',
+  storageBucket: 'evoleonapp.appspot.com',
+  messagingSenderId: '425564389277',
+  appId: '1:425564389277:web:c86772f8abb19ffca47974',
+  measurementId: 'G-GL6LC3D645',
+  databaseURL: 'https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app',
 };
 
 //Initialize Firebase
@@ -64,7 +60,7 @@ export const getUserName = () => {
       return auth.currentUser.displayName;
     }
   }
-  return "";
+  return '';
 };
 
 export const getUserNameTextForProfilePage = () => {
@@ -76,7 +72,7 @@ export const getUserNameTextForProfilePage = () => {
       return "undefined's account details";
     }
   } else {
-    return "Please log into your account";
+    return 'Please log into your account';
   }
 };
 
@@ -91,7 +87,7 @@ export var getUserAuthStatus = () => {
 
     return { Text: UserAuthText, Status: true };
   } else {
-    UserAuthText = "Account";
+    UserAuthText = 'Account';
 
     return { Text: UserAuthText, Status: false };
   }
@@ -107,50 +103,49 @@ export const LoginSignOutButtonPressed = () => {
 // Login for an existing user.
 export const userLogin = async (email, password) => {
   try {
-    console.log("User tried to login to account.");
+    console.log('User tried to login to account.');
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
     userIsAuthenticated = true;
-    console.log("Signed in with:", user.email);
-    console.log("Welcome back", user.displayName);
+    console.log('Signed in with:', user.email);
+    console.log('Welcome back', user.displayName);
     return { success: true, user };
   } catch (err) {
-    console.error("An Error has been caught");
-    console.error("Error code:", err.code);
-    console.error("Error message:", err.message);
+    console.error('An Error has been caught');
+    console.error('Error code:', err.code);
+    console.error('Error message:', err.message);
     return { success: false, error: err };
   }
 };
 
 //Sign up for a new user
-export const userSignUp = async (email, password, firstName, lastName, country) => {
+export const userSignUp = async (email, password, firstName, lastName, country, confirmPassword) => {
   try {
-    console.log("User tried to create a new account.");
-    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
     userIsAuthenticated = true;
     const user = res.user;
-    await sendEmailVerification(user);
-    console.log("Updating profile details");
+    // await sendVerification(user);
+    console.log('Updating profile details');
     await updateProfileDetails(firstName);
-    console.log("Updating firestore data");
+    console.log('Updating firestore data');
     await userFirestoreData(firstName, lastName, country);
     return true;
   } catch (err) {
-    console.error("An Error has been caught");
-    console.error("Error message:", err);
+    console.error('An Error has been caught');
+    console.error('Error message:', err);
     return false;
-  }
+  } 
 };
 
 // Add users first name to firebase Authentication.
 export const updateProfileDetails = async (name) => {
   try {
     await updateProfile(auth.currentUser, { displayName: name });
-    console.log("Profile updated.");
-    console.log("Display name added: " + auth.currentUser.displayName);
+    console.log('Profile updated.');
+    console.log('Display name added: ' + auth.currentUser.displayName);
     return true;
   } catch (error) {
-    console.error("Error updating profile details:", error);
+    console.error('Error updating profile details:', error);
     return false;
   }
 };
@@ -158,14 +153,14 @@ export const updateProfileDetails = async (name) => {
 // Create new Firestore document for user using unqiue user ID.
 export const userFirestoreData = async (firstName, lastName, country) => {
   try {
-    await setDoc(doc(firestoreDB, "UserData", auth.currentUser.uid), {
+    await setDoc(doc(firestoreDB, 'UserData', auth.currentUser.uid), {
       firstName,
       lastName,
       country,
     });
     return true;
   } catch (err) {
-    console.error("Error updating firestore data:", err);
+    console.error('Error updating firestore data:', err);
     return false;
   }
 };
@@ -184,7 +179,7 @@ export const userSignOut = async () => {
       const errorMessage = error.message;
     });
 
-  console.log("Signed out of " + displayName + "'s account");
+  console.log('Signed out of ' + displayName + "'s account");
 };
 
 export const userPasswordResetAuth = async (UserEmail) => {
@@ -192,7 +187,7 @@ export const userPasswordResetAuth = async (UserEmail) => {
     const AuthInfo = auth;
     // Attempt to send a password reset email using the provided email address
     await sendPasswordResetEmail(AuthInfo, UserEmail);
-    alert("Password reset email sent");
+    alert('Password reset email sent');
     return { success: true };
   } catch (error) {
     // Log the error message and return it
@@ -207,7 +202,6 @@ export const userDeleteAccount = async () => {
   const AuthInfo = auth;
   const CurrUser = auth.currentUser;
   try {
-
     /* 
     Sign out the user from their account as we have already attained CurrUser infomation. 
     If this is done after the account is deleted, an error will be thrown and the app won't display correctly.
@@ -215,7 +209,7 @@ export const userDeleteAccount = async () => {
     userSignOut();
     // Deleteing users account, this action is irreversable and cannot be undone.
     await deleteUser(CurrUser);
-    
+
     return { success: true };
   } catch (error) {
     // Log the error message and return it
@@ -225,22 +219,20 @@ export const userDeleteAccount = async () => {
 };
 
 // Add or remove an EV charger from a users favourite list in Firestore.
-export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
-  evChargerLocationVal
-) => {
+export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (evChargerLocationVal) => {
   const document = doc(
     firestoreDB,
-    "UserData",
+    'UserData',
     auth.currentUser.uid,
-    auth.currentUser.uid + "favouriteCharger",
-    evChargerLocationVal.lat + "_" + evChargerLocationVal.long
+    auth.currentUser.uid + 'favouriteCharger',
+    evChargerLocationVal.lat + '_' + evChargerLocationVal.long
   );
 
   // Remove favourite EV charging location.
   if (evChargerLocationIsInFavourites(evChargerLocationVal)) {
     const deleteDocument = await deleteDoc(document)
       .then(() => {
-        console.log("Removed EV charger location from favourites");
+        console.log('Removed EV charger location from favourites');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -259,7 +251,7 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (
 
     await setDoc(document, newFavouriteLocation, { merge: true })
       .then(() => {
-        console.log("EV charger location added to favourites");
+        console.log('EV charger location added to favourites');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -279,7 +271,7 @@ export const getFavouriteMarkers = async () => {
     return false;
   }
 
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   try {
     const querySnapshot = await getDoc(userDocRef);
@@ -289,11 +281,11 @@ export const getFavouriteMarkers = async () => {
       const favouriteMarkers = data.favouriteMarkers || [];
       return favouriteMarkers;
     } else {
-      console.error("No such document!");
+      console.error('No such document!');
       return [];
     }
   } catch (error) {
-    console.error("Error getting document:", error);
+    console.error('Error getting document:', error);
     return [];
   }
 };
@@ -311,7 +303,7 @@ export const addFavouriteMarker = async (markerId) => {
   }
 
   // Get the user's document reference
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   try {
     // Try to update the document with the markerId using arrayUnion
@@ -319,15 +311,15 @@ export const addFavouriteMarker = async (markerId) => {
       favouriteMarkers: arrayUnion(markerId),
     });
   } catch (error) {
-    console.error("Error updating document:", error);
+    console.error('Error updating document:', error);
 
     // Check if the error is due to the document not being created
-    if (error.code === "not-found") {
+    if (error.code === 'not-found') {
       try {
         // Create the document and add the markerId
         await setDoc(userDocRef, { favouriteMarkers: [markerId] });
       } catch (createError) {
-        console.error("Error creating document:", createError);
+        console.error('Error creating document:', createError);
         return false;
       }
     } else {
@@ -349,7 +341,7 @@ export const removeFavouriteMarker = async (markerId) => {
   }
 
   // Get the user's document reference
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   try {
     // Try to remove the markerId from the favouriteMarkers array using arrayRemove
@@ -357,15 +349,15 @@ export const removeFavouriteMarker = async (markerId) => {
       favouriteMarkers: arrayRemove(markerId),
     });
   } catch (error) {
-    console.error("Error updating document:", error);
+    console.error('Error updating document:', error);
 
     // Check if the error is due to the array not existing
-    if (error.code === "not-found") {
+    if (error.code === 'not-found') {
       try {
         // Create an empty favouriteMarkers array
         await setDoc(userDocRef, { favouriteMarkers: [] });
       } catch (createError) {
-        console.error("Error creating document:", createError);
+        console.error('Error creating document:', createError);
         return false;
       }
     } else {
@@ -382,9 +374,9 @@ export const getUsersFavouriteListInFirestore = async () => {
   if (userIsAuthenticated) {
     const getSubCollection = collection(
       firestoreDB,
-      "UserData",
+      'UserData',
       auth.currentUser.uid,
-      auth.currentUser.uid + "favouriteCharger"
+      auth.currentUser.uid + 'favouriteCharger'
     );
 
     const queryVal = query(getSubCollection);
@@ -408,32 +400,35 @@ export const getUsersFavouriteListInFirestore = async () => {
       };
       favouriteMarkers[i] = object;
     }
-    console.log("Current users favourite markers: " + favouriteMarkers);
+    console.log('Current users favourite markers: ' + favouriteMarkers);
   }
   return favouriteMarkers;
 };
 
 export const evChargerLocationIsInFavourites = (val) => {
   for (let i = 0; i < favouriteMarkers.length; i++) {
-    if (
-      (val.lat == favouriteMarkers[i].lat) &
-      (val.long == favouriteMarkers[i].long)
-    ) {
+    if ((val.lat == favouriteMarkers[i].lat) & 
+    (val.long == favouriteMarkers[i].long)) {
       return true;
     }
   }
   return false;
 };
 
-
-export const sendVerificaiton = (email) => {
-  const user = auth.currentUser;
-  sendEmailVerification(user).then((res) => {
-    return true;
-  }).catch((err) => {
-    throw false;
-  })
-}
+// export const sendVerification = async (email) => {
+//   try {
+    /* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
+    This might be reduced by reducing the amount of calls such as update details on signup.
+    */
+    // const auth = getAuth();
+    // const user = auth.currentUser;
+//     await sendEmailVerification(auth.currentUser);
+//     return true;
+//   } catch (error) {
+//     console.error("Error sending verification email:", error);
+//     return false;
+//   }
+// };
 
 
 // Get all EV charger locations from Firestore, return as object instead of array

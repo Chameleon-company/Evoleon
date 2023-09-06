@@ -38,7 +38,7 @@ const DatabaseDrawer = (props) => {
   }, []);
   //on marker change
   useEffect(() => {
-    console.log("marker change");
+    console.log('marker change');
     fetchPlugshareLocation(marker.id).then((data) => {
       setMarkerData(data);
     });
@@ -47,48 +47,48 @@ const DatabaseDrawer = (props) => {
   const textTranslateY = draggedValue.interpolate({
     inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [0, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const textTranslateX = draggedValue.interpolate({
     inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [0, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const textScale = draggedValue.interpolate({
     inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [1, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   // dont sue me plugshare, i'm just a student
   async function fetchPlugshareLocation(locationId) {
     const url = `https://api.plugshare.com/v3/locations/${locationId}`;
     const headers = new Headers({
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0",
-      Accept: "application/json, text/plain, */*",
-      "Accept-Language": "en",
-      "Accept-Encoding": "gzip, deflate, br",
-      Referer: "https://www.plugshare.com/",
-      Authorization: "Basic d2ViX3YyOkVOanNuUE54NHhXeHVkODU=",
-      Origin: "https://www.plugshare.com",
-      Connection: "keep-alive",
-      "Sec-Fetch-Dest": "empty",
-      "Sec-Fetch-Mode": "cors",
-      "Sec-Fetch-Site": "same-site",
-      TE: "trailers",
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0',
+      Accept: 'application/json, text/plain, */*',
+      'Accept-Language': 'en',
+      'Accept-Encoding': 'gzip, deflate, br',
+      Referer: 'https://www.plugshare.com/',
+      Authorization: 'Basic d2ViX3YyOkVOanNuUE54NHhXeHVkODU=',
+      Origin: 'https://www.plugshare.com',
+      Connection: 'keep-alive',
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-site',
+      TE: 'trailers',
     });
 
     try {
-      const response = await fetch(url, { method: "GET", headers });
+      const response = await fetch(url, { method: 'GET', headers });
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
       return null;
     }
   }
@@ -102,12 +102,13 @@ const DatabaseDrawer = (props) => {
         animatedValue={draggedValue}
         snappingPoints={[dragRanges.top, dragRanges.middle]}
         height={height + 180}
-        friction={0.7}>
-        <View style={styles.panel}>
+        friction={0.7}
+      >
+        <View style={MapStyle.panel}>
           <IconButton
             icon={chevronType}
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: -24,
               right: 82,
               width: 48,
@@ -140,15 +141,16 @@ const DatabaseDrawer = (props) => {
             <Animated.View
               style={{
                 transform: [{ translateY: textTranslateY }, { translateX: textTranslateX }, { scale: textScale }],
-              }}>
+              }}
+            >
               <View>
                 <View style={{ bottom: 20 }}>
-                  <Text style={styles.textHeader}>{marker.name}</Text>
+                  <Text style={MapStyle.textHeader}>{marker.name}</Text>
                   {/* If there is no rating / score we will make one up with the id as the seed for a float between 1 and 10 */}
                   <StarRating score={marker.rating == undefined ? marker.id : marker.rating}></StarRating>
                 </View>
                 {/* / */}
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: 'row' }}>
                   <IconButton
                     icon="heart"
                     style={{ marginRight: 10 }}
@@ -159,7 +161,7 @@ const DatabaseDrawer = (props) => {
                   <IconButton
                     icon="direction"
                     onPress={() => {
-                      if (Platform.OS === "ios") {
+                      if (Platform.OS === 'ios') {
                         Linking.openURL(`http://maps.apple.com/?address=${encodeURIComponent(marker.address)}`);
                       } else {
                         Linking.openURL(
@@ -172,12 +174,12 @@ const DatabaseDrawer = (props) => {
                 {markerData !== undefined && (
                   <>
                     {/* Gotta make it fit the page */}
-                    <Text style={{ maxWidth: 500, color: "#ffffff" }}>
-                      {markerData?.cost_description !== undefined && markerData?.cost_description !== ""
+                    <Text style={{ maxWidth: 500, color: colorScheme.colors.text }}>
+                      {markerData?.cost_description !== undefined && markerData?.cost_description !== ''
                         ? markerData?.cost_description.length > 50
-                          ? markerData?.cost_description.substring(0, 50) + "..."
+                          ? markerData?.cost_description.substring(0, 50) + '...'
                           : markerData?.cost_description
-                        : "Visit location for cost information"}
+                        : 'Visit location for cost information'}
                     </Text>
                   </>
                 )}

@@ -1,31 +1,36 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View } from "../components/Themed";
-import MenuIcon from "../components/MenuIcon";
-import { useEffect, useState } from "react";
-import main from "../styles/main";
-import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
-import { ButtonStyle } from "../styles/buttonStyle";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LoginScreenStyle } from "../styles/loginStyle";
-import { userPasswordResetAuth } from "../web/firebase";
+import { Text, View, useTheme } from '../components/Themed';
+import MenuIcon from '../components/MenuIcon';
+import { useEffect, useState } from 'react';
+import main from '../styles/main';
+import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
 
-import { ClientStyle } from "../styles/clientStyle";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { getuserIsAuthenticated } from "../web/firebase";
+import { userPasswordResetAuth } from '../web/firebase';
+import { getuserIsAuthenticated } from '../web/firebase';
+
+import { createButtonStyle } from '../styles/buttonStyle';
+import { createLoginStyle } from '../styles/loginStyle';
 
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
-  const [email, onChangeTextEmail] = React.useState("");
-  const [password, onChangeTextPassword] = React.useState("");
+  const colorScheme = useTheme();
+
+  const LoginStyle = createLoginStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
+  const [email, onChangeTextEmail] = React.useState('');
+  const [password, onChangeTextPassword] = React.useState('');
 
   return (
-    <SafeAreaView style={LoginScreenStyle.content}>
-      <View style={LoginScreenStyle.inputView}>
+    <SafeAreaView style={LoginStyle.content}>
+      <View style={LoginStyle.inputView}>
         <TextInput
-          style={LoginScreenStyle.input}
+          style={LoginStyle.input}
           keyboardType="email-address"
           onChangeText={onChangeTextEmail}
           value={email}
@@ -41,27 +46,29 @@ export default function ForgotPasswordScreen() {
             const { success, error } = await userPasswordResetAuth(email);
             if (!success) {
               // Check the error code and display the appropriate message
-              if (error.code === "auth/invalid-email" || error.code === "auth/missing-email") {
-                Alert.alert("Error", "Please enter the email");
+              if (error.code === 'auth/invalid-email' || error.code === 'auth/missing-email') {
+                Alert.alert('Error', 'Please enter the email');
               } else {
                 // If there's an error, display an alert with the error message
-                Alert.alert("Incorrect account email", error.message);
+                Alert.alert('Incorrect account email', error.message);
               }
             } else {
               // If successful, navigate to the Login screen
-              navigation.navigate("Authenticate");
+              navigation.navigate('Authenticate');
             }
-          }}>
+          }}
+        >
           <Text style={ButtonStyle.Text}>Reset Password</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={LoginScreenStyle.cancelButton}
+        <Pressable
+          style={ButtonStyle.cancelButton}
           onPress={() => {
-            navigation.navigate("Database");
-          }}>
-          <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
-        </TouchableOpacity>
+            navigation.navigate('Login');
+          }}
+        >
+          <Text style={ButtonStyle.cancelText}>Cancel</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

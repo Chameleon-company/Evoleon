@@ -1,19 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Text, View, Dimensions, Animated } from "react-native";
-import { Marker, Callout, CalloutSubview } from "react-native-maps";
-import MapView from "react-native-map-clustering";
-import * as Location from "expo-location";
-import IconButton from "../components/IconButton";
-import { MapStyle } from "../styles/mapStyle";
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, Dimensions, Animated } from 'react-native';
+import { Marker, Callout, CalloutSubview } from 'react-native-maps';
+import MapView from 'react-native-map-clustering';
+import * as Location from 'expo-location';
+import IconButton from '../components/IconButton';
+import { MapStyle } from '../styles/mapStyle';
 import {
   getFavouriteMarkers,
   getuserIsAuthenticated,
   addFavouriteMarker,
   removeFavouriteMarker,
-} from "../web/firebase";
-import DatabaseDrawer from "./DatabaseDrawer";
+} from '../web/firebase';
+import DatabaseDrawer from './DatabaseDrawer';
 
 const DatabaseMap = (props) => {
+  const colorScheme = useTheme();
+
+  const MapStyle = createMapStyle(colorScheme);
+
   //Ref for the map
   const mapRef = useRef(null);
   //Vars for the active marker
@@ -34,7 +38,7 @@ const DatabaseMap = (props) => {
   // getUserLocation will attempt to get the users location and store it in the userLocation state.
   const getUserLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
+    if (status !== 'granted') {
       return false;
     }
 
@@ -63,7 +67,7 @@ const DatabaseMap = (props) => {
   };
 
   const onMarkerPress = (marker, index) => {
-    console.log("marker pressed!");
+    console.log('marker pressed!');
     setActiveMarkerIndex(index);
     props.onMarkerPress(marker);
     setIsVisible(true);
@@ -138,7 +142,8 @@ const DatabaseMap = (props) => {
         // mapType="hybrid"
         style={MapStyle.ViewStyle}
         onRegionChangeComplete={props.onRegionChange}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         {/* This creates all the markers visible  */}
         {props.markers.map((marker, index) => {
           if ((favouriteSelected && favouriteMarkers.includes(marker.id)) || !favouriteSelected) {
@@ -152,7 +157,8 @@ const DatabaseMap = (props) => {
                 title={marker.name}
                 onPress={() => {
                   onMarkerPress(marker, index);
-                }}>
+                }}
+              >
                 <Callout alphaHitTest={true}>
                   <Text>{marker.name}</Text>
                 </Callout>
@@ -167,7 +173,8 @@ const DatabaseMap = (props) => {
           style={MapStyle.drawer}
           setVisibility={setIsVisible}
           favourite={favouriteMarker}
-          marker={props.marker}></DatabaseDrawer>
+          marker={props.marker}
+        ></DatabaseDrawer>
       )}
     </>
   );
