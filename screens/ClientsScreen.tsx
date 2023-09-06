@@ -54,6 +54,7 @@ export default function ClientsScreen() {
       setLoginSignOutText(getUserAuthStatus().Text);
     });
   });
+ 
 
   return (
     <View style={ClientStyle.content}>
@@ -63,6 +64,7 @@ export default function ClientsScreen() {
         <Text style={ClientStyle.headingText}>{profileText}</Text>
       </View>
       <ScrollView style={ClientStyle.scrollView}>
+      {!getUserAuthStatus().Status && (
         <ListButton
           action={() => {
             navigation.navigate('Authenticate');
@@ -70,21 +72,30 @@ export default function ClientsScreen() {
           text="Login"
           iconName="login"
         />
+      )}
+      {getUserAuthStatus().Status && (
         <ListButton
           action={() => {
             navigation.navigate('Update Details');
           }}
           text="Update Account"
           iconName="edit"
-        />
+          
+          />
+      )}
+       
+      {getUserAuthStatus().Status && (
         <ListButton
           action={() => {
             logoutUser();
             navigation.navigate('Authenticate');
           }}
-          text="Logout"
+          text="Log Out"
           iconName="log-out"
         />
+      )}
+
+      {getUserAuthStatus().Status && (
         <ListButton
           action={() => {
             navigation.navigate('Authenticate');
@@ -131,6 +142,7 @@ export default function ClientsScreen() {
           }}
           iconName="remove-user"
         />
+      )}
         <ListButton
           action={() => {
             navigation.navigate('About');
