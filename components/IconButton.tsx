@@ -11,44 +11,33 @@ import { Entypo } from "@expo/vector-icons";
 //  }}
 // />
 
-const IconButton = ({
-  icon,
-  onPress,
-  style,
-  iconSize = 28,
-  touchable = true,
-  ...props
-}) => {
-  if (touchable) {
-    return (
-      <TouchableOpacity
-        style={[styles.favButton, style]}
-        onPress={onPress}
-        {...props}
-      >
-        <View style={styles.iconCircle}>
-          <Entypo name={icon} size={iconSize} color="white" />
-        </View>
-      </TouchableOpacity>
-    );
-  } else {
-    return (
-      <View style={styles.iconCircle}>
-        <Entypo name={icon} size={iconSize} color="white" />
-      </View>
-    );
-  }
+const IconButton = ({ icon, onPress, style, iconSize = 28, touchable = true, ...props }) => {
+  const IconContent = (
+    <View style={styles.iconCircle}>
+      <Entypo name={icon} size={iconSize} color="white" />
+    </View>
+  );
+
+  return touchable ? (
+    <TouchableOpacity style={[styles.touchStyle, style]} onPress={onPress} {...props}>
+      {IconContent}
+    </TouchableOpacity>
+  ) : (
+    IconContent
+  );
 };
 
 const styles = StyleSheet.create({
-  favButton: {},
+  touchStyle: {
+    // add any global button styles here
+  },
   iconCircle: {
-    width: 48, // Adjust the size of the circle
-    height: 48, // Adjust the size of the circle
-    borderRadius: 24, // Set the borderRadius to half of the width and height
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: "#00a651",
-    alignItems: "center", // Center the icon horizontally
-    justifyContent: "center", // Center the icon vertically
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

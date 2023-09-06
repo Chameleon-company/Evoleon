@@ -2,18 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Dimensions, Animated } from "react-native";
 import { Marker, Callout, CalloutSubview } from "react-native-maps";
 import MapView from "react-native-map-clustering";
-import { Button, Switch } from "react-native-paper";
 import * as Location from "expo-location";
-
+import IconButton from "../components/IconButton";
 import { MapStyle } from "../styles/mapStyle";
-
 import {
   getFavouriteMarkers,
   getuserIsAuthenticated,
   addFavouriteMarker,
   removeFavouriteMarker,
 } from "../web/firebase";
-
 import DatabaseDrawer from "./DatabaseDrawer";
 
 const DatabaseMap = (props) => {
@@ -21,16 +18,12 @@ const DatabaseMap = (props) => {
   const mapRef = useRef(null);
   //Vars for the active marker
   const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
-
   //Vars for workign out if the bototm card should be visible
   const [isVisible, setIsVisible] = useState(false);
-  const markerPressed = useRef(false);
-  const debounceTimeout = useRef(null);
-  const markerPressTimeout = useRef(null);
-
   const [favouriteSelected, setFavouriteSelected] = useState(false);
   const [favouriteMarkers, setFavouriteMarkers] = useState([]);
   const userLocation = useRef(null);
+  // Default region of melbourne
   const [initialRegion, setInitialRegion] = useState({
     latitude: -37.840935,
     longitude: 144.946457,
@@ -38,21 +31,17 @@ const DatabaseMap = (props) => {
     longitudeDelta: 0.0421,
   });
 
-  const onRegionChange = (newRegion) => {
-    props.onRegionChange(newRegion);
-  };
-
   // getUserLocation will attempt to get the users location and store it in the userLocation state.
   const getUserLocation = async () => {
-    console.log("getting location");
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      console.log("Permission to access location was denied");
       return false;
     }
-    let loc = await Location.getCurrentPositionAsync({
+
+    const loc = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.Lowest,
     });
+
     userLocation.current = loc;
     return true;
   };
@@ -73,65 +62,29 @@ const DatabaseMap = (props) => {
     );
   };
 
-  // This is gross but needed. The onMapPress will always fire, even if you're pressing a marker.
-  // My fix is to set a timeout on the marker press, and if the timeout is still active when the map press fires, we don't do anything.
-  // This will need to be re-imagined in the future.
-  const togglePanelVisibility = (state) => {
-    if (state !== undefined) {
-      setIsVisible(state);
-    } else {
-      setIsVisible((prevIsVisible) => !prevIsVisible);
-    }
-  };
-
   const onMarkerPress = (marker, index) => {
     console.log("marker pressed!");
-    clearTimeout(markerPressTimeout.current);
     setActiveMarkerIndex(index);
-    markerPressed.current = true;
     props.onMarkerPress(marker);
-    const timeout = setTimeout(() => {
-      markerPressed.current = false;
-    }, 200);
-    markerPressTimeout.current = timeout;
-    togglePanelVisibility(true);
+    setIsVisible(true);
   };
 
-  // Code for hiding the bottom pannel if the user presses the map.
-  const onMapPress = (e) => {
-    // clearTimeout(debounceTimeout.current);
-    // const timeout = setTimeout(() => {
-    //   console.log(markerPressed);
-    //   if (!markerPressed.current) {
-    //     togglePanelVisibility(false);
-    //     setActiveMarkerIndex(null);
-    //   }
-    // }, 50);
-    // debounceTimeout.current = timeout;
-  };
+  // fires when the map is pressed, currently un-used but is handy to know
+  const onMapPress = (e) => {};
 
   // favourite marker will attempt to add or remove the marker from the users favourites. Also stores a local copy of the array
   const favouriteMarker = async (marker) => {
-    if (favouriteMarkers.includes(marker.id)) {
-      console.log("Removing marker from favourites");
-      let res = await removeFavouriteMarker(marker.id);
-      if (!res) {
-        console.log("Failed to remove marker from favourites: " + marker.id);
-        return;
-      }
-      await setFavouriteMarkers(
-        favouriteMarkers.filter((id) => id !== marker.id)
-      );
-      console.log("Marker " + marker.id + " removed from favourites");
-    } else {
-      console.log("Adding marker to favourites");
-      let res = await addFavouriteMarker(marker.id);
-      if (!res) {
-        console.log("Failed to add marker to favourites: " + marker.id);
-        return;
-      }
-      await setFavouriteMarkers([...favouriteMarkers, marker.id]);
-      console.log("Marker " + marker.id + " added to favourites");
+    const { id } = marker;
+    const isFavourite = favouriteMarkers.includes(id);
+    const action = isFavourite ? removeFavouriteMarker : addFavouriteMarker;
+    const updatedFavourites = isFavourite
+      ? favouriteMarkers.filter((existingId) => existingId !== id)
+      : [...favouriteMarkers, id];
+
+    const res = await action(id);
+
+    if (res) {
+      setFavouriteMarkers(updatedFavourites);
     }
   };
 
@@ -157,39 +110,36 @@ const DatabaseMap = (props) => {
 
   return (
     <>
-      <View style={MapStyle.topContainer}>
-        <Text style={MapStyle.switchText}>Favourites</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#E9ECE6" }}
-          thumbColor={favouriteSelected ? "#18A554" : "#f4f3f4"}
-          ios_backgroundColor="#777E7D"
-          onValueChange={onFavouriteToggle}
-          value={favouriteSelected}
+      {/* These are the top right controls */}
+      <View style={MapStyle.sideContainer}>
+        <IconButton
+          icon="direction"
+          style={{}}
+          onPress={() => {
+            animateMap(userLocation.current.coords);
+          }}
         />
-
-        <Button
+        <IconButton
+          icon="heart"
+          style={{
+            marginTop: 10,
+          }}
           onPress={() => {
-            if (userLocation) {
-              animateMap(userLocation.current.coords);
-            }
-          }}>
-          <Text>MyLocation</Text>
-        </Button>
-        <Button
-          onPress={() => {
-            animateMap(initialRegion);
-          }}>
-          <Text>TestingLocation</Text>
-        </Button>
+            onFavouriteToggle();
+          }}
+        />
       </View>
+      {/* This is the map */}
       <MapView
         showsUserLocation={true}
         ref={mapRef}
         onPress={onMapPress}
         initialRegion={initialRegion}
+        // mapType="hybrid"
         style={MapStyle.ViewStyle}
         onRegionChangeComplete={props.onRegionChange}
         zoomEnabled={true}>
+        {/* This creates all the markers visible  */}
         {props.markers.map((marker, index) => {
           if ((favouriteSelected && favouriteMarkers.includes(marker.id)) || !favouriteSelected) {
             return (
@@ -211,10 +161,13 @@ const DatabaseMap = (props) => {
           }
         })}
       </MapView>
-
       {/* This is the bottom card that is conditionally visible */}
       {isVisible && (
-        <DatabaseDrawer style={MapStyle.drawer} favourite={favouriteMarker} marker={props.marker}></DatabaseDrawer>
+        <DatabaseDrawer
+          style={MapStyle.drawer}
+          setVisibility={setIsVisible}
+          favourite={favouriteMarker}
+          marker={props.marker}></DatabaseDrawer>
       )}
     </>
   );

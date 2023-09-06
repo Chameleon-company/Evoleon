@@ -4,6 +4,7 @@ export const MapStyle = StyleSheet.create({
   ViewStyle: {
     flex: 1,
     backgroundColor: "#ffffff",
+    position: "relative",
   },
 
   MarkerPopupStyle: {
@@ -55,12 +56,15 @@ export const MapStyle = StyleSheet.create({
   //   padding: 10
   // },
 
-  topContainer: {
-    marginTop: 0,
-    backgroundColor: "#294E4B",
-    opacity: 0.8,
-    flexDirection: "row",
-    padding: 10,
+  sideContainer: {
+    marginTop: 10,
+    zIndex: 1, // on top of map
+    position: "absolute",
+    right: 10,
+    justifyContent: "center",
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
+    borderRadius: 25,
+    padding: 8,
   },
 
   switchText: {

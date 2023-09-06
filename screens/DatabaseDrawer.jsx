@@ -3,27 +3,39 @@ import { Text, View, Dimensions, Animated, Linking, Platform, TouchableOpacity }
 import SlidingUpPanel from "rn-sliding-up-panel";
 import IconButton from "../components/IconButton";
 import StarRating from "../components/StarRating";
-
-// import { FlatList } from "react-native-gesture-handler";
 import { Image } from "expo-image";
-
-const { height } = Dimensions.get("window");
+import { ScrollView } from "react-native";
+const { height, width } = Dimensions.get("window");
 
 const DatabaseDrawer = (props) => {
-  const defaultProps = {
-    draggableRange: { top: height + 180 - 90, bottom: 240 },
+  const dragRanges = {
+    top: height - 260,
+    middle: height + 180 - 180,
+    bottom: 240,
   };
 
-  const [draggedValue] = useState(new Animated.Value(240));
+  const [draggedValue] = useState(new Animated.Value(dragRanges.bottom));
   const panelRef = useRef(null);
-
+  const marker = props.marker;
+  const [chevronType, setChevronType] = useState("chevron-up");
   // usestate for the marker data
   [markerData, setMarkerData] = useState(null);
+  const [allowDragging, setAllowDragging] = useState(true);
 
-  const marker = props.marker;
+  useEffect(() => {
+    const listenerId = draggedValue.addListener(({ value }) => {
+      console.log("Panel Position:", value); // for debugging
+      if (value == dragRanges.top) {
+        setChevronType("chevron-down");
+      } else {
+        setChevronType("chevron-up");
+      }
+    });
 
-  const { top, bottom } = defaultProps.draggableRange;
-
+    return () => {
+      draggedValue.removeListener(listenerId);
+    };
+  }, []);
   //on marker change
   useEffect(() => {
     console.log("marker change");
@@ -32,32 +44,20 @@ const DatabaseDrawer = (props) => {
     });
   }, [props.marker]);
 
-  const backgoundOpacity = draggedValue.interpolate({
-    inputRange: [height - 48, height],
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-  });
-
-  const iconTranslateY = draggedValue.interpolate({
-    inputRange: [height - 56, height, top],
-    outputRange: [0, 56, 180 - 32],
-    extrapolate: "clamp",
-  });
-
   const textTranslateY = draggedValue.interpolate({
-    inputRange: [bottom, top],
+    inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [0, 0],
     extrapolate: "clamp",
   });
 
   const textTranslateX = draggedValue.interpolate({
-    inputRange: [bottom, top],
+    inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [0, 0],
     extrapolate: "clamp",
   });
 
   const textScale = draggedValue.interpolate({
-    inputRange: [bottom, top],
+    inputRange: [dragRanges.bottom, dragRanges.top],
     outputRange: [1, 1],
     extrapolate: "clamp",
   });
@@ -97,18 +97,19 @@ const DatabaseDrawer = (props) => {
     <>
       <SlidingUpPanel
         ref={panelRef}
-        draggableRange={{ top: height - 90, bottom: 240 }}
+        allowDragging={allowDragging}
+        draggableRange={{ top: dragRanges.top, bottom: dragRanges.bottom }}
         animatedValue={draggedValue}
-        snappingPoints={[480, height]}
+        snappingPoints={[dragRanges.top, dragRanges.middle]}
         height={height + 180}
         friction={0.7}>
         <View style={styles.panel}>
           <IconButton
-            icon="chevron-up"
+            icon={chevronType}
             style={{
               position: "absolute",
               top: -24,
-              right: 18,
+              right: 82,
               width: 48,
               height: 48,
               zIndex: 1,
@@ -119,6 +120,20 @@ const DatabaseDrawer = (props) => {
               } else {
                 panelRef.current.show(480);
               }
+            }}
+          />
+          <IconButton
+            icon={"circle-with-cross"}
+            style={{
+              position: "absolute",
+              top: -24,
+              right: 18,
+              width: 48,
+              height: 48,
+              zIndex: 1,
+            }}
+            onPress={() => {
+              props.setVisibility(false);
             }}
           />
           <View style={styles.panelHeader}>
@@ -170,27 +185,46 @@ const DatabaseDrawer = (props) => {
             </Animated.View>
           </View>
           {/* Larger view screen after being scrolled into full view */}
-          <View style={styles.container}>
-            <Text>Description:</Text>
-            <Text>
-              {markerData?.description.replace(/\r?\n|\r/g, "").length > 100
-                ? markerData?.description.replace(/\r?\n|\r/g, "").slice(0, 100) + "..."
-                : markerData?.description.replace(/\r?\n|\r/g, "") || "No Description"}
+          <ScrollView
+            resizeMode="contain"
+            onTouchStart={() => setAllowDragging(false)}
+            onTouchEnd={() => setAllowDragging(true)}
+            onTouchCancel={() => setAllowDragging(true)}>
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginTop: 10,
+                marginBottom: 10,
+              }}>
+              Description
             </Text>
-            {markerData?.photos?.length > 0 && (
-              <>
-                <Text>Photos:</Text>
-                {/* <FlatList
-                  data={markerData?.photos}
-                  renderItem={({ item }) => (
-                    <Image key={item.id} source={{ uri: item.url }} style={{ width: 200, height: 200 }} />
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                  horizontal={true}
-                /> */}
-              </>
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+                marginBottom: 10,
+              }}>
+              {markerData?.description !== undefined ? markerData?.description : "No description available"}
+            </Text>
+            {markerData?.photos !== undefined && (
+              <View style={{ alignItems: "center" }}>
+                {markerData?.photos.map((photo, index) => (
+                  <Image
+                    key={index}
+                    style={{
+                      width: width - 10, // 10 pixels less than the screen width
+                      height: (width - 10) * 0.75, // Maintain aspect ratio
+                      borderRadius: 10, // Rounded corners
+                      marginBottom: 10, // Space between images
+                    }}
+                    source={{ uri: photo.url }}
+                  />
+                ))}
+              </View>
             )}
-          </View>
+          </ScrollView>
         </View>
       </SlidingUpPanel>
     </>
@@ -202,10 +236,10 @@ export default DatabaseDrawer;
 // Can move this out once the component is outa dev but easier to work with this here
 const styles = {
   container: {
-    flex: 1,
-    backgroundColor: "#f8f9fa",
-    // alignItems: "center",
-    // justifyContent: "center",
+    // flex: 1,
+    // height: 100000,
+    // backgroundColor: "#f8f9fa",
+    // zIndex: 3,
   },
   panel: {
     flex: 1,
@@ -226,34 +260,5 @@ const styles = {
   textFavHeader: {
     fontSize: 28,
     color: "#ffffff",
-  },
-  icon: {
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: -24,
-    right: 18,
-    width: 48,
-    height: 48,
-    zIndex: 1,
-  },
-  iconBg: {
-    backgroundColor: "#00a651",
-    position: "absolute",
-    top: -24,
-    right: 18,
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    zIndex: 1,
-  },
-  starContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
-  },
-  star: {
-    marginRight: 4,
   },
 };
