@@ -1,47 +1,44 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
-import { Text, View } from "../components/Themed";
-import { Alert, Pressable, TextInput, TouchableOpacity } from "react-native";
-import { ButtonStyle } from "../styles/buttonStyle";
-import MenuIcon from "../components/MenuIcon";
-import { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LoginScreenStyle } from "../styles/loginStyle";
-import { userLogin } from "../web/firebase";
+import { Text, View, useTheme } from '../components/Themed';
+import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
 
-{
-  /* Log in Screen */
-}
+import MenuIcon from '../components/MenuIcon';
+import { useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { userLogin } from '../web/firebase';
+
+import { createLoginStyle } from '../styles/loginStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
+
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const [email, onChangeTextEmail] = React.useState("");
-  const [password, onChangeTextPassword] = React.useState("");
+  const colorScheme = useTheme();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
+  const LoginStyle = createLoginStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
+  const [email, onChangeTextEmail] = React.useState('');
+  const [password, onChangeTextPassword] = React.useState('');
 
   return (
-    <SafeAreaView style={LoginScreenStyle.content}>
-      <View style={LoginScreenStyle.content}>
-        <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
-          Don't have an account?
-        </Text>
+    <SafeAreaView style={LoginStyle.content}>
+      <View style={LoginStyle.content}>
+        <Text style={LoginStyle.text}>Don't have an account?</Text>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Signup");
+            navigation.navigate('Signup');
           }}
         >
-          <Text style={LoginScreenStyle.SignupLink}>Sign Up</Text>
+          <Text style={ButtonStyle.signupLink}>Sign Up</Text>
         </TouchableOpacity>
 
-        <View style={LoginScreenStyle.inputView}>
+        <View style={LoginStyle.inputView}>
           <TextInput
-            style={LoginScreenStyle.input}
+            style={LoginStyle.input}
             keyboardType="email-address"
             onChangeText={onChangeTextEmail}
             value={email}
@@ -49,7 +46,7 @@ export default function LoginScreen() {
             placeholder="Email"
           />
           <TextInput
-            style={LoginScreenStyle.input}
+            style={LoginStyle.input}
             secureTextEntry={true}
             onChangeText={onChangeTextPassword}
             value={password}
@@ -58,30 +55,22 @@ export default function LoginScreen() {
           />
 
           <TouchableOpacity
-            style={LoginScreenStyle.forgotPassButton}
+            style={ButtonStyle.forgotPassButton}
             onPress={() => {
-              navigation.navigate("ForgotPassword");
+              navigation.navigate('ForgotPasswordScreen');
             }}
           >
-            <Text style={LoginScreenStyle.SignupLink}>
-              Forgot your password?
-            </Text>
+            <Text style={ButtonStyle.signupLink}>Forgot your password?</Text>
           </TouchableOpacity>
 
-          {/* Login button */}
           <TouchableOpacity
-            style={LoginScreenStyle.button}
+            style={ButtonStyle.button}
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {
-                navigation.navigate("Database");
+                navigation.navigate('Database');
               } else {
-                Alert.alert(
-                  "Login Error",
-                  error.code === "auth/wrong-password"
-                    ? "Incorrect password"
-                    : error.message
-                );
+                Alert.alert('Login Error', error.code === 'auth/wrong-password' ? 'Incorrect password' : error.message);
               }
             }}
           >
@@ -89,12 +78,12 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={LoginScreenStyle.cancelButton}
+            style={ButtonStyle.cancelButton}
             onPress={() => {
-              navigation.navigate("Authenticate");
+              navigation.navigate('Authenticate');
             }}
           >
-            <Text style={LoginScreenStyle.cancelText}>Cancel</Text>
+            <Text style={ButtonStyle.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>

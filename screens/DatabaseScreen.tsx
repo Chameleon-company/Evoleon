@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { MapStyle } from "../styles/mapStyle";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import DatabaseMap from "./DatabaseMap";
-import MenuIcon from "../components/MenuIcon";
-import testingCoords from "../locations.json";
+import React, { useState, useEffect } from 'react';
+import { createMapStyle } from '../styles/mapStyle';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { Text, View, useTheme } from '../components/Themed';
+import DatabaseMap from './DatabaseMap';
+import MenuIcon from '../components/MenuIcon';
+import testingCoords from '../locations.json';
 
 const DatabaseScreen = (props) => {
+  const colorScheme = useTheme();
+
+  const MapStyle = createMapStyle(colorScheme);
+
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [visibleRegion, setVisibleRegion] = useState(null);
   const [visibleMarkers, setVisibleMarkers] = useState([]);
@@ -14,8 +18,7 @@ const DatabaseScreen = (props) => {
   const isLocationVisible = (location) => {
     if (!visibleRegion) return false;
 
-    const { latitude, longitude, latitudeDelta, longitudeDelta } =
-      visibleRegion;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = visibleRegion;
     const latMin = latitude - latitudeDelta / 2;
     const latMax = latitude + latitudeDelta / 2;
     const lonMin = longitude - longitudeDelta / 2;
@@ -32,13 +35,6 @@ const DatabaseScreen = (props) => {
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
   };
-
-  useEffect(() => {
-    // To display the hamburger top left
-    props.navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  }, []);
 
   return (
     <View style={MapStyle.ViewStyle}>

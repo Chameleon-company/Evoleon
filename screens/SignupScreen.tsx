@@ -1,148 +1,159 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import {
-  Alert,
-  Pressable,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import { useEffect } from "react";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Alert, Pressable, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 
-import { Text, View } from "../components/Themed";
-import MenuIcon from "../components/MenuIcon";
+import { Text, View, useTheme } from '../components/Themed';
 
-import { AuthScreenStyle } from "../styles/authenticateStyle";
-import { ButtonStyle } from "../styles/buttonStyle";
-import { SignUpScreenStyle } from "../styles/signUpStyle";
-import Checkbox from "expo-checkbox";
-import { userSignUp } from "../web/firebase";
+import Checkbox from 'expo-checkbox';
+import { userSignUp } from '../web/firebase';
 
-{
-  /* User sign up screen */
-}
+import { createAuthenticationStyle } from '../styles/authenticateStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
+import { createSignupStyle } from '../styles/signupStyle';
+
 export default function SignupScreen() {
   const navigation = useNavigation();
-  const [firstName, onChangeTextFirstName] = React.useState("");
-  const [lastName, onChangeTextLastName] = React.useState("");
-  const [homeCountry, onChangeTextCountry] = React.useState("");
-  const [homePostcode, onChangeTextPostcode] = React.useState("");
-  const [email, onChangeTextEmail] = React.useState("");
-  const [password, onChangeTextPassword] = React.useState("");
+  const colorScheme = useTheme();
+
+  const AuthScreenStyle = createAuthenticationStyle(colorScheme);
+  const SignupStyle = createSignupStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
+
+  const [firstName, onChangeTextFirstName] = React.useState('');
+  const [lastName, onChangeTextLastName] = React.useState('');
+  const [homeCountry, onChangeTextCountry] = React.useState('');
+  const [homePostcode, onChangeTextPostcode] = React.useState('');
+  const [email, onChangeTextEmail] = React.useState('');
+  const [password, onChangeTextPassword] = React.useState('');
+  const [confirmPassword, onChangeTextConfirmPassword] = React.useState('');
   const [isChecked, setChecked] = React.useState(false);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
-
   return (
-    <View style={AuthScreenStyle.Centered}>
-      <Text lightColor="rgba(0,0,0,0.8)" darkColor="#294E4B">
-        Already have an account?
-      </Text>
+    <View style={SignupStyle.content}>
+      <Text style={SignupStyle.text}>Already have an account? </Text>
 
       {/* Link to go to Login page*/}
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Login");
+          navigation.navigate('Login');
         }}
       >
         <Text style={ButtonStyle.LoginLink}>Login</Text>
       </TouchableOpacity>
 
       {/* Collect user information */}
-      <SafeAreaView style={SignUpScreenStyle.InputArea}>
+      <SafeAreaView style={SignupStyle.InputArea}>
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextFirstName}
           value={firstName}
           placeholderTextColor="grey"
-          placeholder="First name"
+          placeholder="First name *"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextLastName}
           value={lastName}
           placeholderTextColor="grey"
-          placeholder="Last name"
+          placeholder="Last name  *"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextCountry}
           value={homeCountry}
           placeholderTextColor="grey"
-          placeholder="Home Country"
+          placeholder="Home Country *"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextPostcode}
           value={homePostcode}
           placeholderTextColor="grey"
-          placeholder="Home Postcode"
+          placeholder="Home Postcode  *"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           onChangeText={onChangeTextEmail}
           value={email}
           placeholderTextColor="grey"
-          placeholder="Email"
+          placeholder="Email  *"
         />
         <TextInput
-          style={SignUpScreenStyle.Text}
+          style={SignupStyle.Text}
           secureTextEntry={true}
           onChangeText={onChangeTextPassword}
           value={password}
           placeholderTextColor="grey"
-          placeholder="Password"
+          placeholder="Password *"
+        />
+
+        <TextInput
+          style={SignupStyle.Text}
+          secureTextEntry={true}
+          onChangeText={onChangeTextConfirmPassword}
+          value={confirmPassword}
+          placeholderTextColor="grey"
+          placeholder="Confirm Password *"
         />
       </SafeAreaView>
 
-      <View style={SignUpScreenStyle.CheckBox}>
+      <View style={SignupStyle.CheckBox}>
         <Checkbox
           value={isChecked}
           onValueChange={setChecked}
-          color={isChecked ? "#294E4B" : undefined}
+          color={isChecked ? colorScheme.colors.primary : undefined}
         />
 
-        <TouchableOpacity
-        ///style={SignUpScreenStyle.termsConditionsButton}
-        /// onPress={() => {
-        /// navigation.navigate('TermsAndConditionsScreen');
-        ///  }}
-        />
-        <Text style={SignUpScreenStyle.CheckBoxText}>
-          I agree to
-          <TouchableOpacity
-            onPress={() => navigation.navigate("TermsAndConditionsScreen")}
+        <Text style={SignupStyle.CheckBoxText}>
+          I agree to{' '}
+          <Text
+            onPress={() => navigation.navigate('TermsAndConditionsScreen')}
+            style={{ ...ButtonStyle.signupLink, color: colorScheme.colors.primary }}
           >
-            <Text style={SignUpScreenStyle.SignupLink}>
-              Terms and Conditions
-            </Text>
-          </TouchableOpacity>
+            Terms and Conditions
+          </Text>{' '}
           and the Privacy Policy
         </Text>
       </View>
-
-      {/* Submit button */}
+      {/* Submit Button */}
       <Pressable
         style={ButtonStyle.Button}
-        onPress={() => {
-          userSignUp(email, password, firstName, lastName, homeCountry).then(
-            (result) => {
-              console.log(result);
-              if (result == true) {
-                navigation.navigate("Database");
-              } else {
-                Alert.alert("Error when creating account");
-              }
+        onPress={async () => {
+          try {
+            // Check if passwords match
+            if (password !== confirmPassword) {
+              throw new Error('Passwords do not match.');
             }
-          );
+
+            // Check password length
+            if (password.length < 6) {
+              throw new Error('Password must be 6 characters or more.');
+            }
+            const result = await userSignUp(email, password, firstName, lastName, homeCountry, confirmPassword);
+
+            if (result) {
+              console.log('Account created successfully');
+              navigation.navigate('Map');
+            } else {
+              console.log('Error when creating account');
+              Alert.alert('Error when creating account');
+            }
+          } catch (error: any) {
+            console.error('An error occurred during sign up:', error.message);
+            Alert.alert('Error during sign up', error.message);
+          }
         }}
       >
         <Text style={ButtonStyle.Text}>Submit</Text>
+      </Pressable>
+
+      <Pressable
+        style={ButtonStyle.cancelButton}
+        onPress={() => {
+          navigation.navigate('Authenticate');
+        }}
+      >
+        <Text style={ButtonStyle.cancelText}>Cancel</Text>
       </Pressable>
     </View>
   );

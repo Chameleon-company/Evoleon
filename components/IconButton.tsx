@@ -2,15 +2,6 @@ import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-// This just exports a touchable button with the width and height defined so it's cleaner within code.
-// Use like this:
-// <IconButton
-//  icon="heart"
-//  onPress={() => {
-//    someFunction()
-//  }}
-// />
-
 const IconButton = ({
   icon,
   onPress,

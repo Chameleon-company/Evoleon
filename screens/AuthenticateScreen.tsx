@@ -1,40 +1,33 @@
-import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import { Image, Pressable, TouchableOpacity } from "react-native";
-import { useEffect } from "react";
+import * as React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Image, TouchableOpacity } from 'react-native';
 
-import { Text, View } from "../components/Themed";
-import MenuIcon from "../components/MenuIcon";
+import { Text, View, useTheme } from '../components/Themed';
 
-import { AuthScreenStyle } from "../styles/authenticateStyle";
-import { ButtonStyle } from "../styles/buttonStyle";
-import logoStyles from "../styles/logoStyle";
+import { createAuthenticationStyle } from '../styles/authenticateStyle';
+import { createButtonStyle } from '../styles/buttonStyle';
 
-
- /* Initial screen for authentication proccess.
+/* Initial screen for authentication proccess.
   To do: improve user interface code and update links
 */
 
 export default function AuthenticateScreen() {
   const navigation = useNavigation();
+  const colorScheme = useTheme();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: (props: StackHeaderLeftButtonProps) => <MenuIcon />,
-    });
-  });
+  const AuthenticationStyle = createAuthenticationStyle(colorScheme);
+  const ButtonStyle = createButtonStyle(colorScheme);
 
   return (
-    <View style={AuthScreenStyle.Centered}>
+    <View style={AuthenticationStyle.Centered}>
       {/* Logo - to be updated with current logo */}
-      <Image style={logoStyles.frontPageLogo} source={require("./EvoleonFinal.png")} />
+      <Image style={AuthenticationStyle.frontPageLogo} source={require('../assets/EvoleonUserProfileTemp.png')} />
 
       {/* Login button */}
       <TouchableOpacity
         style={ButtonStyle.Button}
         onPress={() => {
-          navigation.navigate("Login");
+          navigation.navigate('Login');
         }}
       >
         <Text style={ButtonStyle.Text}>Login</Text>
@@ -44,19 +37,11 @@ export default function AuthenticateScreen() {
       <TouchableOpacity
         style={ButtonStyle.Button}
         onPress={() => {
-          navigation.navigate("Signup");
+          navigation.navigate('Signup');
         }}
       >
         <Text style={ButtonStyle.Text}>Sign up</Text>
       </TouchableOpacity>
-    {/* Back button */}
-    <TouchableOpacity
-        style={[{marginTop: 20}, ButtonStyle.Button]}
-        onPress={() => {
-            navigation.goBack();
-        }}>
-        <Text style={ButtonStyle.Text}>Back</Text>
-    </TouchableOpacity>
     </View>
   );
 }
