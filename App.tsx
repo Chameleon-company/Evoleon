@@ -17,6 +17,7 @@ import UpdateUserDetailsScreen from './screens/UpdateUserDetailsScreen';
 import SignupScreen from './screens/SignupScreen';
 import AboutScreen from './screens/AboutScreen';
 import HelpAndSupportScreen from './screens/HelpAndSupportScreen';
+import ContactScreen from './screens/ContactScreen';
 
 // Nav Icon Imports.
 import { Entypo } from '@expo/vector-icons';
@@ -82,6 +83,7 @@ export default function App() {
           <Tab.Screen name="File System Screen" component={FileSystemScreen} />
           <Tab.Screen name="About Screen" component={AboutScreen} />
           <Tab.Screen name="Settings" component={ClientsScreen} />
+          <Tab.Screen name="Help and Support" component={HelpAndSupportScreen}/>
           {/* The next tabs are hidden from selection */}
           {/* Note: If you are implementing a new page you must put the entry here so it's within the possible navigation boundaries.
            Adding the blank view tag here hides it from the menu but it's required that new pages be added here.  */}
@@ -108,9 +110,9 @@ export default function App() {
             component={ForgotPasswordScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
-          <Tab.Screen
-            name="HelpAndSupportScreen"
-            component={HelpAndSupportScreen}
+           <Tab.Screen
+            name="ContactScreen"
+            component={ContactScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
         </Tab.Navigator>
