@@ -68,7 +68,7 @@ export default function LoginScreen() {
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {
-                navigation.navigate('Database');
+                navigation.navigate('Map');
               } else {
                 Alert.alert('Login Error', error.code === 'auth/wrong-password' ? 'Incorrect password' : error.message);
               }
