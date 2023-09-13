@@ -9,7 +9,7 @@ import { userSignUp } from '../web/firebase';
 
 import { createAuthenticationStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
-import { createSignupStyle } from '../styles/signupStyle';
+import { createSignupStyle } from '../styles/signUpStyle';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
