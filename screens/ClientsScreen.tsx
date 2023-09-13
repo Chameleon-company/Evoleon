@@ -138,6 +138,13 @@ export default function ClientsScreen() {
           text="About"
           iconName="info"
         />
+        <ListButton
+          action={() => {
+            navigation.navigate('Help and Support');
+          }}
+          text="Help and Support"
+          iconName="help"
+        />
       </ScrollView>
     </View>
   );

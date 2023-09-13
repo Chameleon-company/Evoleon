@@ -16,6 +16,8 @@ import TermsAndConditionsScreen from './screens/TermsAndConditionsScreen';
 import UpdateUserDetailsScreen from './screens/UpdateUserDetailsScreen';
 import SignupScreen from './screens/SignupScreen';
 import AboutScreen from './screens/AboutScreen';
+import HelpAndSupportScreen from './screens/HelpAndSupportScreen';
+import ContactScreen from './screens/ContactScreen';
 
 // Nav Icon Imports.
 import { Entypo } from '@expo/vector-icons';
@@ -88,6 +90,11 @@ export default function App() {
           <Tab.Screen name="Signup" component={SignupScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen name="About" component={AboutScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen
+            name="Help and Support"
+            component={HelpAndSupportScreen}
+            options={{ tabBarButton: () => <View></View> }}
+          />
+          <Tab.Screen
             name="Update Details"
             component={UpdateUserDetailsScreen}
             options={{ tabBarButton: () => <View></View> }}
@@ -107,6 +114,7 @@ export default function App() {
             component={ForgotPasswordScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
+          <Tab.Screen name="ContactScreen" component={ContactScreen} options={{ tabBarButton: () => <View></View> }} />
         </Tab.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

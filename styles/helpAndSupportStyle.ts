@@ -5,16 +5,18 @@ export const createHelpAndSupportPageStyle = (colorScheme) =>
     container: {
       flex: 1,
       backgroundColor: colorScheme.colors.background,
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: 20, // Add padding to the container
     },
     title: {
       fontWeight: 'bold',
       fontSize: 24,
       marginVertical: 20,
     },
+    scrollContainer: {
+      flexGrow: 1, // Allow the content to grow and scroll
+    },
     faqContainer: {
-      width: '80%',
+      width: '100%', // Adjust the width to 100% for full screen width
       marginBottom: 20,
     },
     questionContainer: {
@@ -41,6 +43,8 @@ export const createHelpAndSupportPageStyle = (colorScheme) =>
     },
     icon: {
       marginLeft: 10,
+      width: 16, 
+      height: 16,
     },
     faqsContainer: {
       alignItems: 'center',
