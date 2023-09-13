@@ -83,13 +83,17 @@ export default function App() {
           <Tab.Screen name="File System Screen" component={FileSystemScreen} />
           <Tab.Screen name="About Screen" component={AboutScreen} />
           <Tab.Screen name="Settings" component={ClientsScreen} />
-          <Tab.Screen name="Help and Support" component={HelpAndSupportScreen}/>
           {/* The next tabs are hidden from selection */}
           {/* Note: If you are implementing a new page you must put the entry here so it's within the possible navigation boundaries.
            Adding the blank view tag here hides it from the menu but it's required that new pages be added here.  */}
           <Tab.Screen name="Login" component={LoginScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen name="Signup" component={SignupScreen} options={{ tabBarButton: () => <View></View> }} />
           <Tab.Screen name="About" component={AboutScreen} options={{ tabBarButton: () => <View></View> }} />
+          <Tab.Screen
+            name="Help and Support"
+            component={HelpAndSupportScreen}
+            options={{ tabBarButton: () => <View></View> }}
+          />
           <Tab.Screen
             name="Update Details"
             component={UpdateUserDetailsScreen}
@@ -110,11 +114,7 @@ export default function App() {
             component={ForgotPasswordScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
-           <Tab.Screen
-            name="ContactScreen"
-            component={ContactScreen}
-            options={{ tabBarButton: () => <View></View> }}
-          />
+          <Tab.Screen name="ContactScreen" component={ContactScreen} options={{ tabBarButton: () => <View></View> }} />
         </Tab.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

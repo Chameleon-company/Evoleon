@@ -43,9 +43,8 @@ export const createHelpAndSupportPageStyle = (colorScheme) =>
     },
     icon: {
       marginLeft: 10,
-    },
-    backButton: {
-      marginTop: 20,
+      width: 16, 
+      height: 16,
     },
     faqsContainer: {
       alignItems: 'center',
