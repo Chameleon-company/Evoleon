@@ -3,6 +3,10 @@ import { StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import {
+  getUserAuthStatus,
+} from './web/firebase';
 
 // Screen imports.
 import AuthenticateScreen from './screens/AuthenticateScreen';
@@ -30,6 +34,21 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   scheme = useColorScheme();
   theme = useTheme();
+
+ // Use state to manage the authentication status
+ const [isAuthenticated, setIsAuthenticated] = useState(getUserAuthStatus().Status);
+
+ // Listen for changes in authentication status
+ useEffect(() => {
+   const updateAuthStatus = () => {
+     setIsAuthenticated(getUserAuthStatus().Status);
+   };
+
+   // Simulate checking for authentication status changes every 5 seconds
+   const authStatusCheckInterval = setInterval(updateAuthStatus, 5000);
+ // Clean up the interval when the component unmounts
+ return () => clearInterval(authStatusCheckInterval);
+}, []);
 
   return (
     <NavigationContainer theme={theme}>
@@ -79,7 +98,11 @@ export default function App() {
         >
           {/* Entries that are displayed on the bottom bar */}
           <Tab.Screen name="Map" component={DatabaseScreen} />
-          <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
+           {/* Conditionally render the "Authenticate" tab based on authentication status */}
+   {/* Conditionally render the "Authenticate" tab based on authentication status */}
+   {!isAuthenticated ? (
+            <Tab.Screen name="Authenticate" component={AuthenticateScreen} />
+          ) : null}
           <Tab.Screen name="File System Screen" component={FileSystemScreen} />
           <Tab.Screen name="About Screen" component={AboutScreen} />
           <Tab.Screen name="Settings" component={ClientsScreen} />
