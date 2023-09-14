@@ -86,12 +86,14 @@ export default function ClientsScreen() {
        
       {getUserAuthStatus().Status && (
         <ListButton
-          action={() => {
+          action ={() => {
             logoutUser();
-            navigation.navigate('Authenticate');
+            navigation.navigate('Map');
           }}
+
           text="Log Out"
           iconName="log-out"
+
         />
       )}
 
