@@ -45,7 +45,7 @@ export default function App() {
    };
 
    // Simulate checking for authentication status changes every 5 seconds
-   const authStatusCheckInterval = setInterval(updateAuthStatus, 5000);
+   const authStatusCheckInterval = setInterval(updateAuthStatus, 0);
  // Clean up the interval when the component unmounts
  return () => clearInterval(authStatusCheckInterval);
 }, []);
