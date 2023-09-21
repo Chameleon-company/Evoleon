@@ -1,13 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, View, Dimensions, Animated, Linking, Platform, TouchableOpacity } from "react-native";
-import SlidingUpPanel from "rn-sliding-up-panel";
-import IconButton from "../components/IconButton";
-import StarRating from "../components/StarRating";
-import { Image } from "expo-image";
-import { ScrollView } from "react-native";
-const { height, width } = Dimensions.get("window");
+import { Dimensions, Animated, Linking, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import SlidingUpPanel from 'rn-sliding-up-panel';
+import IconButton from '../components/IconButton';
+import StarRating from '../components/StarRating';
+import { Image } from 'expo-image';
+const { height, width } = Dimensions.get('window');
+
+import { Text, View, useTheme } from '../components/Themed';
+import { createMapStyle } from '../styles/mapStyle';
 
 const DatabaseDrawer = (props) => {
+  // This is the map style
+  const colorScheme = useTheme();
+  const MapStyle = createMapStyle(colorScheme);
   const dragRanges = {
     top: height - 260,
     middle: height + 180 - 180,
@@ -17,18 +22,19 @@ const DatabaseDrawer = (props) => {
   const [draggedValue] = useState(new Animated.Value(dragRanges.bottom));
   const panelRef = useRef(null);
   const marker = props.marker;
-  const [chevronType, setChevronType] = useState("chevron-up");
+  const [chevronType, setChevronType] = useState('chevron-up');
   // usestate for the marker data
   [markerData, setMarkerData] = useState(null);
   const [allowDragging, setAllowDragging] = useState(true);
 
   useEffect(() => {
     const listenerId = draggedValue.addListener(({ value }) => {
-      console.log("Panel Position:", value); // for debugging
+      console.log('Panel Position:', value); // for debugging
       if (value == dragRanges.top) {
-        setChevronType("chevron-down");
+        setChevronType('chevron-down');
+        // console.log(backgroundColor);
       } else {
-        setChevronType("chevron-up");
+        setChevronType('chevron-up');
       }
     });
 
@@ -104,17 +110,12 @@ const DatabaseDrawer = (props) => {
         height={height + 180}
         friction={0.7}
       >
-        <View style={styles.panel}>
+        {/* view for entire panel */}
+        <View style={MapStyle.panel}>
+          {/* right buttons on header */}
           <IconButton
             icon={chevronType}
-            style={{
-              position: 'absolute',
-              top: -24,
-              right: 82,
-              width: 48,
-              height: 48,
-              zIndex: 1,
-            }}
+            style={MapStyle.chevronButton}
             onPress={() => {
               if (draggedValue._value == 480) {
                 panelRef.current.show();
@@ -125,64 +126,58 @@ const DatabaseDrawer = (props) => {
           />
           <IconButton
             icon={'circle-with-cross'}
-            style={{
-              position: 'absolute',
-              top: -24,
-              right: 18,
-              width: 48,
-              height: 48,
-              zIndex: 1,
-            }}
+            style={MapStyle.closeButton}
             onPress={() => {
               props.setVisibility(false);
             }}
           />
-          <View style={styles.panelHeader}>
+          {/* main panel header  */}
+          <View style={MapStyle.panelHeader}>
             <Animated.View
               style={{
                 transform: [{ translateY: textTranslateY }, { translateX: textTranslateX }, { scale: textScale }],
               }}
             >
-              <View>
-                <View style={{ bottom: 20 }}>
-                  <Text style={styles.textHeader}>{marker.name}</Text>
-                  {/* If there is no rating / score we will make one up with the id as the seed for a float between 1 and 10 */}
-                  <StarRating score={marker.rating == undefined ? marker.id : marker.rating}></StarRating>
-                </View>
-                {/* / */}
-                <View style={{ flexDirection: 'row' }}>
-                  <IconButton
-                    icon="heart"
-                    style={{ marginRight: 10 }}
-                    onPress={() => {
-                      props.favourite(marker);
-                    }}
-                  />
-                  <IconButton
-                    icon="direction"
-                    onPress={() => {
-                      if (Platform.OS === 'ios') {
-                        Linking.openURL(`http://maps.apple.com/?address=${encodeURIComponent(marker.address)}`);
-                      } else {
-                        Linking.openURL(
-                          `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(marker.address)}`
-                        );
-                      }
-                    }}
-                  />
-                </View>
-                {markerData !== undefined && (
-                  <>
-                    {/* Gotta make it fit the page */}
-                    <Text style={{ maxWidth: 500, color: '#ffffff' }}>
-                      {markerData?.cost_description !== undefined && markerData?.cost_description !== ''
-                        ? markerData?.cost_description.length > 50
-                          ? markerData?.cost_description.substring(0, 50) + '...'
-                          : markerData?.cost_description
-                        : 'Visit location for cost information'}
-                    </Text>
-                  </>
-                )}
+              <Text style={MapStyle.textHeader}>{marker.name}</Text>
+              {/* If there is no rating / score we will make one up with the id as the seed for a float between 1 and 10 */}
+              <StarRating
+                containerStyle={MapStyle.starRating}
+                score={marker.rating == undefined ? marker.id : marker.rating}
+              ></StarRating>
+              {/* / */}
+              {markerData !== undefined && (
+                <>
+                  {/* Gotta make it fit the page */}
+                  <Text style={MapStyle.costText}>
+                    {markerData?.cost_description !== undefined && markerData?.cost_description !== ''
+                      ? markerData?.cost_description.length > 50
+                        ? markerData?.cost_description.substring(0, 50) + '...'
+                        : markerData?.cost_description
+                      : 'Visit location for cost information'}
+                  </Text>
+                </>
+              )}
+              <View style={MapStyle.heartIcon}>
+                <IconButton
+                  icon="heart"
+                  style={{ marginRight: 10 }}
+                  onPress={() => {
+                    props.favourite(marker);
+                  }}
+                />
+                <IconButton
+                  style={MapStyle.directionsIcon}
+                  icon="direction"
+                  onPress={() => {
+                    if (Platform.OS === 'ios') {
+                      Linking.openURL(`http://maps.apple.com/?address=${encodeURIComponent(marker.address)}`);
+                    } else {
+                      Linking.openURL(
+                        `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(marker.address)}`
+                      );
+                    }
+                  }}
+                />
               </View>
             </Animated.View>
           </View>
@@ -193,37 +188,22 @@ const DatabaseDrawer = (props) => {
             onTouchEnd={() => setAllowDragging(true)}
             onTouchCancel={() => setAllowDragging(true)}
           >
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: 'bold',
-                textAlign: 'center',
-                marginTop: 10,
-                marginBottom: 10,
-              }}
-            >
-              Description
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: 'center',
-                marginBottom: 10,
-              }}
-            >
+            <Text style={MapStyle.bodyDescriptionHeader}>Description</Text>
+            <Text style={MapStyle.bodyDescriptionText}>
               {markerData?.description !== undefined ? markerData?.description : 'No description available'}
             </Text>
             {markerData?.photos !== undefined && (
-              <View style={{ alignItems: 'center' }}>
+              <View style={MapStyle.bodyPhotoView}>
                 {markerData?.photos.map((photo, index) => (
                   <Image
                     key={index}
-                    style={{
-                      width: width - 10, // 10 pixels less than the screen width
-                      height: (width - 10) * 0.75, // Maintain aspect ratio
-                      borderRadius: 10, // Rounded corners
-                      marginBottom: 10, // Space between images
-                    }}
+                    style={[
+                      {
+                        width: width - 10, // 10 pixels less than the screen width
+                        height: (width - 10) * 0.75, // Maintain aspect ratio
+                      },
+                      MapStyle.bodyPhoto,
+                    ]}
                     source={{ uri: photo.url }}
                   />
                 ))}
@@ -237,33 +217,3 @@ const DatabaseDrawer = (props) => {
 };
 
 export default DatabaseDrawer;
-
-// Can move this out once the component is outa dev but easier to work with this here
-const styles = {
-  container: {
-    // flex: 1,
-    // height: 100000,
-    // backgroundColor: "#f8f9fa",
-    // zIndex: 3,
-  },
-  panel: {
-    flex: 1,
-    backgroundColor: "white",
-    position: "relative",
-  },
-  panelHeader: {
-    height: 180,
-    backgroundColor: "#294e4b",
-    justifyContent: "flex-end",
-    padding: 24,
-  },
-  textHeader: {
-    // bottom: 20,
-    fontSize: 24,
-    color: "#FFF",
-  },
-  textFavHeader: {
-    fontSize: 28,
-    color: "#ffffff",
-  },
-};

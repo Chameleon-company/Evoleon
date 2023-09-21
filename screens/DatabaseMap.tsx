@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Dimensions, Animated } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import MapView from 'react-native-map-clustering';
 import * as Location from 'expo-location';
 import IconButton from '../components/IconButton';
-import { MapStyle } from '../styles/mapStyle';
+import { Text, View, useTheme } from '../components/Themed';
+import { createMapStyle } from '../styles/mapStyle';
 import {
   getFavouriteMarkers,
   getuserIsAuthenticated,
@@ -14,6 +15,10 @@ import {
 import DatabaseDrawer from './DatabaseDrawer';
 
 const DatabaseMap = (props) => {
+  // This is the map style
+  const colorScheme = useTheme();
+  const MapStyle = createMapStyle(colorScheme);
+
   //Ref for the map
   const mapRef = useRef(null);
   //Vars for the active marker
@@ -145,6 +150,7 @@ const DatabaseMap = (props) => {
           if ((favouriteSelected && favouriteMarkers.includes(marker.id)) || !favouriteSelected) {
             return (
               <Marker
+                style={MapStyle.MapMarkerBody}
                 key={index}
                 coordinate={{
                   latitude: marker.latitude,
@@ -156,7 +162,7 @@ const DatabaseMap = (props) => {
                 }}
               >
                 <Callout alphaHitTest={true}>
-                  <Text>{marker.name}</Text>
+                  <Text style={MapStyle.MapMarkerText}>{marker.name}</Text>
                 </Callout>
               </Marker>
             );
@@ -165,12 +171,7 @@ const DatabaseMap = (props) => {
       </MapView>
       {/* This is the bottom card that is conditionally visible */}
       {isVisible && (
-        <DatabaseDrawer
-          style={MapStyle.drawer}
-          setVisibility={setIsVisible}
-          favourite={favouriteMarker}
-          marker={props.marker}
-        ></DatabaseDrawer>
+        <DatabaseDrawer setVisibility={setIsVisible} favourite={favouriteMarker} marker={props.marker}></DatabaseDrawer>
       )}
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { View, StyleSheet } from "react-native";
 
-const StarRating = ({ score }) => {
+const StarRating = ({ score, containerStyle, starStyle }) => {
   // This is to generate a random float between 1 and 10 using the input score as a seed
   // Mainly for display purposes during testing
   if (score > 10) {
@@ -14,14 +14,14 @@ const StarRating = ({ score }) => {
   const rating = (score / 10) * 5;
 
   const renderStar = (i, rating) => {
-    let iconName = "star";
+    let iconName = 'star';
 
     if (rating >= i + 1) {
-      iconName = "star";
+      iconName = 'star';
     } else if (rating > i && rating < i + 1) {
-      iconName = "star-half";
+      iconName = 'star-half';
     } else {
-      iconName = "star-o";
+      iconName = 'star-o';
     }
 
     return (
@@ -29,14 +29,14 @@ const StarRating = ({ score }) => {
         key={i}
         name={iconName}
         size={24}
-        color={iconName !== "star-o" ? "gold" : "lightgray"}
+        color={iconName !== 'star-o' ? 'gold' : 'lightgray'}
         style={styles.star}
       />
     );
   };
 
   return (
-    <View style={styles.starContainer}>
+    <View style={[styles.starContainer, containerStyle]}>
       {Array.from(Array(5).keys()).map((i) => renderStar(i, rating))}
     </View>
   );

@@ -9,7 +9,6 @@ import { userSignUp } from '../web/firebase';
 
 import { createAuthenticationStyle } from '../styles/authenticateStyle';
 import { createButtonStyle } from '../styles/buttonStyle';
-
 export default function SignupScreen() {
   const navigation = useNavigation();
   const colorScheme = useTheme();
