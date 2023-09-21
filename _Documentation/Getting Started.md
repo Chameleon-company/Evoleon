@@ -1,7 +1,7 @@
 # Getting Started
 
 # Usage
-Download the expo go app from the play / apple store. Scan the QR code shown in the terminal after running 'npx run start' and you will be able to view the app. At the moment, there is a problem with the web view for development. It's recommended to just use your phone for the moment.
+Download the expo go app from the play / apple store. Scan the QR code shown in the terminal after running 'npx expo start' and you will be able to view the app. At the moment, there is a problem with the web view for development. It's recommended to just use your phone for the moment.
 
 The problem is with webpack, webpack is used to translate packages from react native which runs on mobile devices to a react web framework.
 
@@ -16,8 +16,12 @@ Currently using node 18 LTS. You can check your own by running 'node --version'
 ```bash
 git clone https://github.com/Chameleon-company/Evoleon/
 cd Evoleon
-npm install
-npx run start
+npm install (if npm ERR! occurs --force it)
+npx expo start
+if the above doesn't work after running npx expo start then follow the steps below:
+npm fund
+yarn install
+npx expo start
 ```
 
 ## Updating 
