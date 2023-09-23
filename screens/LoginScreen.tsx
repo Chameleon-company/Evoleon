@@ -51,7 +51,7 @@ export default function LoginScreen() {
           />
           <TextInput
             style={LoginStyle.input}
-            secureTextEntry={true}
+            secureTextEntry={!showPassword}
             onChangeText={setPassword}
             value={password}
             placeholderTextColor="grey"
@@ -59,9 +59,10 @@ export default function LoginScreen() {
             
           /> 
           <Button
-        title={showPassword ? 'Hide Password' : 'Show Password'}
-        onPress={togglePasswordVisibility}
-      />
+            title={showPassword ? 'Hide Password' : 'Show Password'}
+            onPress={togglePasswordVisibility}
+          />
+      
           
           
 

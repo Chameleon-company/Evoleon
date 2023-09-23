@@ -30,7 +30,7 @@ import {
 } from 'firebase/firestore';
 
 import { getDatabase, ref, set } from 'firebase/database';
-import LoginScreen from '../screens/LoginScreen';
+
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -371,48 +371,6 @@ export const removeFavouriteMarker = async (markerId) => {
   return true;
 };
 
-```export const LoginScreens = () => {
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  return (
-    <View style={LoginStyle.container}>
-      <TextInput
-        style={LoginStyle.input}
-        secureTextEntry={!showPassword}
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholderTextColor="grey"
-        placeholder="Password"
-      />
-      <Button
-        title={showPassword ? 'Hide Password' : 'Show Password'}
-        onPress={togglePasswordVisibility}
-      />
-    </View>
-  );
-}; 
-
-
-export const LoginStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    marginBottom: 20,
-    paddingHorizontal: 10,
-  },
-});```
 export let favouriteMarkers = [{}];
 
 export const getUsersFavouriteListInFirestore = async () => {
