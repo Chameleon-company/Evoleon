@@ -9,6 +9,7 @@ import {
   updateProfile,
   sendEmailVerification,
 } from 'firebase/auth';
+import { StyleSheet } from 'react-native';
 
 // Firebase app imports.
 import { initializeApp } from 'firebase/app';
@@ -29,6 +30,7 @@ import {
 } from 'firebase/firestore';
 
 import { getDatabase, ref, set } from 'firebase/database';
+import LoginScreen from '../screens/LoginScreen';
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -228,6 +230,7 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (evCharg
     evChargerLocationVal.lat + '_' + evChargerLocationVal.long
   );
 
+
   // Remove favourite EV charging location.
   if (evChargerLocationIsInFavourites(evChargerLocationVal)) {
     const deleteDocument = await deleteDoc(document)
@@ -368,6 +371,48 @@ export const removeFavouriteMarker = async (markerId) => {
   return true;
 };
 
+```export const LoginScreens = () => {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <View style={LoginStyle.container}>
+      <TextInput
+        style={LoginStyle.input}
+        secureTextEntry={!showPassword}
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+        placeholderTextColor="grey"
+        placeholder="Password"
+      />
+      <Button
+        title={showPassword ? 'Hide Password' : 'Show Password'}
+        onPress={togglePasswordVisibility}
+      />
+    </View>
+  );
+}; 
+
+
+export const LoginStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: 300,
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+});```
 export let favouriteMarkers = [{}];
 
 export const getUsersFavouriteListInFirestore = async () => {
