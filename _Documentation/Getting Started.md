@@ -50,3 +50,18 @@ Update the expo version:
 ```bash
 expo upgrade
 ```
+
+## Security
+
+Due to security issue with students uploading API keys to GitHub, please reach out to security team for the API dotenv file. If you miss this step no firebase functionality will work.
+
+```bash
+touch .env
+```
+
+This file needs to be added into the repository, a video on this can be found [here](https://www.youtube.com/watch?v=).
+
+##### Content Authored by:
+*Mick Wiedermann*
+*Jordan Sam Cooke*
+*Joel Murphy-Dyer*

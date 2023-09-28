@@ -48,3 +48,7 @@ Contains all screens for the Evoleon App.
 ## styles
 Global styling for the app goes here. 
 
+## .env
+
+This file contains the API keys and firebase infomation for the project.
+

@@ -204,6 +204,17 @@ function ProblematicCode() {
   // ... 
 } 
 ```
+
+## DO NOT UPLOAD API KEYS TO GITHUB
+
+* If you do, please contact the security team immediately.
+
+```bash
+  apiKey: 'GJTVhd389JFVVSHJ-3bdBHGFNHJ876',
+```
+
+This is an example of an API key, it is used to access the firebase database. If you upload this to github, anyone can access the database and change it. This is a security risk and should be avoided at all costs.
+
 *Content Authored by: Jordan Sam Cooke*
 
 *Converted to Markdown: Mick Wiedermann* 
