@@ -30,16 +30,18 @@ import {
 
 import { getDatabase, ref, set } from 'firebase/database';
 
+import { enviromental } from './.env';
+
 // Firebase config for Evoleon Application
 const firebaseConfig = {
-  apiKey: 'AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg',
-  authDomain: 'evoleonapp.firebaseapp.com',
-  projectId: 'evoleonapp',
-  storageBucket: 'evoleonapp.appspot.com',
-  messagingSenderId: '425564389277',
-  appId: '1:425564389277:web:c86772f8abb19ffca47974',
-  measurementId: 'G-GL6LC3D645',
-  databaseURL: 'https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app',
+  apiKey: enviromental.apiKey,
+  authDomain: enviromental.authDomain,
+  projectId: enviromental.projectId,
+  storageBucket: enviromental.storageBucket,
+  messagingSenderId: enviromental.messagingSenderId,
+  appId: enviromental.appId,
+  measurementId: enviromental.measurementId,
+  databaseURL: enviromental.databaseURL,
 };
 
 //Initialize Firebase
