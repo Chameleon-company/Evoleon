@@ -9,6 +9,7 @@ import {
   updateProfile,
   sendEmailVerification,
 } from 'firebase/auth';
+import { StyleSheet } from 'react-native';
 
 // Firebase app imports.
 import { initializeApp } from 'firebase/app';
@@ -29,6 +30,7 @@ import {
 } from 'firebase/firestore';
 
 import { getDatabase, ref, set } from 'firebase/database';
+
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -227,6 +229,7 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (evCharg
     auth.currentUser.uid + 'favouriteCharger',
     evChargerLocationVal.lat + '_' + evChargerLocationVal.long
   );
+
 
   // Remove favourite EV charging location.
   if (evChargerLocationIsInFavourites(evChargerLocationVal)) {
