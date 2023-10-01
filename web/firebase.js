@@ -7,7 +7,6 @@ import {
   getAuth,
   signOut,
   updateProfile,
-  sendEmailVerification,
 } from 'firebase/auth';
 
 // Firebase app imports.
@@ -28,9 +27,7 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 
-import { getDatabase, ref, set } from 'firebase/database';
-
-import { enviromental } from './enviromental/.env';
+import { enviromental } from './enviromental/ENV.env';
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -50,10 +47,11 @@ const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
 // Boolean - true if user is signed in
-let userIsAuthenticated = false; // we don't have to use this anymore, phase this out
+// FIXME: Evoleon doesn't use this anymore, phase this out for getUserIsAuthenticated or getUserAuthStatus
+let userIsAuthenticated = false;
 
 export const getuserIsAuthenticated = () => {
-  return auth.currentUser ? true : false;
+  return auth.currentUser != null;
 };
 
 export const getUserName = () => {
@@ -125,8 +123,6 @@ export const userSignUp = async (email, password, firstName, lastName, country, 
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
     userIsAuthenticated = true;
-    const user = res.user;
-    // await sendVerification(user);
     console.log('Updating profile details');
     await updateProfileDetails(firstName);
     console.log('Updating firestore data');
