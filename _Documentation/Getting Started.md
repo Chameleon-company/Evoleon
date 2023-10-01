@@ -59,7 +59,9 @@ Due to security issue with students uploading API keys to GitHub, please reach o
 touch .env
 ```
 
-This file needs to be added into the repository, a video on this can be found [here](https://www.youtube.com/watch?v=).
+This file needs to be added into the repository, a video on this can be found [here](https://youtu.be/WSJHG6NeovQ).
+
+If you need the enviromental file and are not apart of the Chameleon team, please contact the team through GitHub.
 
 ##### Content Authored by:
 *Mick Wiedermann*
