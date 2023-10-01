@@ -3,10 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
 import { Text, View, useTheme } from '../components/Themed';
-import { Alert, Pressable, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, Pressable, TextInput, TouchableOpacity,Button } from 'react-native';
 
 import MenuIcon from '../components/MenuIcon';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { userLogin } from '../web/firebase';
@@ -21,9 +21,13 @@ export default function LoginScreen() {
   const LoginStyle = createLoginStyle(colorScheme);
   const ButtonStyle = createButtonStyle(colorScheme);
 
-  const [email, onChangeTextEmail] = React.useState('');
-  const [password, onChangeTextPassword] = React.useState('');
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+ 
   return (
     <SafeAreaView style={LoginStyle.content}>
       <View style={LoginStyle.content}>
@@ -40,19 +44,28 @@ export default function LoginScreen() {
           <TextInput
             style={LoginStyle.input}
             keyboardType="email-address"
-            onChangeText={onChangeTextEmail}
+            onChangeText={setEmail}
             value={email}
             placeholderTextColor="grey"
             placeholder="Email"
           />
           <TextInput
             style={LoginStyle.input}
-            secureTextEntry={true}
-            onChangeText={onChangeTextPassword}
+            secureTextEntry={!showPassword}
+            onChangeText={setPassword}
             value={password}
             placeholderTextColor="grey"
             placeholder="Password"
+            
+          /> 
+          <Button
+            title={showPassword ? 'Hide Password' : 'Show Password'}
+            onPress={togglePasswordVisibility}
           />
+      
+          
+          
+
 
           <TouchableOpacity
             style={ButtonStyle.forgotPassButton}

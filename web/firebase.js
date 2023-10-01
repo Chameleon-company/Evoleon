@@ -136,7 +136,7 @@ export const userSignUp = async (email, password, firstName, lastName, country, 
     console.error('An Error has been caught');
     console.error('Error message:', err);
     return false;
-  } 
+  }
 };
 
 // Add users first name to firebase Authentication.
@@ -409,8 +409,7 @@ export const getUsersFavouriteListInFirestore = async () => {
 
 export const evChargerLocationIsInFavourites = (val) => {
   for (let i = 0; i < favouriteMarkers.length; i++) {
-    if ((val.lat == favouriteMarkers[i].lat) & 
-    (val.long == favouriteMarkers[i].long)) {
+    if ((val.lat == favouriteMarkers[i].lat) & (val.long == favouriteMarkers[i].long)) {
       return true;
     }
   }
@@ -419,11 +418,11 @@ export const evChargerLocationIsInFavourites = (val) => {
 
 // export const sendVerification = async (email) => {
 //   try {
-    /* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
+/* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
     This might be reduced by reducing the amount of calls such as update details on signup.
     */
-    // const auth = getAuth();
-    // const user = auth.currentUser;
+// const auth = getAuth();
+// const user = auth.currentUser;
 //     await sendEmailVerification(auth.currentUser);
 //     return true;
 //   } catch (error) {
@@ -432,10 +431,9 @@ export const evChargerLocationIsInFavourites = (val) => {
 //   }
 // };
 
-
 // Get all EV charger locations from Firestore, return as object instead of array
 export const fetchLocations = async () => {
-  const locationRef = collection(firestoreDB, "Locations");
+  const locationRef = collection(firestoreDB, 'Locations');
   const q = query(locationRef);
   const querySnapshot = await getDocs(q);
 
@@ -455,14 +453,14 @@ export const fetchLocations = async () => {
   return locations;
 };
 
-export const updateUserData = async(userDetails) => {
-    // if not logged in
-    if (!userIsAuthenticated) {
-      return null;
-    }
+export const updateUserData = async (userDetails) => {
+  // if not logged in
+  if (!userIsAuthenticated) {
+    return null;
+  }
   // Get the user's document reference
   const user = auth.currentUser;
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   // Initialize an object to hold the updates
   let updates = {};
@@ -476,7 +474,7 @@ export const updateUserData = async(userDetails) => {
     updates.displayName = userDetails.displayName;
     await updateProfile(auth.currentUser, {
       displayName: userDetails.displayName,
-    })
+    });
   }
 
   if (userDetails.email && userDetails.email !== '') {
@@ -503,8 +501,7 @@ export const updateUserData = async(userDetails) => {
   if (Object.keys(updates).length > 0) {
     await updateDoc(userDocRef, updates);
   }
-}
-
+};
 
 export const fetchUserDetails = async () => {
   // if not logged in
@@ -516,7 +513,7 @@ export const fetchUserDetails = async () => {
   const user = auth.currentUser;
 
   // Get the user's document reference
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   // Fetch the document
   const userDoc = await getDoc(userDocRef);
@@ -530,7 +527,7 @@ export const fetchUserDetails = async () => {
 
     // Create an object with only the available fields
     let userDetails = {};
-    fields.forEach(field => {
+    fields.forEach((field) => {
       if (data[field]) {
         userDetails[field] = data[field];
       }
@@ -541,20 +538,20 @@ export const fetchUserDetails = async () => {
     // If the document does not exist, return null or handle this situation as you see fit
     return null;
   }
-}
+};
 
 export const logoutUser = () => {
   // if not logged in
   if (!userIsAuthenticated) {
     return null;
   }
-signOut(auth)
-  .then(() => {
-    // Update the authentication status
-    userIsAuthenticated = false;
-    console.log("User logged out");
-  })
-  .catch((error) => {
-    console.error("Error logging out:", error);
-  });
+  signOut(auth)
+    .then(() => {
+      // Update the authentication status
+      userIsAuthenticated = false;
+      console.log('User logged out');
+    })
+    .catch((error) => {
+      console.error('Error logging out:', error);
+    });
 };
