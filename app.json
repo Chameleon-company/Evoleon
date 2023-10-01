@@ -2,7 +2,7 @@
   "expo": {
     "name": "Evoleon",
     "slug": "evoleon",
-    "version": "0.2.1\nSplash of Colour Update",
+    "version": "0.2.4\nSplash of Colour Update",
     "orientation": "portrait",
     "icon": "./assets/EvoleonLandingTemp.png",
     "scheme": "myapp",
@@ -10,7 +10,8 @@
     "splash": {
       "image": "./assets/EvoleonLandingTemp.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F7F7FF"
+      "backgroundColor": "#F7F7FF",
+      "imageResizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,13 +23,10 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
+    "description": "Evoleon is a mobile app that allows you to search for an electric charger near you, base on a criteria entered by you. It also allows you to add a charger to the database, so that other users can find it. ",
+    "platforms": ["ios", "android"],
     "android": {
       "package": "com.evoleonapp.evoleon"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "35a5e80d-1b32-43a8-b5ca-a96a8436e7fd"
-      }
     }
   }
 }

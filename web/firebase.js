@@ -30,7 +30,7 @@ import {
 
 import { getDatabase, ref, set } from 'firebase/database';
 
-import { enviromental } from './.env';
+import { enviromental } from './enviromental/.env';
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
@@ -81,8 +81,8 @@ export const getUserNameTextForProfilePage = () => {
 /* Determines the users status and produced the correct login/signout text.
 A booleon value is also produced in order to be used to determine the status of the user.
 */
-export var getUserAuthStatus = () => {
-  var UserAuthText;
+export let getUserAuthStatus = () => {
+  let UserAuthText = '';
 
   if (userIsAuthenticated) {
     UserAuthText = auth.currentUser.displayName + "'s account";
