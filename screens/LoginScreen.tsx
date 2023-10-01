@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
 
 import { Text, View, useTheme } from '../components/Themed';
-import { Alert, Pressable, TextInput, TouchableOpacity,Button } from 'react-native';
+import { Alert, Pressable, TextInput, TouchableOpacity, Button } from 'react-native';
+import Checkbox from 'expo-checkbox';
 
-import MenuIcon from '../components/MenuIcon';
-import { useEffect,useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { userLogin } from '../web/firebase';
@@ -23,11 +22,13 @@ export default function LoginScreen() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
- 
+
   return (
     <SafeAreaView style={LoginStyle.content}>
       <View style={LoginStyle.content}>
@@ -49,6 +50,7 @@ export default function LoginScreen() {
             placeholderTextColor="grey"
             placeholder="Email"
           />
+
           <TextInput
             style={LoginStyle.input}
             secureTextEntry={!showPassword}
@@ -56,16 +58,17 @@ export default function LoginScreen() {
             value={password}
             placeholderTextColor="grey"
             placeholder="Password"
-            
-          /> 
-          <Button
-            title={showPassword ? 'Hide Password' : 'Show Password'}
-            onPress={togglePasswordVisibility}
           />
-      
-          
-          
 
+          <View style={[LoginStyle.checkboxContainer]}>
+            <Checkbox
+              value={showPassword}
+              onValueChange={setShowPassword}
+              color={showPassword ? colorScheme.colors.primary : undefined}
+              style={LoginStyle.checkbox}
+            />
+            <Text style={LoginStyle.checkboxText}> Show Password </Text>
+          </View>
 
           <TouchableOpacity
             style={ButtonStyle.forgotPassButton}
@@ -77,7 +80,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={ButtonStyle.button}
+            style={ButtonStyle.Button}
             onPress={async () => {
               const { success, error } = await userLogin(email, password);
               if (success) {

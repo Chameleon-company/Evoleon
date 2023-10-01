@@ -7,9 +7,7 @@ import {
   getAuth,
   signOut,
   updateProfile,
-  sendEmailVerification,
 } from 'firebase/auth';
-import { StyleSheet } from 'react-native';
 
 // Firebase app imports.
 import { initializeApp } from 'firebase/app';
@@ -29,19 +27,18 @@ import {
   arrayRemove,
 } from 'firebase/firestore';
 
-import { getDatabase, ref, set } from 'firebase/database';
-
+import { enviromental } from './enviromental/ENV.env';
 
 // Firebase config for Evoleon Application
 const firebaseConfig = {
-  apiKey: 'AIzaSyDKfzJfKg08xUAHb7WBhs-I2L8lQV5nUIg',
-  authDomain: 'evoleonapp.firebaseapp.com',
-  projectId: 'evoleonapp',
-  storageBucket: 'evoleonapp.appspot.com',
-  messagingSenderId: '425564389277',
-  appId: '1:425564389277:web:c86772f8abb19ffca47974',
-  measurementId: 'G-GL6LC3D645',
-  databaseURL: 'https://evoleonapp-default-rtdb.asia-southeast1.firebasedatabase.app',
+  apiKey: enviromental.apiKey,
+  authDomain: enviromental.authDomain,
+  projectId: enviromental.projectId,
+  storageBucket: enviromental.storageBucket,
+  messagingSenderId: enviromental.messagingSenderId,
+  appId: enviromental.appId,
+  measurementId: enviromental.measurementId,
+  databaseURL: enviromental.databaseURL,
 };
 
 //Initialize Firebase
@@ -50,10 +47,11 @@ const auth = getAuth();
 export const firestoreDB = getFirestore(app);
 
 // Boolean - true if user is signed in
-let userIsAuthenticated = false; // we don't have to use this anymore, phase this out
+// FIXME: Evoleon doesn't use this anymore, phase this out for getUserIsAuthenticated or getUserAuthStatus
+let userIsAuthenticated = false;
 
 export const getuserIsAuthenticated = () => {
-  return auth.currentUser ? true : false;
+  return auth.currentUser != null;
 };
 
 export const getUserName = () => {
@@ -81,8 +79,8 @@ export const getUserNameTextForProfilePage = () => {
 /* Determines the users status and produced the correct login/signout text.
 A booleon value is also produced in order to be used to determine the status of the user.
 */
-export var getUserAuthStatus = () => {
-  var UserAuthText;
+export let getUserAuthStatus = () => {
+  let UserAuthText = '';
 
   if (userIsAuthenticated) {
     UserAuthText = auth.currentUser.displayName + "'s account";
@@ -125,8 +123,6 @@ export const userSignUp = async (email, password, firstName, lastName, country, 
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password, confirmPassword);
     userIsAuthenticated = true;
-    const user = res.user;
-    // await sendVerification(user);
     console.log('Updating profile details');
     await updateProfileDetails(firstName);
     console.log('Updating firestore data');
@@ -136,7 +132,7 @@ export const userSignUp = async (email, password, firstName, lastName, country, 
     console.error('An Error has been caught');
     console.error('Error message:', err);
     return false;
-  } 
+  }
 };
 
 // Add users first name to firebase Authentication.
@@ -229,7 +225,6 @@ export const addOrRemoveChargerFromUserFavouriteListInFirestore = async (evCharg
     auth.currentUser.uid + 'favouriteCharger',
     evChargerLocationVal.lat + '_' + evChargerLocationVal.long
   );
-
 
   // Remove favourite EV charging location.
   if (evChargerLocationIsInFavourites(evChargerLocationVal)) {
@@ -410,8 +405,7 @@ export const getUsersFavouriteListInFirestore = async () => {
 
 export const evChargerLocationIsInFavourites = (val) => {
   for (let i = 0; i < favouriteMarkers.length; i++) {
-    if ((val.lat == favouriteMarkers[i].lat) & 
-    (val.long == favouriteMarkers[i].long)) {
+    if ((val.lat == favouriteMarkers[i].lat) & (val.long == favouriteMarkers[i].long)) {
       return true;
     }
   }
@@ -420,11 +414,11 @@ export const evChargerLocationIsInFavourites = (val) => {
 
 // export const sendVerification = async (email) => {
 //   try {
-    /* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
+/* FIXME: An error occurs when this is called. This error is due to the Evoleon application making too many firestore calls at any given time.
     This might be reduced by reducing the amount of calls such as update details on signup.
     */
-    // const auth = getAuth();
-    // const user = auth.currentUser;
+// const auth = getAuth();
+// const user = auth.currentUser;
 //     await sendEmailVerification(auth.currentUser);
 //     return true;
 //   } catch (error) {
@@ -433,10 +427,9 @@ export const evChargerLocationIsInFavourites = (val) => {
 //   }
 // };
 
-
 // Get all EV charger locations from Firestore, return as object instead of array
 export const fetchLocations = async () => {
-  const locationRef = collection(firestoreDB, "Locations");
+  const locationRef = collection(firestoreDB, 'Locations');
   const q = query(locationRef);
   const querySnapshot = await getDocs(q);
 
@@ -456,14 +449,14 @@ export const fetchLocations = async () => {
   return locations;
 };
 
-export const updateUserData = async(userDetails) => {
-    // if not logged in
-    if (!userIsAuthenticated) {
-      return null;
-    }
+export const updateUserData = async (userDetails) => {
+  // if not logged in
+  if (!userIsAuthenticated) {
+    return null;
+  }
   // Get the user's document reference
   const user = auth.currentUser;
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   // Initialize an object to hold the updates
   let updates = {};
@@ -477,7 +470,7 @@ export const updateUserData = async(userDetails) => {
     updates.displayName = userDetails.displayName;
     await updateProfile(auth.currentUser, {
       displayName: userDetails.displayName,
-    })
+    });
   }
 
   if (userDetails.email && userDetails.email !== '') {
@@ -504,8 +497,7 @@ export const updateUserData = async(userDetails) => {
   if (Object.keys(updates).length > 0) {
     await updateDoc(userDocRef, updates);
   }
-}
-
+};
 
 export const fetchUserDetails = async () => {
   // if not logged in
@@ -517,7 +509,7 @@ export const fetchUserDetails = async () => {
   const user = auth.currentUser;
 
   // Get the user's document reference
-  const userDocRef = doc(firestoreDB, "UserData", user.uid);
+  const userDocRef = doc(firestoreDB, 'UserData', user.uid);
 
   // Fetch the document
   const userDoc = await getDoc(userDocRef);
@@ -531,7 +523,7 @@ export const fetchUserDetails = async () => {
 
     // Create an object with only the available fields
     let userDetails = {};
-    fields.forEach(field => {
+    fields.forEach((field) => {
       if (data[field]) {
         userDetails[field] = data[field];
       }
@@ -542,20 +534,20 @@ export const fetchUserDetails = async () => {
     // If the document does not exist, return null or handle this situation as you see fit
     return null;
   }
-}
+};
 
 export const logoutUser = () => {
   // if not logged in
   if (!userIsAuthenticated) {
     return null;
   }
-signOut(auth)
-  .then(() => {
-    // Update the authentication status
-    userIsAuthenticated = false;
-    console.log("User logged out");
-  })
-  .catch((error) => {
-    console.error("Error logging out:", error);
-  });
+  signOut(auth)
+    .then(() => {
+      // Update the authentication status
+      userIsAuthenticated = false;
+      console.log('User logged out');
+    })
+    .catch((error) => {
+      console.error('Error logging out:', error);
+    });
 };
