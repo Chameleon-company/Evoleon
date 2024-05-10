@@ -20,6 +20,7 @@ import SignupScreen from './screens/SignupScreen';
 import AboutScreen from './screens/AboutScreen';
 import HelpAndSupportScreen from './screens/HelpAndSupportScreen';
 import ContactScreen from './screens/ContactScreen';
+import Newsscreen from './screens/Newsscreen';
 
 // Nav Icon Imports.
 import { Entypo } from '@expo/vector-icons';
@@ -118,14 +119,20 @@ export default function App() {
             component={UpdateUserDetailsScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
+
+          <Tab.Screen
+            name="PrivacyPolicy"
+            component={PrivacyPolicyScreen}
+            options={{ tabBarButton: () => <View></View> }}
+          />
           <Tab.Screen
             name="TermsAndConditionsScreen"
             component={TermsAndConditionsScreen}
             options={{ tabBarButton: () => <View></View> }}
           />
           <Tab.Screen
-            name="PrivacyPolicy"
-            component={PrivacyPolicyScreen}
+            name="Newsscreen"
+            component={Newsscreen}
             options={{ tabBarButton: () => <View></View> }}
           />
           <Tab.Screen

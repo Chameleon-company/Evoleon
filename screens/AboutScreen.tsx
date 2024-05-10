@@ -31,6 +31,7 @@ function AboutScreen() {
   const termsButton = ' Ts & Cs ';
   const privacyButton = 'Privacy Policy';
   const clearCache = ' Clear Cache ';
+  const newsButton = ' EV News ';
 
   // A place holder alert to add the clear cache functionality to.
   const clearCacheAlert = () =>
@@ -56,10 +57,10 @@ function AboutScreen() {
         <TouchableOpacity
           style={ButtonStyle.Button}
           onPress={() => {
-            navigation.navigate('PrivacyPolicy');
+            navigation.navigate('Newsscreen');
           }}
         >
-          <Text style={ButtonStyle.Text}>{privacyButton}</Text>
+          <Text style={ButtonStyle.Text}>{newsButton}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={ButtonStyle.Button}
@@ -68,6 +69,14 @@ function AboutScreen() {
           }}
         >
           <Text style={ButtonStyle.Text}>{termsButton}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={ButtonStyle.Button}
+          onPress={() => {
+            navigation.navigate('PrivacyPolicy');
+          }}
+        >
+          <Text style={ButtonStyle.Text}>{privacyButton}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={ButtonStyle.Button} onPress={clearCacheAlert}>
           <Text style={ButtonStyle.Text}>{clearCache}</Text>
